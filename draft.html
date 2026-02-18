@@ -1,0 +1,777 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Storage Integrations | Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        /* Main Header */
+        .main-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .city-logo {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 2px solid var(--orange-accent);
+            border-radius: 50px;
+            margin-bottom: 12px;
+        }
+
+        .city-logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .tagline {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--orange-accent);
+        }
+
+        .btn-outline:hover {
+            background: var(--orange-accent);
+            color: var(--bg-dark);
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .page-header p {
+            color: var(--text-gray);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Storage Providers Section */
+        .providers-section {
+            margin-bottom: 50px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-header h2 {
+            font-size: 24px;
+        }
+
+        .section-header p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .providers-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .provider-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            display: flex;
+            gap: 20px;
+        }
+
+        .provider-card:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-3px);
+        }
+
+        .provider-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            flex-shrink: 0;
+        }
+
+        .provider-content {
+            flex: 1;
+        }
+
+        .provider-content h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .provider-content p {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .provider-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .feature-tag {
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--purple-primary);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .provider-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        /* Connection Status */
+        .connection-status {
+            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+        }
+
+        .status-connected {
+            background: rgba(72, 187, 120, 0.1);
+            color: #48bb78;
+        }
+
+        .status-disconnected {
+            background: rgba(245, 101, 101, 0.1);
+            color: #f56565;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 26px;
+            margin-bottom: 40px;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-weight: 700;
+            font-size: 20px;
+            color: white;
+        }
+
+        .step h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Benefits Section */
+        .benefits-section {
+            margin-bottom: 50px;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .benefit-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .benefit-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .benefit-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .benefit-card p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .providers-grid,
+            .steps,
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .top-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .provider-card {
+                flex-direction: column;
+            }
+
+            .provider-icon {
+                align-self: flex-start;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="#" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="v11.html">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+            </ul>
+        </nav>
+
+        <!-- Page Header -->
+        <header class="page-header">
+            <div class="city-logo">
+                <h1>LETTERS CITY</h1>
+            </div>
+            <p class="tagline">Private. Encrypted for you</p>
+            <h1>Cloud Storage Integrations</h1>
+            <p>Connect your favorite cloud storage services to Letters City for seamless file management and sharing.</p>
+        </header>
+
+        <!-- Storage Providers Section -->
+        <section class="providers-section">
+            <div class="section-header">
+                <h2>Available Storage Providers</h2>
+                <p>Connect one or multiple services</p>
+            </div>
+
+            <div class="providers-grid">
+                <!-- Google Drive Card -->
+                <div class="provider-card">
+                    <div class="provider-icon" style="background: linear-gradient(135deg, #4285F4, #34A853);">
+                        <i class="fab fa-google-drive"></i>
+                    </div>
+                    <div class="provider-content">
+                        <h3>Google Drive <span class="connection-status status-connected">Connected</span></h3>
+                        <p>Access and attach files directly from your Google Drive account with real-time sync.</p>
+                        <div class="provider-features">
+                            <span class="feature-tag">Real-time sync</span>
+                            <span class="feature-tag">Team folders</span>
+                            <span class="feature-tag">Search integration</span>
+                        </div>
+                        <div class="provider-actions">
+                            <button class="btn btn-primary btn-small">Manage</button>
+                            <button class="btn btn-outline btn-small">Disconnect</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dropbox Card -->
+                <div class="provider-card">
+                    <div class="provider-icon" style="background: linear-gradient(135deg, #0061FF, #00C2FF);">
+                        <i class="fab fa-dropbox"></i>
+                    </div>
+                    <div class="provider-content">
+                        <h3>Dropbox <span class="connection-status status-connected">Connected</span></h3>
+                        <p>Seamlessly share files from your Dropbox with enhanced security and version control.</p>
+                        <div class="provider-features">
+                            <span class="feature-tag">Version history</span>
+                            <span class="feature-tag">File requests</span>
+                            <span class="feature-tag">Smart sync</span>
+                        </div>
+                        <div class="provider-actions">
+                            <button class="btn btn-primary btn-small">Manage</button>
+                            <button class="btn btn-outline btn-small">Disconnect</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- OneDrive Card -->
+                <div class="provider-card">
+                    <div class="provider-icon" style="background: linear-gradient(135deg, #0078D4, #00A4EF);">
+                        <i class="fab fa-microsoft"></i>
+                    </div>
+                    <div class="provider-content">
+                        <h3>OneDrive <span class="connection-status status-disconnected">Not Connected</span></h3>
+                        <p>Integrate your Microsoft OneDrive for seamless Office 365 collaboration.</p>
+                        <div class="provider-features">
+                            <span class="feature-tag">Office integration</span>
+                            <span class="feature-tag">Personal vault</span>
+                            <span class="feature-tag">Files on-demand</span>
+                        </div>
+                        <div class="provider-actions">
+                            <button class="btn btn-primary btn-small">Connect</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- iCloud Card -->
+                <div class="provider-card">
+                    <div class="provider-icon" style="background: linear-gradient(135deg, #007AFF, #5856D6);">
+                        <i class="fab fa-apple"></i>
+                    </div>
+                    <div class="provider-content">
+                        <h3>iCloud Drive <span class="connection-status status-disconnected">Not Connected</span></h3>
+                        <p>Access your iCloud files directly within Letters City on all your Apple devices.</p>
+                        <div class="provider-features">
+                            <span class="feature-tag">Apple ecosystem</span>
+                            <span class="feature-tag">Desktop & mobile</span>
+                            <span class="feature-tag">Privacy focused</span>
+                        </div>
+                        <div class="provider-actions">
+                            <button class="btn btn-primary btn-small">Connect</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="how-it-works">
+            <h2>How Cloud Integration Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Connect Your Account</h3>
+                    <p>Securely authorize Letters City to access your cloud storage with encrypted OAuth authentication.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Access Files Seamlessly</h3>
+                    <p>Browse and attach files directly from your connected cloud storage when composing emails.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Enhanced Collaboration</h3>
+                    <p>Share files with team members while maintaining version control and access permissions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Benefits Section -->
+        <section class="benefits-section">
+            <div class="section-header">
+                <h2>Integration Benefits</h2>
+                <p>Why connect your cloud storage</p>
+            </div>
+
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Faster Workflow</h3>
+                    <p>Attach files directly from cloud storage without downloading and re-uploading, saving time and bandwidth.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Enhanced Security</h3>
+                    <p>Your files remain encrypted in transit and at rest with end-to-end protection across all platforms.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Real-time Sync</h3>
+                    <p>Changes made to files in your cloud storage are instantly reflected across all connected devices.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Team Collaboration</h3>
+                    <p>Share files with colleagues while maintaining version control and access permissions.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising performance.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.provider-card, .benefit-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 40px rgba(168, 85, 247, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Connect buttons functionality
+        document.querySelectorAll('.provider-actions .btn-primary').forEach(button => {
+            button.addEventListener('click', function() {
+                const card = this.closest('.provider-card');
+                const status = card.querySelector('.connection-status');
+                
+                if (this.textContent === 'Connect') {
+                    // Simulate connection process
+                    this.textContent = 'Connecting...';
+                    setTimeout(() => {
+                        this.textContent = 'Manage';
+                        status.textContent = 'Connected';
+                        status.className = 'connection-status status-connected';
+                        
+                        // Add disconnect button if not present
+                        if (!card.querySelector('.btn-outline')) {
+                            const disconnectBtn = document.createElement('button');
+                            disconnectBtn.className = 'btn btn-outline btn-small';
+                            disconnectBtn.textContent = 'Disconnect';
+                            disconnectBtn.addEventListener('click', function() {
+                                const card = this.closest('.provider-card');
+                                const status = card.querySelector('.connection-status');
+                                const connectBtn = card.querySelector('.btn-primary');
+                                
+                                connectBtn.textContent = 'Connect';
+                                status.textContent = 'Not Connected';
+                                status.className = 'connection-status status-disconnected';
+                                this.remove();
+                            });
+                            this.parentNode.appendChild(disconnectBtn);
+                        }
+                    }, 1500);
+                }
+            });
+        });
+
+        // Disconnect buttons functionality
+        document.querySelectorAll('.btn-outline').forEach(button => {
+            button.addEventListener('click', function() {
+                const card = this.closest('.provider-card');
+                const status = card.querySelector('.connection-status');
+                const connectBtn = card.querySelector('.btn-primary');
+                
+                connectBtn.textContent = 'Connect';
+                status.textContent = 'Not Connected';
+                status.className = 'connection-status status-disconnected';
+                this.remove();
+            });
+        });
+    </script>
+</body>
+</html>

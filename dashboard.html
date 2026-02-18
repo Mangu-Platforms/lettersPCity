@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mangu Mail - AI-Powered Email Revolution</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        },
+                        secondary: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'ai-pulse': 'ai-pulse 3s ease-in-out infinite',
+                        'fadeIn': 'fadeIn 0.3s ease-in',
+                        'slideUp': 'slideUp 0.3s ease-out',
+                        'glow': 'glow 2s infinite alternate',
+                        'typing': 'typing 1.5s steps(40, end) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --purple-light: #c084fc;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --glow: 0 0 15px rgba(168, 85, 247, 0.4);
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden;
+        }
+        
+        .gradient-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .gradient-secondary { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .gradient-success { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .gradient-warning { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .floating-action {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .ai-glow {
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+            animation: ai-pulse 3s ease-in-out infinite;
+        }
+        
+        @keyframes ai-pulse {
+            0%, 100% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(147, 51, 234, 0.6); }
+        }
+        
+        .selected-email {
+            border-left: 4px solid #7c3aed;
+            background-color: #f5f3ff;
+        }
+        
+        .dark .selected-email {
+            background-color: rgba(55, 48, 163, 0.2);
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .slide-up {
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes slideUp {
+            from { transform: translateY(20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .gradient-button {
+            background-image: linear-gradient(to right, #7c3aed, #6366f1);
+            transition: all 0.3s ease;
+        }
+        
+        .gradient-button:hover {
+            background-image: linear-gradient(to right, #6d28d9, #4446e5);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+        }
+        
+        .sidebar-gradient {
+            background-image: linear-gradient(to bottom, #7c3aed, #6366f1);
+        }
+        
+        .dark .sidebar-gradient {
+            background-image: linear-gradient(to bottom, #4c1d95, #3730a3);
+        }
+        
+        .smart-label {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 9999px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-right: 6px;
+        }
+        
+        .label-work {
+            background-color: #e0f2fe;
+            color: #0369a1;
+        }
+        
+        .label-personal {
+            background-color: #ede9fe;
+            color: #5b21b6;
+        }
+        
+        .label-update {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        
+        .dark .label-work {
+            background-color: #0c4a6e;
+            color: #bae6fd;
+        }
+        
+        .dark .label-personal {
+            background-color: #4c1d95;
+            color: #ddd6fe;
+        }
+        
+        .dark .label-update {
+            background-color: #14532d;
+            color: #bbf7d0;
+        }
+        
+        /* Particles Background */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .particle {
+            position: absolute;
+            background: var(--purple-primary);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: particle-float 15s infinite linear;
+        }
+        
+        @keyframes particle-float {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(-100vh) translateX(100px) rotate(360deg);
+            }
+        }
+        
+        /* Modern UI Enhancements */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+        }
+        
+        .dark .glass-card {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .hover-glow:hover {
+            box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .ai-response-bubble {
+            background: linear-gradient(135deg, #7c3aed, #6366f1);
+            color: white;
+            border-radius: 18px;
+            padding: 12px 16px;
+            max-width: 80%;
+            margin: 8px 0;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        .user-message-bubble {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 12px 16px;
+            max-width: 80%;
+            margin: 8px 0;
+            margin-left: auto;
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        .dark .user-message-bubble {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .sentiment-indicator {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+        }
+        
+        .sentiment-positive { background-color: #10b981; }
+        .sentiment-neutral { background-color: #f59e0b; }
+        .sentiment-negative { background-color: #ef4444; }
+        
+        .ai-typing {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #7c3aed;
+            margin: 0 2px;
+            animation: typing 1.5s infinite;
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+        
+        .social-post-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .social-post-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .neural-network {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+        
+        .neural-node {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #7c3aed;
+        }
+        
+        .neural-connection {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #7c3aed, transparent);
+        }
+        
+        .ai-brain {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+        
+        .ai-brain-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #7c3aed, #ec4899, #f59e0b, #10b981, #3b82f6, #7c3aed);
+            animation: rotate 10s linear infinite;
+        }
+        
+        .ai-brain-inner {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--bg-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="h-screen flex flex-col bg-slate-50 font-sans text-slate-800 dark:bg-slate-900 dark:text-slate-200 overflow-hidden">
+    <!-- Neural Network Background -->
+    <div class="neural-network" id="neuralNetwork"></div>
+    
+    <!-- AI Brain Floating Widget -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <div class="ai-brain">
+            <div class="ai-brain-circle w-full h-full"></div>
+            <div class="ai-brain-inner w-20 h-20 top-5 left-5">
+                <i class="fas fa-brain"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top Bar -->
+    <header class="h-16 bg-white border-b flex items-center px-6 justify-between shadow-sm dark:bg-slate-800 dark:border-slate-700 relative z-10">
+        <div class="flex items-center space-x-3">
+            <span class="material-icons text-3xl text-indigo-600 dark:text-indigo-400">mail_outline</span>
+            <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Mangu Mail</h1>
+            <span class="text-xs bg-indigo-100 text-indigo-800 rounded-full px-2 py-1 ml-2 dark:bg-indigo-900 dark:text-indigo-100">AI-Powered</span>
+        </div>
+        
+        <!-- Search Bar with AI -->
+        <div class="relative flex-1 max-w-xl mx-6">
+            <span class="material-icons absolute left-3 top-2.5 text-slate-400 dark:text-slate-500">search</span>
+            <input type="text" placeholder="Ask AI to find emails, summarize threads, or draft replies..." 
+                   class="w-full pl-10 pr-4 py-2 rounded-full bg-slate-100 border border-slate-200 focus:ring-2 focus:ring-indigo-300 focus:bg-white transition-all dark:bg-slate-700 dark:border-slate-600 dark:text-white dark:focus:bg-slate-600" 
+                   id="aiSearch" />
+            <div class="absolute right-3 top-2.5">
+                <span class="ai-typing"></span>
+                <span class="ai-typing" style="animation-delay: 0.2s"></span>
+                <span class="ai-typing" style="animation-delay: 0.4s"></span>
+            </div>
+        </div>
+        
+        <div class="flex items-center space-x-4">
+            <button id="theme-toggle" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700">
+                <span id="theme-icon" class="material-icons">dark_mode</span>
+            </button>
+            <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 relative">
+                <span class="material-icons text-slate-600 dark:text-slate-300">notifications_none</span>
+                <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+            </button>
+            <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700" onclick="showView('settings')">
+                <span class="material-icons text-slate-600 dark:text-slate-300">settings</span>
+            </button>
+            <div class="social-ring">
+                <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-600 cursor-pointer dark:bg-slate-700 dark:text-slate-300" onclick="showView('profile')">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="flex flex-1 overflow-hidden">
+        <!-- Sidebar -->
+        <aside class="w-60 sidebar-gradient text-white flex flex-col shadow-lg z-20 dark:bg-gradient-to-b dark:from-indigo-900 dark:to-purple-900">
+            <header class="h-16 flex items-center px-6 text-xl font-bold tracking-tight">
+                <span class="material-icons mr-2">mail</span> Mangu
+            </header>
+            
+            <nav class="flex-1 overflow-y-auto px-2 space-y-1 text-sm font-medium mt-4">
+                <a href="#" class="nav-item active flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('inbox')">
+                    <span class="material-icons">inbox</span> Inbox
+                    <span class="ml-auto text-xs bg-white/20 rounded-full px-2">24</span>
+                </a>
+                <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('starred')">
+                    <span class="material-icons">star</span> Starred
+                    <span class="ml-auto text-xs bg-white/20 rounded-full px-2">5</span>
+                </a>
+                <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('ephemeral')">
+                    <span class="material-icons">hourglass_top</span> Ephemeral
+                    <span class="ml-auto text-xs bg-white/20 rounded-full px-2">3</span>
+                </a>
+                <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('sent')">
+                    <span class="material-icons">send</span> Sent
+                </a>
+                <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('workflows')">
+                    <i class="fas fa-bolt w-5"></i>
+                    <span>AI Workflows</span>
+                    <span class="ml-auto ai-glow text-xs px-2 py-1 bg-purple-500 rounded-full">NEW</span>
+                </a>
+                <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('ai-assistant')">
+                    <i class="fas fa-robot w-5"></i>
+                    <span>AI Assistant</span>
+                    <span class="ml-auto text-xs bg-white/20 rounded-full px-2">Live</span>
+                </a>
+                <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('social-feed')">
+                    <i class="fas fa-users w-5"></i>
+                    <span>Social Feed</span>
+                    <span class="ml-auto text-xs bg-white/20 rounded-full px-2">12</span>
+                </a>
+                <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('marketplace')">
+                    <i class="fas fa-store w-5"></i>
+                    <span>Marketplace</span>
+                    <span class="ml-auto text-xs px-2 py-1 bg-yellow-500 rounded-full">💰</span>
+                </a>
+                
+                <section class="mt-6 px-2">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="uppercase text-xs opacity-80">AI Channels</h3>
+                        <button class="text-xs opacity-80 hover:opacity-100">+ Add</button>
+                    </div>
+                    <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer hover-glow" onclick="showView('project-phoenix')">
+                        <span class="material-icons">groups</span>
+                        <span>Project Phoenix</span>
+                    </div>
+                    <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer hover-glow" onclick="showView('design-guild')">
+                        <span class="material-icons">palette</span>
+                        <span>Design Guild</span>
+                    </div>
+                    <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer hover-glow" onclick="showView('marketing-team')">
+                        <span class="material-icons">campaign</span>
+                        <span>Marketing Team</span>
+                    </div>
+                </section>
+            </nav>
+            
+            <button onclick="toggleCompose()" class="m-4 flex items-center justify-center bg-white text-slate-900 font-semibold rounded-xl h-12 gap-2 hover:shadow-lg transition-shadow dark:bg-slate-800 dark:text-white hover-glow">
+                <span class="material-icons">add</span> Compose
+            </button>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 grid grid-cols-12 overflow-hidden relative">
+            <!-- Inbox View -->
+            <section id="inbox-view" class="col-span-12 flex flex-col">
+                <!-- Focused Inbox Tabs -->
+                <div class="flex border-b dark:border-slate-700 bg-white dark:bg-slate-800">
+                    <button class="flex-1 py-3 text-center focused-tab active hover:bg-slate-100 dark:hover:bg-slate-700" onclick="switchInboxTab('all')">All</button>
+                    <button class="flex-1 py-3 text-center focused-tab hover:bg-slate-100 dark:hover:bg-slate-700" onclick="switchInboxTab('focused')">Focused</button>
+                    <button class="flex-1 py-3 text-center focused-tab hover:bg-slate-100 dark:hover:bg-slate-700" onclick="switchInboxTab('ai-prioritized')">AI Prioritized</button>
+                    <button class="flex-1 py-3 text-center focused-tab hover:bg-slate-100 dark:hover:bg-slate-700" onclick="switchInboxTab('social')">Social</button>
+                </div>
+
+                <!-- AI Workflow Cards -->
+                <div class="p-4 space-y-3 border-b bg-slate-50/80 backdrop-blur-sm dark:bg-slate-800/80 dark:border-slate-700">
+                    <div class="workflow-card glass-card px-4 py-3 shadow-sm slide-up">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-semibold text-slate-900 dark:text-white mb-1">AI Summary: Weekly Digest</h4>
+                            <span class="material-icons text-indigo-500">auto_awesome</span>
+                        </div>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">Your AI assistant has summarized 24 emails from this week. 3 require your attention.</p>
+                        <div class="flex gap-2">
+                            <button class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs hover:bg-indigo-700">View Summary</button>
+                            <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">Schedule Review</button>
+                            <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">AI Reply All</button>
+                        </div>
+                    </div>
+
+                    <div class="workflow-card glass-card px-4 py-3 shadow-sm slide-up">
+                        <h4 class="font-semibold text-slate-900 dark:text-white mb-1">Sentiment Alert: Project Phoenix</h4>
+                        <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">AI detected negative sentiment in recent emails. Team morale may need attention.</p>
+                        <div class="flex gap-2">
+                            <button class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs hover:bg-indigo-700">View Analysis</button>
+                            <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">Schedule Check-in</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email List -->
+                <div class="flex-1 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-700 email-list-container">
+                    <!-- Emails rendered dynamically -->
+                </div>
+            </section>
+            
+            <!-- AI Assistant View -->
+            <section id="ai-assistant-view" class="col-span-12 hidden flex flex-col">
+                <div class="flex border-b dark:border-slate-700 bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+                            <i class="fas fa-robot text-xl"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-bold">Mangu AI Assistant</h2>
+                            <p class="text-indigo-100">Your intelligent email companion</p>
+                        </div>
+                    </div>
+                    <div class="ml-auto flex items-center gap-2">
+                        <span class="text-sm bg-white/20 px-2 py-1 rounded-full">Online</span>
+                        <span class="text-sm bg-green-500/80 px-2 py-1 rounded-full flex items-center gap-1">
+                            <span class="w-2 h-2 bg-green-300 rounded-full animate-pulse"></span>
+                            Active
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="flex-1 flex overflow-hidden">
+                    <!-- AI Chat -->
+                    <div class="flex-1 flex flex-col p-4 border-r dark:border-slate-700">
+                        <div class="flex-1 overflow-y-auto space-y-4 p-4" id="aiChatContainer">
+                            <div class="ai-response-bubble">
+                                <div class="font-semibold mb-1">Mangu AI</div>
+                                <p>Hello! I'm your AI assistant. I can help you manage emails, draft responses, analyze sentiment, and much more. What would you like to do today?</p>
+                            </div>
+                            
+                            <div class="user-message-bubble">
+                                <p>Can you summarize my unread emails and highlight the urgent ones?</p>
+                            </div>
+                            
+                            <div class="ai-response-bubble">
+                                <div class="font-semibold mb-1">Mangu AI</div>
+                                <p>I've analyzed your 12 unread emails. Here's the summary:</p>
+                                <ul class="list-disc pl-5 mt-2 space-y-1">
+                                    <li><span class="sentiment-indicator sentiment-positive"></span> 3 emails from your team - all positive updates</li>
+                                    <li><span class="sentiment-indicator sentiment-negative"></span> 1 email from client - requires urgent attention (negative sentiment detected)</li>
+                                    <li>5 newsletters - can be read later</li>
+                                    <li>3 promotional emails - low priority</li>
+                                </ul>
+                                <div class="mt-3 p-2 bg-white/20 rounded-lg">
+                                    <p class="font-semibold">Recommendation:</p>
+                                    <p>Reply to the client email first. I've drafted a response that addresses their concerns while maintaining a positive tone.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="p-4 border-t dark:border-slate-700">
+                            <div class="flex gap-2">
+                                <input type="text" placeholder="Ask Mangu AI..." class="flex-1 bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-full px-4 py-2 focus:ring-2 focus:ring-indigo-300">
+                                <button class="bg-indigo-600 text-white rounded-full w-10 h-10 flex items-center justify-center hover:bg-indigo-700">
+                                    <span class="material-icons">send</span>
+                                </button>
+                            </div>
+                            <div class="flex gap-2 mt-2 overflow-x-auto">
+                                <button class="text-xs bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600">Draft reply</button>
+                                <button class="text-xs bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600">Summarize thread</button>
+                                <button class="text-xs bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600">Check sentiment</button>
+                                <button class="text-xs bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600">Schedule meeting</button>
+                                <button class="text-xs bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600">Find documents</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- AI Insights Panel -->
+                    <div class="w-80 flex flex-col p-4 space-y-4 overflow-y-auto">
+                        <div class="glass-card p-4">
+                            <h3 class="font-semibold text-slate-900 dark:text-white mb-2">Email Analytics</h3>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span>Emails Processed</span>
+                                    <span class="font-semibold">1,247</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Time Saved</span>
+                                    <span class="font-semibold text-green-600">18.5 hours</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>AI Suggestions</span>
+                                    <span class="font-semibold">324</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Accuracy</span>
+                                    <span class="font-semibold text-green-600">94.7%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-card p-4">
+                            <h3 class="font-semibold text-slate-900 dark:text-white mb-2">Sentiment Overview</h3>
+                            <div class="space-y-2">
+                                <div class="flex items-center">
+                                    <span class="sentiment-indicator sentiment-positive"></span>
+                                    <span class="flex-1">Positive</span>
+                                    <span class="font-semibold">68%</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="sentiment-indicator sentiment-neutral"></span>
+                                    <span class="flex-1">Neutral</span>
+                                    <span class="font-semibold">24%</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <span class="sentiment-indicator sentiment-negative"></span>
+                                    <span class="flex-1">Negative</span>
+                                    <span class="font-semibold">8%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-card p-4">
+                            <h3 class="font-semibold text-slate-900 dark:text-white mb-2">AI Capabilities</h3>
+                            <div class="grid grid-cols-2 gap-2">
+                                <div class="bg-indigo-500/20 p-2 rounded-lg text-center">
+                                    <i class="fas fa-comment-dots text-indigo-400"></i>
+                                    <p class="text-xs mt-1">Smart Reply</p>
+                                </div>
+                                <div class="bg-purple-500/20 p-2 rounded-lg text-center">
+                                    <i class="fas fa-chart-pie text-purple-400"></i>
+                                    <p class="text-xs mt-1">Analytics</p>
+                                </div>
+                                <div class="bg-pink-500/20 p-2 rounded-lg text-center">
+                                    <i class="fas fa-heart text-pink-400"></i>
+                                    <p class="text-xs mt-1">Sentiment</p>
+                                </div>
+                                <div class="bg-green-500/20 p-2 rounded-lg text-center">
+                                    <i class="fas fa-tasks text-green-400"></i>
+                                    <p class="text-xs mt-1">Workflows</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Social Feed View -->
+            <section id="social-feed-view" class="col-span-12 hidden flex flex-col p-6 overflow-y-auto">
+                <div class="flex justify-between items-center mb-8">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Social Feed</h2>
+                        <p class="text-slate-600 dark:text-slate-400">Connect with your network across platforms</p>
+                    </div>
+                    <div class="flex gap-3">
+                        <button class="px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors">
+                            <i class="fas fa-sync mr-2"></i>
+                            Refresh
+                        </button>
+                        <button class="px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors dark:border-slate-600 dark:hover:bg-slate-700">
+                            <i class="fas fa-filter mr-2"></i>
+                            Filter
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Social Posts -->
+                    <div class="lg:col-span-2 space-y-6">
+                        <!-- Create Post -->
+                        <div class="glass-card p-4">
+                            <div class="flex gap-3">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-semibold">
+                                    You
+                                </div>
+                                <input type="text" placeholder="Share something with your network..." class="flex-1 bg-slate-100 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-full px-4 py-2 focus:ring-2 focus:ring-indigo-300">
+                            </div>
+                            <div class="flex justify-between mt-3">
+                                <button class="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400">
+                                    <i class="fas fa-image"></i>
+                                    <span>Photo</span>
+                                </button>
+                                <button class="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400">
+                                    <i class="fas fa-video"></i>
+                                    <span>Video</span>
+                                </button>
+                                <button class="flex items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Event</span>
+                                </button>
+                                <button class="px-3 py-1 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700">
+                                    Post
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Social Posts -->
+                        <div class="social-post-card glass-card p-4">
+                            <div class="flex gap-3">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white font-semibold">
+                                    MC
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-900 dark:text-white">Michael Chen</h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">2 hrs ago • <i class="fab fa-twitter text-blue-400"></i></p>
+                                </div>
+                            </div>
+                            <p class="mt-3 text-slate-700 dark:text-slate-300">Just launched our new dashboard feature! 🚀 Huge thanks to the entire team for their hard work. The AI-powered analytics are already getting great feedback from our beta users.</p>
+                            <div class="mt-3 flex gap-4 text-slate-500 dark:text-slate-400">
+                                <button class="flex items-center gap-1 hover:text-indigo-600 dark:hover:text-indigo-400">
+                                    <i class="far fa-heart"></i>
+                                    <span>42</span>
+                                </button>
+                                <button class="flex items-center gap-1 hover:text-indigo-600 dark:hover:text-indigo-400">
+                                    <i class="far fa-comment"></i>
+                                    <span>7</span>
+                                </button>
+                                <button class="flex items-center gap-1 hover:text-indigo-600 dark:hover:text-indigo-400">
+                                    <i class="far fa-share-square"></i>
+                                    <span>3</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="social-post-card glass-card p-4">
+                            <div class="flex gap-3">
+                                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-pink-500 to-rose-400 flex items-center justify-center text-white font-semibold">
+                                    SW
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-900 dark:text-white">Sarah Williams</h4>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400">5 hrs ago • <i class="fab fa-linkedin text-blue-600"></i></p>
+                                </div>
+                            </div>
+                            <p class="mt-3 text-slate-700 dark:text-slate-300">Excited to share that our team just hit a major milestone - 10,000 active users! 🎉 Thank you to everyone who believed in our vision and helped us get here.</p>
+                            <div class="mt-3 bg-slate-100 dark:bg-slate-700 rounded-lg p-3">
+                                <div class="flex gap-2 items-center">
+                                    <i class="fas fa-chart-line text-green-500"></i>
+                                    <span class="font-semibold text-slate-900 dark:text-white">Growth Metrics</span>
+                                </div>
+                                <p class="text-sm mt-1 text-slate-600 dark:text-slate-400">User engagement is up 35% month over month with the new AI features.</p>
+                            </div>
+                            <div class="mt-3 flex gap-4 text-slate-500 dark:text-slate-400">
+                                <button class="flex items-center gap-1 hover:text-indigo-600 dark:hover:text-indigo-400">
+                                    <i class="far fa-heart"></i>
+                                    <span>128</span>
+                                </button>
+                                <button class="flex items-center gap-1 hover:text-indigo-600 dark:hover:text-indigo-400">
+                                    <i class="far fa-comment"></i>
+                                    <span>24</span>
+                                </button>
+                                <button class="flex items-center gap-1 hover:text-indigo-600 dark:hover:text-indigo-400">
+                                    <i class="far fa-share-square"></i>
+                                    <span>12</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Connections & Trends -->
+                    <div class="space-y-6">
+                        <div class="glass-card p-4">
+                            <h3 class="font-semibold text-slate-900 dark:text-white mb-3">Trending in Your Network</h3>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg cursor-pointer">
+                                    <div>
+                                        <p class="font-medium">#AIInnovation</p>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400">42 posts</p>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-slate-400"></i>
+                                </div>
+                                <div class="flex justify-between items-center p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg cursor-pointer">
+                                    <div>
+                                        <p class="font-medium">#ProductLaunch</p>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400">28 posts</p>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-slate-400"></i>
+                                </div>
+                                <div class="flex justify-between items-center p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg cursor-pointer">
+                                    <div>
+                                        <p class="font-medium">#RemoteWork</p>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400">35 posts</p>
+                                    </div>
+                                    <i class="fas fa-chevron-right text-slate-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-card p-4">
+                            <h3 class="font-semibold text-slate-900 dark:text-white mb-3">People You May Know</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3 p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg cursor-pointer">
+                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-yellow-500 to-amber-400 flex items-center justify-center text-white font-semibold">
+                                        AJ
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium">Alex Johnson</p>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400">12 mutual connections</p>
+                                    </div>
+                                    <button class="text-xs bg-indigo-600 text-white px-2 py-1 rounded-lg hover:bg-indigo-700">Connect</button>
+                                </div>
+                                <div class="flex items-center gap-3 p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg cursor-pointer">
+                                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-green-500 to-emerald-400 flex items-center justify-center text-white font-semibold">
+                                        LZ
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="font-medium">Lisa Zhang</p>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400">8 mutual connections</p>
+                                    </div>
+                                    <button class="text-xs bg-indigo-600 text-white px-2 py-1 rounded-lg hover:bg-indigo-700">Connect</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="glass-card p-4">
+                            <h3 class="font-semibold text-slate-900 dark:text-white mb-3">Social Insights</h3>
+                            <div class="space-y-2">
+                                <div class="flex justify-between">
+                                    <span>Network Growth</span>
+                                    <span class="font-semibold text-green-600">+12%</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Engagement Rate</span>
+                                    <span class="font-semibold">4.7%</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Top Platform</span>
+                                    <span class="font-semibold">LinkedIn</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // Global State Management
+        const appState = {
+            user: {
+                id: "user_123",
+                name: "Your Name",
+                email: "your.email@company.com",
+                balance: 327.50,
+                aliases: [
+                    { address: "user+work@domain.com", category: "work", expiresAt: null },
+                    { address: "user+shopping@domain.com", category: "shopping", expiresAt: "2023-12-31" }
+                ]
+            },
+            emails: {
+                inbox: [
+                    {
+                        id: "email_1",
+                        sender: { name: "Alex Johnson", email: "alex.johnson@company.com" },
+                        subject: "Project Update: Q3 Deliverables",
+                        body: "Hi there,\n\nI wanted to provide an update on the Q3 deliverables...",
+                        timestamp: "2023-07-26T10:24:00Z",
+                        labels: ["work", "update"],
+                        attachments: [
+                            { name: "Q3_Progress_Report.pdf", size: "2.4 MB", type: "pdf" },
+                            { name: "Voice_Note.mp3", size: "1.2 MB", type: "audio" }
+                        ],
+                        stake: 5.00,
+                        thread: [
+                            {
+                                id: "reply_1",
+                                sender: { name: "You", email: "your.email@company.com" },
+                                body: "Thanks for the update Alex! The dashboard looks great...",
+                                timestamp: "2023-07-26T11:30:00Z"
+                            }
+                        ]
+                    }
+                ],
+                sent: [],
+                drafts: [],
+                starred: []
+            },
+            marketplace: {
+                stakes: [
+                    { id: "stake_1", amount: 5.00, recipient: "alex.johnson@company.com", status: "accepted" },
+                    { id: "stake_2", amount: 10.00, recipient: "sarah.williams@company.com", status: "pending" }
+                ],
+                earnings: { daily: 15.50, weekly: 87.25, monthly: 327.50 },
+                leaderboard: [
+                    { name: "You", earnings: 327.50 },
+                    { name: "Alex Johnson", earnings: 285.75 },
+                    { name: "Sarah Williams", earnings: 243.20 }
+                ]
+            },
+            social: {
+                posts: [
+                    {
+                        id: "post_1",
+                        author: { name: "Michael Chen", initials: "MC" },
+                        content: "Just launched our new dashboard feature! 🚀 Huge thanks to the entire team...",
+                        timestamp: "2023-07-25T14:30:00Z",
+                        reactions: { likes: 42, comments: 7, shares: 3 }
+                    }
+                ],
+                connections: 24
+            },
+            workflows: {
+                active: [
+                    { id: "workflow_1", title: "Review Quarterly Report", status: "pending" }
+                ]
+            },
+            currentView: "inbox",
+            selectedEmailId: "email_1",
+            aiAssistActive: false
+        };
+
+        // Create neural network background
+        function createNeuralNetwork() {
+            const container = document.getElementById('neuralNetwork');
+            const nodeCount = 30;
+            const connectionCount = 50;
+            
+            // Create nodes
+            for (let i = 0; i < nodeCount; i++) {
+                const node = document.createElement('div');
+                node.classList.add('neural-node');
+                
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                
+                node.style.left = `${posX}%`;
+                node.style.top = `${posY}%`;
+                
+                container.appendChild(node);
+            }
+            
+            // Create connections
+            for (let i = 0; i < connectionCount; i++) {
+                const connection = document.createElement('div');
+                connection.classList.add('neural-connection');
+                
+                const startX = Math.random() * 100;
+                const startY = Math.random() * 100;
+                const endX = Math.random() * 100;
+                const endY = Math.random() * 100;
+                
+                const length = Math.sqrt(Math.pow(endX - startX, 2) + Math.pow(endY - startY, 2));
+                const angle = Math.atan2(endY - startY, endX - startX) * 180 / Math.PI;
+                
+                connection.style.width = `${length}%`;
+                connection.style.left = `${startX}%`;
+                connection.style.top = `${startY}%`;
+                connection.style.transform = `rotate(${angle}deg)`;
+                connection.style.transformOrigin = '0 0';
+                
+                container.appendChild(connection);
+            }
+        }
+
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            renderApp();
+            initEventListeners();
+            createNeuralNetwork();
+        });
+
+        function initTheme() {
+            if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                document.getElementById('theme-icon').textContent = 'light_mode';
+            } else {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('theme-icon').textContent = 'dark_mode';
+            }
+        }
+
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            if (document.documentElement.classList.contains('dark')) {
+                document.getElementById('theme-icon').textContent = 'light_mode';
+                localStorage.theme = 'dark';
+            } else {
+                document.getElementById('theme-icon').textContent = 'dark_mode';
+                localStorage.theme = 'light';
+            }
+        }
+
+        function initEventListeners() {
+            document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const view = e.currentTarget.getAttribute('onclick').match(/showView\('(.*)'\)/)[1];
+                    showView(view);
+                });
+            });
+            
+            // AI Search functionality
+            document.getElementById('aiSearch').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const query = this.value;
+                    if (query.trim() !== '') {
+                        showView('ai-assistant');
+                        // In a real app, this would send the query to the AI
+                        setTimeout(() => {
+                            const chatContainer = document.getElementById('aiChatContainer');
+                            const userMessage = document.createElement('div');
+                            userMessage.className = 'user-message-bubble';
+                            userMessage.innerHTML = `<p>${query}</p>`;
+                            chatContainer.appendChild(userMessage);
+                            
+                            setTimeout(() => {
+                                const aiResponse = document.createElement('div');
+                                aiResponse.className = 'ai-response-bubble';
+                                aiResponse.innerHTML = `
+                                    <div class="font-semibold mb-1">Mangu AI</div>
+                                    <p>I found 3 emails related to "${query}". One requires your attention regarding project deadlines. Would you like me to summarize them for you?</p>
+                                `;
+                                chatContainer.appendChild(aiResponse);
+                                chatContainer.scrollTop = chatContainer.scrollHeight;
+                            }, 1000);
+                            
+                            chatContainer.scrollTop = chatContainer.scrollHeight;
+                        }, 500);
+                        
+                        this.value = '';
+                    }
+                }
+            });
+        }
+
+        function showView(viewName) {
+            appState.currentView = viewName;
+            document.querySelectorAll('[id$="-view"]').forEach(view => {
+                view.classList.add('hidden');
+            });
+            document.getElementById(`${viewName}-view`).classList.remove('hidden');
+            
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            const activeItem = document.querySelector(`.nav-item[onclick*="showView('${viewName}')"]`);
+            if (activeItem) activeItem.classList.add('active');
+            
+            if (viewName === 'inbox' || viewName === 'starred') {
+                renderEmailList();
+            }
+        }
+
+        function renderApp() {
+            renderEmailList();
+        }
+
+        function renderEmailList() {
+            const container = document.querySelector('.email-list-container');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            
+            const emails = appState.emails[appState.currentView] || [];
+            emails.forEach(email => {
+                const row = document.createElement('div');
+                row.className = 'email-row flex flex-col gap-0.5 px-4 py-3 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800';
+                row.setAttribute('data-email-id', email.id);
+                row.onclick = () => selectEmail(email.id);
+                
+                if (appState.selectedEmailId === email.id) {
+                    row.classList.add('selected-email');
+                }
+                
+                row.innerHTML = `
+                    <div class="flex justify-between items-center">
+                        <p class="font-medium text-slate-900 dark:text-white">${email.sender.name}</p>
+                        <span class="text-xs text-slate-500 dark:text-slate-400">${new Date(email.timestamp).toLocaleTimeString()}</span>
+                    </div>
+                    <p class="truncate text-slate-800 font-semibold dark:text-white">${email.subject}</p>
+                    <div class="flex items-center mt-1">
+                        ${email.labels.map(label => `<span class="smart-label label-${label}">${label}</span>`).join('')}
+                        ${email.stake ? `<div class="attention-marketplace text-xs px-2 py-1 rounded-full ml-2">$${email.stake.toFixed(2)}</div>` : ''}
+                    </div>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 email-preview">${email.body.substring(0, 100)}...</p>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function selectEmail(emailId) {
+            appState.selectedEmailId = emailId;
+            
+            document.querySelectorAll('.email-row').forEach(row => {
+                row.classList.remove('selected-email');
+            });
+            const selectedRow = document.querySelector(`.email-row[data-email-id="${emailId}"]`);
+            if (selectedRow) selectedRow.classList.add('selected-email');
+        }
+
+        function toggleCompose() {
+            // Implement compose functionality
+            alert('AI-powered compose window would open here with smart suggestions and drafting assistance');
+        }
+    </script>
+</body>
+</html>

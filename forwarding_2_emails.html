@@ -1,0 +1,2239 @@
+V4
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Templates | Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --orange-accent: #ff8c00;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --border-radius: 20px;
+            --transition: all 0.3s ease;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+            --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.3);
+            --ai-blue: #3b82f6;
+            --ai-green: #10b981;
+            --ai-purple: #8b5cf6;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--bg-darker), var(--bg-dark));
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 30px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--orange-accent);
+            box-shadow: 0 0 15px rgba(168, 85, 247, 0.3);
+        }
+        
+        .logo-icon i {
+            font-size: 22px;
+            color: white;
+        }
+        
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .logo h1 {
+            font-weight: 800;
+            font-size: 32px;
+            background: linear-gradient(to right, var(--text-light), var(--purple-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo p {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-top: 2px;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            color: white;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.4);
+            border-color: var(--orange-accent);
+        }
+        
+        .btn-ai {
+            background: linear-gradient(135deg, var(--ai-blue), var(--ai-purple));
+            color: white;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-ai:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+            border-color: var(--ai-green);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-gray);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: var(--orange-accent);
+            color: var(--text-light);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, var(--ai-green), #059669);
+            color: white;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+        
+        .btn-sm {
+            padding: 10px 18px;
+            font-size: 14px;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+        }
+        
+        .sidebar {
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            height: fit-content;
+            position: sticky;
+            top: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+        
+        .sidebar:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .sidebar-header h2 {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--text-light), var(--purple-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-bottom: 25px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            font-size: 15px;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+        }
+        
+        .ai-suggestions {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .ai-suggestions h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--ai-blue);
+        }
+        
+        .ai-suggestion-item {
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        
+        .ai-suggestion-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--ai-blue);
+            transform: translateX(5px);
+        }
+        
+        .ai-suggestion-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .template-list {
+            list-style: none;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 5px;
+        }
+        
+        .template-list::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .template-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+        
+        .template-list::-webkit-scrollbar-thumb {
+            background: var(--purple-primary);
+            border-radius: 10px;
+        }
+        
+        .template-item {
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+            background-color: rgba(255, 255, 255, 0.03);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .template-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--purple-primary), var(--purple-dark));
+            transform: scaleY(0);
+            transition: transform 0.3s ease;
+        }
+        
+        .template-item:hover {
+            background-color: rgba(255, 255, 255, 0.06);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+        
+        .template-item:hover::before {
+            transform: scaleY(1);
+        }
+        
+        .template-item.active {
+            background-color: rgba(168, 85, 247, 0.1);
+            border-color: var(--orange-accent);
+        }
+        
+        .template-item.active::before {
+            transform: scaleY(1);
+        }
+        
+        .template-info {
+            flex: 1;
+        }
+        
+        .template-item h3 {
+            font-size: 17px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+        
+        .template-item p {
+            font-size: 14px;
+            color: var(--text-gray);
+            margin-bottom: 10px;
+        }
+        
+        .template-actions {
+            display: flex;
+            gap: 10px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .template-item:hover .template-actions {
+            opacity: 1;
+        }
+        
+        .template-actions button {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            cursor: pointer;
+            color: var(--text-gray);
+            transition: var(--transition);
+            padding: 8px;
+            border-radius: 8px;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .template-actions button:hover {
+            background-color: var(--purple-primary);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .content-area {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        
+        .template-preview {
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+        
+        .template-preview:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+        
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .preview-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--text-light), var(--purple-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .preview-actions {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .preview-content {
+            min-height: 450px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            background-color: rgba(255, 255, 255, 0.02);
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        
+        .template-editor {
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+        
+        .template-editor:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+        
+        .editor-header {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .editor-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--text-light), var(--purple-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .ai-tools {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .ai-tool-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .ai-tool-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: var(--ai-blue);
+            transform: translateY(-3px);
+        }
+        
+        .ai-tool-btn i {
+            font-size: 20px;
+            color: var(--ai-blue);
+        }
+        
+        .ai-tool-btn span {
+            font-size: 13px;
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 15px 20px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            font-size: 16px;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2);
+        }
+        
+        textarea {
+            min-height: 200px;
+            resize: vertical;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .editor-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .template-placeholder {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-gray);
+            width: 100%;
+        }
+        
+        .template-placeholder i {
+            font-size: 80px;
+            margin-bottom: 25px;
+            color: rgba(139, 139, 146, 0.3);
+        }
+        
+        .email-template {
+            max-width: 600px;
+            width: 100%;
+            margin: 0 auto;
+            background-color: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .email-header {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .email-body {
+            padding: 35px;
+            line-height: 1.7;
+            color: #333;
+        }
+        
+        .email-footer {
+            padding: 25px 35px;
+            background-color: #f9fafb;
+            border-top: 1px solid #e5e7eb;
+            font-size: 14px;
+            color: #6b7280;
+            text-align: center;
+        }
+        
+        .template-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        
+        .tag {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            color: white;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+        
+        .tag:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(168, 85, 247, 0.3);
+            border-color: var(--orange-accent);
+        }
+        
+        .ai-tag {
+            background: linear-gradient(135deg, var(--ai-blue), var(--ai-purple));
+        }
+        
+        .ai-tag:hover {
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 18px 28px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            color: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1000;
+            border-left: 4px solid var(--orange-accent);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 5, 10, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            width: 90%;
+            max-width: 600px;
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .modal-header h3 {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .status-active {
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        
+        .status-draft {
+            background: rgba(139, 139, 146, 0.15);
+            color: var(--text-gray);
+            border: 1px solid rgba(139, 139, 146, 0.3);
+        }
+        
+        .template-category {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(168, 85, 247, 0.15);
+            color: var(--purple-primary);
+            margin-top: 8px;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background-color: var(--bg-card);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+        
+        .stat-card:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            transform: translateY(-5px);
+        }
+        
+        .stat-card i {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: var(--purple-primary);
+        }
+        
+        .stat-card h3 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            background: linear-gradient(to right, var(--text-light), var(--purple-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-card p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+        
+        .ai-loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .ai-loading i {
+            font-size: 24px;
+            color: var(--ai-blue);
+            margin-bottom: 10px;
+        }
+        
+        .ai-loading p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+        
+        .ai-suggestion-box {
+            position: absolute;
+            background: var(--bg-card);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            padding: 15px;
+            z-index: 100;
+            width: 300px;
+            display: none;
+        }
+        
+        .ai-suggestion-box h4 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: var(--ai-blue);
+        }
+        
+        .ai-suggestion-option {
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 5px;
+        }
+        
+        .ai-suggestion-option:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        .ai-suggestion-option:last-child {
+            margin-bottom: 0;
+        }
+        
+        .ai-prediction {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: rgba(59, 130, 246, 0.1);
+            border-radius: 8px;
+            margin-top: 10px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+        }
+        
+        .ai-prediction i {
+            color: var(--ai-blue);
+        }
+        
+        .ai-prediction p {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+        
+        .ai-prediction span {
+            color: var(--ai-blue);
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 300px 1fr;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: 2;
+                position: static;
+            }
+            
+            .content-area {
+                order: 1;
+            }
+            
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .header-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .preview-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 20px;
+            }
+            
+            .preview-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .editor-actions {
+                flex-direction: column;
+            }
+            
+            .editor-actions button {
+                width: 100%;
+            }
+            
+            .ai-tools {
+                flex-wrap: wrap;
+            }
+            
+            .ai-tool-btn {
+                flex: 1 0 45%;
+            }
+            
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-city"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Letters City</h1>
+                    <p>AI-Powered Email Template Manager</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-ai" id="ai-generate-btn">
+                    <i class="fas fa-robot"></i> AI Generate
+                </button>
+                <button class="btn btn-primary" id="new-template-btn">
+                    <i class="fas fa-plus"></i> New Template
+                </button>
+            </div>
+        </header>
+        
+        <div class="stats-container">
+            <div class="stat-card">
+                <i class="fas fa-envelope"></i>
+                <h3 id="total-templates">4</h3>
+                <p>Total Templates</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-robot"></i>
+                <h3 id="ai-generated">2</h3>
+                <p>AI Generated</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-chart-line"></i>
+                <h3 id="performance-score">87%</h3>
+                <p>Performance Score</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-tags"></i>
+                <h3 id="categories-count">4</h3>
+                <p>Categories</p>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Your Templates</h2>
+                    <span class="status-badge status-active" id="template-count">4 Templates</span>
+                </div>
+                
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="template-search" placeholder="Search templates...">
+                </div>
+                
+                <div class="ai-suggestions">
+                    <h3><i class="fas fa-lightbulb"></i> AI Suggestions</h3>
+                    <div class="ai-suggestion-item" data-type="welcome">
+                        <strong>Welcome Series</strong>
+                        <p>New customer onboarding</p>
+                    </div>
+                    <div class="ai-suggestion-item" data-type="abandoned-cart">
+                        <strong>Abandoned Cart</strong>
+                        <p>Recover lost sales</p>
+                    </div>
+                    <div class="ai-suggestion-item" data-type="newsletter">
+                        <strong>Newsletter</strong>
+                        <p>Monthly updates</p>
+                    </div>
+                </div>
+                
+                <ul class="template-list" id="template-list">
+                    <!-- Template items will be populated by JavaScript -->
+                </ul>
+            </div>
+            
+            <div class="content-area">
+                <div class="template-preview" id="template-preview">
+                    <div class="preview-header">
+                        <h2>Template Preview</h2>
+                        <div class="preview-actions">
+                            <button class="btn btn-outline" id="preview-desktop">
+                                <i class="fas fa-desktop"></i> Desktop
+                            </button>
+                            <button class="btn btn-outline" id="preview-mobile">
+                                <i class="fas fa-mobile-alt"></i> Mobile
+                            </button>
+                            <button class="btn btn-outline" id="preview-html">
+                                <i class="fas fa-code"></i> HTML
+                            </button>
+                            <button class="btn btn-ai" id="ai-analyze-btn">
+                                <i class="fas fa-chart-bar"></i> Analyze
+                            </button>
+                        </div>
+                    </div>
+                    <div class="preview-content" id="preview-content">
+                        <div class="template-placeholder" id="template-placeholder">
+                            <i class="fas fa-envelope-open-text"></i>
+                            <h3>Select a template to preview</h3>
+                            <p>Choose a template from the list to see how it looks</p>
+                        </div>
+                        <div class="email-template" id="email-template" style="display: none;">
+                            <!-- Email template will be populated by JavaScript -->
+                        </div>
+                        <div class="html-preview" id="html-preview" style="display: none;">
+                            <!-- HTML code preview will be populated by JavaScript -->
+                        </div>
+                        <div class="ai-analysis" id="ai-analysis" style="display: none;">
+                            <!-- AI analysis will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="template-editor" id="template-editor">
+                    <div class="editor-header">
+                        <h2>Edit Template</h2>
+                    </div>
+                    
+                    <div class="ai-tools">
+                        <div class="ai-tool-btn" id="ai-rewrite-btn">
+                            <i class="fas fa-magic"></i>
+                            <span>Rewrite</span>
+                        </div>
+                        <div class="ai-tool-btn" id="ai-optimize-btn">
+                            <i class="fas fa-bolt"></i>
+                            <span>Optimize</span>
+                        </div>
+                        <div class="ai-tool-btn" id="ai-tone-btn">
+                            <i class="fas fa-user-edit"></i>
+                            <span>Change Tone</span>
+                        </div>
+                        <div class="ai-tool-btn" id="ai-expand-btn">
+                            <i class="fas fa-expand-alt"></i>
+                            <span>Expand</span>
+                        </div>
+                    </div>
+                    
+                    <div class="editor-form" id="editor-form">
+                        <div class="form-group">
+                            <label for="template-name">Template Name</label>
+                            <input type="text" id="template-name" placeholder="Enter template name">
+                        </div>
+                        <div class="form-group">
+                            <label for="template-subject">Subject</label>
+                            <input type="text" id="template-subject" placeholder="Enter email subject">
+                            <div class="ai-prediction" id="subject-prediction" style="display: none;">
+                                <i class="fas fa-robot"></i>
+                                <p>AI suggests: <span id="predicted-subject">Boost engagement with this subject</span></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="template-body">Body Content</label>
+                            <textarea id="template-body" placeholder="Enter email body content (HTML supported)"></textarea>
+                            <div class="ai-suggestion-box" id="body-suggestion-box">
+                                <h4>AI Suggestions</h4>
+                                <div class="ai-suggestion-option" data-action="improve-clarity">Improve clarity</div>
+                                <div class="ai-suggestion-option" data-action="make-concise">Make more concise</div>
+                                <div class="ai-suggestion-option" data-action="add-cta">Add call-to-action</div>
+                                <div class="ai-suggestion-option" data-action="personalize">Personalize tone</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Available Tags</label>
+                            <div class="template-tags">
+                                <div class="tag" data-tag="{{first_name}}">First Name</div>
+                                <div class="tag" data-tag="{{last_name}}">Last Name</div>
+                                <div class="tag" data-tag="{{company}}">Company</div>
+                                <div class="tag" data-tag="{{date}}">Date</div>
+                                <div class="tag ai-tag" data-tag="{{personalized_content}}">Personalized Content</div>
+                                <div class="tag ai-tag" data-tag="{{recommendations}}">Recommendations</div>
+                                <div class="tag ai-tag" data-tag="{{ai_summary}}">AI Summary</div>
+                            </div>
+                        </div>
+                        <div class="editor-actions">
+                            <button class="btn btn-outline" id="cancel-btn">Cancel</button>
+                            <button class="btn btn-primary" id="save-btn">
+                                <i class="fas fa-save"></i> Save Template
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- AI Generate Modal -->
+    <div class="modal" id="ai-generate-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>AI Template Generator</h3>
+                <button class="btn btn-outline btn-sm" id="close-ai-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="form-group">
+                <label for="ai-prompt">Describe the template you want to create</label>
+                <textarea id="ai-prompt" placeholder="E.g., A welcome email for new subscribers that highlights our main features and includes a special offer..." rows="4"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="ai-tone">Tone</label>
+                <select id="ai-tone">
+                    <option value="professional">Professional</option>
+                    <option value="friendly">Friendly</option>
+                    <option value="casual">Casual</option>
+                    <option value="enthusiastic">Enthusiastic</option>
+                    <option value="formal">Formal</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ai-purpose">Purpose</label>
+                <select id="ai-purpose">
+                    <option value="welcome">Welcome</option>
+                    <option value="promotional">Promotional</option>
+                    <option value="newsletter">Newsletter</option>
+                    <option value="transactional">Transactional</option>
+                    <option value="educational">Educational</option>
+                </select>
+            </div>
+            <div class="ai-loading" id="ai-generate-loading">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>AI is generating your template...</p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-outline" id="cancel-ai-generate">Cancel</button>
+                <button class="btn btn-ai" id="generate-template-btn">
+                    <i class="fas fa-robot"></i> Generate Template
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div class="modal" id="delete-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Delete Template</h3>
+                <button class="btn btn-outline btn-sm" id="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <p>Are you sure you want to delete "<span id="delete-template-name"></span>"? This action cannot be undone.</p>
+            <div class="modal-actions">
+                <button class="btn btn-outline" id="cancel-delete">Cancel</button>
+                <button class="btn btn-danger" id="confirm-delete">Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced template data with AI properties
+        const templates = [
+            {
+                id: 1,
+                name: "Welcome Email",
+                subject: "Welcome to Our Service!",
+                body: `<h2 style="color: #4a6cf7; margin-bottom: 15px;">Hello {{first_name}},</h2>
+                <p>Welcome to our platform! We're excited to have you on board.</p>
+                <p>Get started by exploring our features and don't hesitate to reach out if you have any questions.</p>
+                <div style="margin: 25px 0;">
+                    <a href="#" style="background-color: #4a6cf7; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; display: inline-block;">Get Started</a>
+                </div>
+                <p>Best regards,<br><strong>The {{company}} Team</strong></p>`,
+                lastUpdated: "2023-04-15",
+                status: "active",
+                category: "Onboarding",
+                aiGenerated: false,
+                performanceScore: 92
+            },
+            {
+                id: 2,
+                name: "Password Reset",
+                subject: "Reset Your Password",
+                body: `<h2 style="color: #4a6cf7; margin-bottom: 15px;">Password Reset Request</h2>
+                <p>Hello {{first_name}},</p>
+                <p>We received a request to reset your password. Click the button below to create a new password:</p>
+                <div style="margin: 25px 0;">
+                    <a href="#" style="background-color: #4a6cf7; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; display: inline-block;">Reset Password</a>
+                </div>
+                <p>This link will expire in 24 hours. If you didn't request this, please ignore this email.</p>
+                <p>Best regards,<br><strong>The {{company}} Team</strong></p>`,
+                lastUpdated: "2023-03-22",
+                status: "active",
+                category: "Security",
+                aiGenerated: false,
+                performanceScore: 88
+            },
+            {
+                id: 3,
+                name: "Product Launch",
+                subject: "Introducing Our New Product: {{product_name}}",
+                body: `<h2 style="color: #4a6cf7; margin-bottom: 15px;">Exciting News!</h2>
+                <p>Hello {{first_name}},</p>
+                <p>We're thrilled to introduce <strong>{{product_name}}</strong>, our latest innovation designed to help you achieve more.</p>
+                <p>Key features include:</p>
+                <ul style="margin: 15px 0; padding-left: 20px;">
+                    <li>Feature 1</li>
+                    <li>Feature 2</li>
+                    <li>Feature 3</li>
+                </ul>
+                <div style="margin: 25px 0;">
+                    <a href="#" style="background-color: #4a6cf7; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; display: inline-block;">Learn More</a>
+                </div>
+                <p>Best regards,<br><strong>The {{company}} Team</strong></p>`,
+                lastUpdated: "2023-05-10",
+                status: "active",
+                category: "Marketing",
+                aiGenerated: true,
+                performanceScore: 95
+            },
+            {
+                id: 4,
+                name: "Monthly Newsletter",
+                subject: "{{company}} Monthly Newsletter - {{date}}",
+                body: `<h2 style="color: #4a6cf7; margin-bottom: 15px; text-align: center;">Monthly Updates</h2>
+                <p>Hello {{first_name}},</p>
+                <p>Here's what's new this month at {{company}}:</p>
+                
+                <h3 style="color: #4a6cf7; margin: 20px 0 10px;">Latest News</h3>
+                <p>Content about recent developments, achievements, or announcements...</p>
+                
+                <h3 style="color: #4a6cf7; margin: 20px 0 10px;">Upcoming Events</h3>
+                <p>Information about webinars, conferences, or other events...</p>
+                
+                <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0;">
+                    <h4 style="margin-top: 0;">Quick Tip</h4>
+                    <p>Did you know you can...?</p>
+                </div>
+                
+                <p>Thank you for being part of our community!</p>
+                <p>Best regards,<br><strong>The {{company}} Team</strong></p>`,
+                lastUpdated: "2023-05-01",
+                status: "active",
+                category: "Newsletter",
+                aiGenerated: true,
+                performanceScore: 85
+            }
+        ];
+
+        // DOM elements
+        const templateList = document.getElementById('template-list');
+        const templatePreview = document.getElementById('template-preview');
+        const emailTemplate = document.getElementById('email-template');
+        const htmlPreview = document.getElementById('html-preview');
+        const templatePlaceholder = document.getElementById('template-placeholder');
+        const templateNameInput = document.getElementById('template-name');
+        const templateSubjectInput = document.getElementById('template-subject');
+        const templateBodyInput = document.getElementById('template-body');
+        const newTemplateBtn = document.getElementById('new-template-btn');
+        const aiGenerateBtn = document.getElementById('ai-generate-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const cancelBtn = document.getElementById('cancel-btn');
+        const previewDesktopBtn = document.getElementById('preview-desktop');
+        const previewMobileBtn = document.getElementById('preview-mobile');
+        const previewHtmlBtn = document.getElementById('preview-html');
+        const aiAnalyzeBtn = document.getElementById('ai-analyze-btn');
+        const templateTags = document.querySelectorAll('.tag');
+        const templateSearch = document.getElementById('template-search');
+        const templateCount = document.getElementById('template-count');
+        const toast = document.getElementById('toast');
+        const deleteModal = document.getElementById('delete-modal');
+        const deleteTemplateName = document.getElementById('delete-template-name');
+        const cancelDeleteBtn = document.getElementById('cancel-delete');
+        const confirmDeleteBtn = document.getElementById('confirm-delete');
+        const closeModalBtn = document.getElementById('close-modal');
+        const totalTemplates = document.getElementById('total-templates');
+        const aiGenerated = document.getElementById('ai-generated');
+        const performanceScore = document.getElementById('performance-score');
+        const categoriesCount = document.getElementById('categories-count');
+        const aiGenerateModal = document.getElementById('ai-generate-modal');
+        const aiPrompt = document.getElementById('ai-prompt');
+        const aiTone = document.getElementById('ai-tone');
+        const aiPurpose = document.getElementById('ai-purpose');
+        const aiGenerateLoading = document.getElementById('ai-generate-loading');
+        const generateTemplateBtn = document.getElementById('generate-template-btn');
+        const cancelAiGenerate = document.getElementById('cancel-ai-generate');
+        const closeAiModal = document.getElementById('close-ai-modal');
+        const aiRewriteBtn = document.getElementById('ai-rewrite-btn');
+        const aiOptimizeBtn = document.getElementById('ai-optimize-btn');
+        const aiToneBtn = document.getElementById('ai-tone-btn');
+        const aiExpandBtn = document.getElementById('ai-expand-btn');
+        const bodySuggestionBox = document.getElementById('body-suggestion-box');
+        const subjectPrediction = document.getElementById('subject-prediction');
+        const predictedSubject = document.getElementById('predicted-subject');
+        const aiSuggestionItems = document.querySelectorAll('.ai-suggestion-item');
+
+        let currentTemplate = null;
+        let isEditing = false;
+        let previewMode = 'desktop'; // 'desktop', 'mobile', 'html', or 'analysis'
+        let templateToDelete = null;
+
+        // Initialize the template list
+        function initTemplateList() {
+            templateList.innerHTML = '';
+            
+            if (templates.length === 0) {
+                templateList.innerHTML = `
+                    <div class="template-placeholder">
+                        <i class="fas fa-folder-open"></i>
+                        <h3>No Templates Yet</h3>
+                        <p>Create your first template to get started</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            templates.forEach(template => {
+                const templateItem = document.createElement('li');
+                templateItem.className = 'template-item';
+                templateItem.setAttribute('data-id', template.id);
+                
+                const aiBadge = template.aiGenerated ? '<span class="status-badge status-active" style="background: rgba(59, 130, 246, 0.15); color: var(--ai-blue); border-color: rgba(59, 130, 246, 0.3); margin-left: 5px;">AI</span>' : '';
+                
+                templateItem.innerHTML = `
+                    <div class="template-info">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <h3>${template.name}</h3>
+                            ${aiBadge}
+                        </div>
+                        <p>Last updated: ${template.lastUpdated}</p>
+                        <span class="status-badge status-${template.status}">${template.status}</span>
+                        <div class="template-category">${template.category}</div>
+                    </div>
+                    <div class="template-actions">
+                        <button class="edit-btn" title="Edit template">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="delete-btn" title="Delete template">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                templateItem.addEventListener('click', (e) => {
+                    if (!e.target.closest('.template-actions')) {
+                        selectTemplate(template);
+                    }
+                });
+                
+                const editBtn = templateItem.querySelector('.edit-btn');
+                editBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectTemplate(template);
+                    templateNameInput.focus();
+                });
+                
+                const deleteBtn = templateItem.querySelector('.delete-btn');
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showDeleteModal(template);
+                });
+                
+                templateList.appendChild(templateItem);
+            });
+            
+            updateTemplateCount();
+            updateStats();
+        }
+
+        // Select a template to preview and edit
+        function selectTemplate(template) {
+            currentTemplate = template;
+            
+            // Update active state in template list
+            document.querySelectorAll('.template-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            const activeItem = document.querySelector(`.template-item[data-id="${template.id}"]`);
+            if (activeItem) {
+                activeItem.classList.add('active');
+            }
+            
+            // Show the template preview
+            templatePlaceholder.style.display = 'none';
+            emailTemplate.style.display = 'block';
+            htmlPreview.style.display = 'none';
+            document.getElementById('ai-analysis').style.display = 'none';
+            
+            // Update the email template preview
+            updateEmailTemplatePreview(template);
+            
+            // Update the editor form
+            templateNameInput.value = template.name;
+            templateSubjectInput.value = template.subject;
+            templateBodyInput.value = template.body;
+            
+            // Show AI subject prediction
+            if (template.aiGenerated) {
+                showSubjectPrediction(template);
+            } else {
+                subjectPrediction.style.display = 'none';
+            }
+            
+            isEditing = false;
+        }
+
+        // Update the email template preview
+        function updateEmailTemplatePreview(template) {
+            emailTemplate.innerHTML = `
+                <div class="email-header">
+                    <h2>${template.subject}</h2>
+                </div>
+                <div class="email-body">
+                    ${template.body}
+                </div>
+                <div class="email-footer">
+                    <p>Sent with ❤️ from ${template.name}</p>
+                    <p><a href="#">Unsubscribe</a> | <a href="#">View in browser</a></p>
+                </div>
+            `;
+            
+            // Update HTML preview
+            htmlPreview.innerHTML = `<pre style="color: white; background: #1a1a1a; padding: 20px; border-radius: 8px; overflow: auto;"><code>${escapeHtml(template.body)}</code></pre>`;
+            
+            // Update AI analysis
+            updateAiAnalysis(template);
+        }
+
+        // Update AI analysis
+        function updateAiAnalysis(template) {
+            const aiAnalysis = document.getElementById('ai-analysis');
+            aiAnalysis.innerHTML = `
+                <div style="padding: 30px;">
+                    <h3 style="margin-bottom: 20px; color: var(--ai-blue); display: flex; align-items: center; gap: 10px;">
+                        <i class="fas fa-chart-bar"></i> AI Performance Analysis
+                    </h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 30px;">
+                        <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px;">
+                            <h4 style="margin-bottom: 10px; color: var(--text-light);">Performance Score</h4>
+                            <div style="font-size: 36px; font-weight: 700; color: var(--ai-green);">${template.performanceScore}%</div>
+                        </div>
+                        
+                        <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px;">
+                            <h4 style="margin-bottom: 10px; color: var(--text-light);">Predicted Open Rate</h4>
+                            <div style="font-size: 36px; font-weight: 700; color: var(--ai-blue);">${Math.min(95, template.performanceScore + 5)}%</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+                        <h4 style="margin-bottom: 15px; color: var(--text-light);">AI Recommendations</h4>
+                        <ul style="padding-left: 20px;">
+                            <li style="margin-bottom: 10px;">${getRandomRecommendation()}</li>
+                            <li style="margin-bottom: 10px;">${getRandomRecommendation()}</li>
+                            <li>${getRandomRecommendation()}</li>
+                        </ul>
+                    </div>
+                    
+                    <div style="background: rgba(255, 255, 255, 0.05); padding: 20px; border-radius: 12px;">
+                        <h4 style="margin-bottom: 15px; color: var(--text-light);">Sentiment Analysis</h4>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div style="width: 100%; height: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 5px; overflow: hidden;">
+                                <div style="width: ${template.performanceScore}%; height: 100%; background: linear-gradient(90deg, var(--ai-blue), var(--ai-green));"></div>
+                            </div>
+                            <span style="color: var(--ai-green); font-weight: 600;">Positive</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Get random AI recommendation
+        function getRandomRecommendation() {
+            const recommendations = [
+                "Consider adding a stronger call-to-action to improve conversion rates.",
+                "Personalization tags could increase engagement by up to 30%.",
+                "Shorten subject line to under 50 characters for better open rates.",
+                "Add social proof or testimonials to build trust.",
+                "Include a sense of urgency to encourage immediate action.",
+                "Test different sending times to optimize delivery."
+            ];
+            return recommendations[Math.floor(Math.random() * recommendations.length)];
+        }
+
+        // Show subject prediction
+        function showSubjectPrediction(template) {
+            const predictions = [
+                "Boost engagement with this subject",
+                "Try this subject for better open rates",
+                "AI suggests this optimized subject",
+                "This subject performed well in tests"
+            ];
+            
+            predictedSubject.textContent = predictions[Math.floor(Math.random() * predictions.length)];
+            subjectPrediction.style.display = 'flex';
+            
+            // Add click event to use the prediction
+            predictedSubject.addEventListener('click', () => {
+                templateSubjectInput.value = predictedSubject.textContent;
+                showToast('Subject updated with AI suggestion!', 'success');
+            });
+        }
+
+        // Create a new template
+        function createNewTemplate() {
+            currentTemplate = null;
+            
+            // Reset the editor form
+            templateNameInput.value = '';
+            templateSubjectInput.value = '';
+            templateBodyInput.value = '';
+            
+            // Hide the template preview
+            templatePlaceholder.style.display = 'block';
+            emailTemplate.style.display = 'none';
+            htmlPreview.style.display = 'none';
+            document.getElementById('ai-analysis').style.display = 'none';
+            
+            // Remove active state from template list
+            document.querySelectorAll('.template-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Hide subject prediction
+            subjectPrediction.style.display = 'none';
+            
+            isEditing = true;
+            
+            // Focus on the template name field
+            setTimeout(() => {
+                templateNameInput.focus();
+            }, 100);
+        }
+
+        // Save template
+        function saveTemplate() {
+            const name = templateNameInput.value.trim();
+            const subject = templateSubjectInput.value.trim();
+            const body = templateBodyInput.value.trim();
+            
+            if (!name || !subject || !body) {
+                showToast('Please fill in all fields', 'warning');
+                return;
+            }
+            
+            if (currentTemplate) {
+                // Update existing template
+                currentTemplate.name = name;
+                currentTemplate.subject = subject;
+                currentTemplate.body = body;
+                currentTemplate.lastUpdated = new Date().toISOString().split('T')[0];
+                
+                showToast('Template updated successfully!', 'success');
+            } else {
+                // Create new template
+                const newTemplate = {
+                    id: templates.length > 0 ? Math.max(...templates.map(t => t.id)) + 1 : 1,
+                    name,
+                    subject,
+                    body,
+                    lastUpdated: new Date().toISOString().split('T')[0],
+                    status: 'active',
+                    category: 'General',
+                    aiGenerated: false,
+                    performanceScore: Math.floor(Math.random() * 20) + 70 // Random score between 70-90
+                };
+                
+                templates.push(newTemplate);
+                currentTemplate = newTemplate;
+                
+                showToast('Template created successfully!', 'success');
+            }
+            
+            // Update the UI
+            initTemplateList();
+            updateEmailTemplatePreview(currentTemplate);
+            
+            isEditing = false;
+        }
+
+        // Delete template
+        function deleteTemplate(template) {
+            const index = templates.findIndex(t => t.id === template.id);
+            if (index !== -1) {
+                templates.splice(index, 1);
+                showToast('Template deleted successfully!', 'success');
+                
+                // If we deleted the current template, clear the editor
+                if (currentTemplate && currentTemplate.id === template.id) {
+                    createNewTemplate();
+                }
+                
+                initTemplateList();
+            }
+        }
+
+        // Show delete confirmation modal
+        function showDeleteModal(template) {
+            templateToDelete = template;
+            deleteTemplateName.textContent = template.name;
+            deleteModal.style.display = 'flex';
+        }
+
+        // Hide delete confirmation modal
+        function hideDeleteModal() {
+            deleteModal.style.display = 'none';
+            templateToDelete = null;
+        }
+
+        // Show AI generate modal
+        function showAiGenerateModal() {
+            aiGenerateModal.style.display = 'flex';
+            aiPrompt.value = '';
+            aiTone.value = 'professional';
+            aiPurpose.value = 'welcome';
+            aiGenerateLoading.style.display = 'none';
+        }
+
+        // Hide AI generate modal
+        function hideAiGenerateModal() {
+            aiGenerateModal.style.display = 'none';
+        }
+
+        // Generate template with AI
+        function generateAiTemplate() {
+            const prompt = aiPrompt.value.trim();
+            const tone = aiTone.value;
+            const purpose = aiPurpose.value;
+            
+            if (!prompt) {
+                showToast('Please describe the template you want to create', 'warning');
+                return;
+            }
+            
+            // Show loading
+            aiGenerateLoading.style.display = 'block';
+            generateTemplateBtn.disabled = true;
+            
+            // Simulate AI processing
+            setTimeout(() => {
+                // Create new template from AI
+                const newTemplate = {
+                    id: templates.length > 0 ? Math.max(...templates.map(t => t.id)) + 1 : 1,
+                    name: `AI Generated - ${purpose.charAt(0).toUpperCase() + purpose.slice(1)}`,
+                    subject: generateAiSubject(purpose, tone),
+                    body: generateAiBody(purpose, tone, prompt),
+                    lastUpdated: new Date().toISOString().split('T')[0],
+                    status: 'active',
+                    category: purpose.charAt(0).toUpperCase() + purpose.slice(1),
+                    aiGenerated: true,
+                    performanceScore: Math.floor(Math.random() * 20) + 80 // Random score between 80-100
+                };
+                
+                templates.push(newTemplate);
+                currentTemplate = newTemplate;
+                
+                // Update the UI
+                initTemplateList();
+                selectTemplate(newTemplate);
+                
+                // Hide modal and show success
+                hideAiGenerateModal();
+                showToast('AI template generated successfully!', 'success');
+                
+                // Reset button
+                generateTemplateBtn.disabled = false;
+            }, 2000);
+        }
+
+        // Generate AI subject
+        function generateAiSubject(purpose, tone) {
+            const subjects = {
+                welcome: {
+                    professional: "Welcome to Our Community - Get Started Today",
+                    friendly: "Hey there! Welcome to the family",
+                    casual: "You're in! Here's what's next",
+                    enthusiastic: "Welcome! So excited to have you join us",
+                    formal: "Official Welcome to Our Services"
+                },
+                promotional: {
+                    professional: "Special Offer Just For You",
+                    friendly: "A little something special for you",
+                    casual: "Don't miss out on this!",
+                    enthusiastic: "Amazing Deal Inside!",
+                    formal: "Exclusive Promotion Announcement"
+                },
+                newsletter: {
+                    professional: "Monthly Updates: What's New This Month",
+                    friendly: "Here's what we've been up to",
+                    casual: "Your monthly dose of updates",
+                    enthusiastic: "So much to share this month!",
+                    formal: "Monthly Newsletter: Key Updates"
+                },
+                transactional: {
+                    professional: "Your Order Confirmation",
+                    friendly: "Your order is on its way!",
+                    casual: "Order confirmed - here's what's next",
+                    enthusiastic: "Yay! Your order is being processed",
+                    formal: "Transaction Confirmation Notice"
+                },
+                educational: {
+                    professional: "Learn How to Maximize Your Results",
+                    friendly: "Tips to help you get the most out of our service",
+                    casual: "Want to become a pro? Read this",
+                    enthusiastic: "Level up your skills with these tips!",
+                    formal: "Educational Resources for Optimal Usage"
+                }
+            };
+            
+            return subjects[purpose][tone] || "New Message from Us";
+        }
+
+        // Generate AI body
+        function generateAiBody(purpose, tone, prompt) {
+            // This would normally come from an AI API
+            // For simulation, we return predefined templates
+            
+            const bodies = {
+                welcome: `<h2 style="color: #4a6cf7; margin-bottom: 15px;">Welcome {{first_name}}!</h2>
+                <p>We're thrilled to have you join our community. Your journey to better email communication starts now.</p>
+                <p>Here's how to get started:</p>
+                <ul style="margin: 15px 0; padding-left: 20px;">
+                    <li>Explore our template library</li>
+                    <li>Customize templates to match your brand</li>
+                    <li>Send your first campaign</li>
+                </ul>
+                <div style="margin: 25px 0;">
+                    <a href="#" style="background-color: #4a6cf7; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; display: inline-block;">Get Started Now</a>
+                </div>
+                <p>If you have any questions, our support team is here to help.</p>
+                <p>Best regards,<br><strong>The {{company}} Team</strong></p>`,
+                
+                promotional: `<h2 style="color: #4a6cf7; margin-bottom: 15px;">Special Offer Just For You</h2>
+                <p>Hello {{first_name}},</p>
+                <p>As a valued member of our community, we wanted to offer you an exclusive discount on our premium features.</p>
+                <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0;">
+                    <h3 style="color: #4a6cf7; margin-top: 0;">Use code: <strong>SPECIAL20</strong></h3>
+                    <p style="margin-bottom: 0;">for 20% off any premium plan</p>
+                </div>
+                <p>This offer is valid for the next 7 days, so don't wait!</p>
+                <div style="margin: 25px 0;">
+                    <a href="#" style="background-color: #4a6cf7; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; display: inline-block;">Claim Your Discount</a>
+                </div>
+                <p>Best regards,<br><strong>The {{company}} Team</strong></p>`,
+                
+                newsletter: `<h2 style="color: #4a6cf7; margin-bottom: 15px; text-align: center;">This Month at {{company}}</h2>
+                <p>Hello {{first_name}},</p>
+                <p>Here's what's been happening this month and what's coming up:</p>
+                
+                <h3 style="color: #4a6cf7; margin: 20px 0 10px;">What's New</h3>
+                <p>We've launched several new features to make your experience even better:</p>
+                <ul style="margin: 15px 0; padding-left: 20px;">
+                    <li>AI-powered template suggestions</li>
+                    <li>Enhanced analytics dashboard</li>
+                    <li>New integration options</li>
+                </ul>
+                
+                <h3 style="color: #4a6cf7; margin: 20px 0 10px;">Upcoming Events</h3>
+                <p>Join us for our upcoming webinar: "Maximizing Email Engagement with AI"</p>
+                <div style="margin: 25px 0;">
+                    <a href="#" style="background-color: #4a6cf7; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; display: inline-block;">Register Now</a>
+                </div>
+                
+                <p>Thank you for being part of our growing community!</p>
+                <p>Best regards,<br><strong>The {{company}} Team</strong></p>`
+            };
+            
+            return bodies[purpose] || bodies.welcome;
+        }
+
+        // AI rewrite content
+        function aiRewriteContent() {
+            if (!templateBodyInput.value.trim()) {
+                showToast('Please add some content to rewrite', 'warning');
+                return;
+            }
+            
+            showToast('AI is rewriting your content...', 'success');
+            
+            // Simulate AI processing
+            setTimeout(() => {
+                const originalText = templateBodyInput.value;
+                // Simple simulation of AI rewriting
+                const rewrittenText = originalText
+                    .replace(/Welcome/g, 'Warm welcome')
+                    .replace(/Hello/g, 'Greetings')
+                    .replace(/feature/g, 'capability')
+                    .replace(/easy/g, 'effortless')
+                    .replace(/help/g, 'assist');
+                
+                templateBodyInput.value = rewrittenText;
+                showToast('Content rewritten by AI!', 'success');
+            }, 1500);
+        }
+
+        // AI optimize content
+        function aiOptimizeContent() {
+            if (!templateBodyInput.value.trim()) {
+                showToast('Please add some content to optimize', 'warning');
+                return;
+            }
+            
+            showToast('AI is optimizing your content...', 'success');
+            
+            // Simulate AI processing
+            setTimeout(() => {
+                showToast('Content optimized for better engagement!', 'success');
+                
+                // In a real app, this would be the optimized content from AI
+                // For now, we'll just show a toast
+            }, 1500);
+        }
+
+        // AI change tone
+        function aiChangeTone() {
+            if (!templateBodyInput.value.trim()) {
+                showToast('Please add some content to change tone', 'warning');
+                return;
+            }
+            
+            const tones = ['professional', 'friendly', 'casual', 'enthusiastic'];
+            const randomTone = tones[Math.floor(Math.random() * tones.length)];
+            
+            showToast(`AI is changing tone to ${randomTone}...`, 'success');
+            
+            // Simulate AI processing
+            setTimeout(() => {
+                showToast(`Tone changed to ${randomTone}!`, 'success');
+                
+                // In a real app, this would change the tone of the content
+                // For now, we'll just show a toast
+            }, 1500);
+        }
+
+        // AI expand content
+        function aiExpandContent() {
+            if (!templateBodyInput.value.trim()) {
+                showToast('Please add some content to expand', 'warning');
+                return;
+            }
+            
+            showToast('AI is expanding your content...', 'success');
+            
+            // Simulate AI processing
+            setTimeout(() => {
+                const originalText = templateBodyInput.value;
+                // Simple simulation of AI expanding
+                const expandedText = originalText + "\n\n<p>Additionally, we want to emphasize that our team is dedicated to providing you with the best possible experience. If you have any questions or need further assistance, please don't hesitate to reach out to our support team who are available 24/7 to help you succeed.</p>";
+                
+                templateBodyInput.value = expandedText;
+                showToast('Content expanded by AI!', 'success');
+            }, 1500);
+        }
+
+        // Show AI suggestions for content
+        function showAiSuggestions(event) {
+            if (!templateBodyInput.value.trim()) {
+                return;
+            }
+            
+            const rect = templateBodyInput.getBoundingClientRect();
+            bodySuggestionBox.style.display = 'block';
+            bodySuggestionBox.style.top = `${rect.bottom + window.scrollY + 5}px`;
+            bodySuggestionBox.style.left = `${rect.left + window.scrollX}px`;
+        }
+
+        // Hide AI suggestions
+        function hideAiSuggestions() {
+            bodySuggestionBox.style.display = 'none';
+        }
+
+        // Apply AI suggestion
+        function applyAiSuggestion(action) {
+            hideAiSuggestions();
+            
+            showToast(`Applying AI suggestion: ${action.replace(/-/g, ' ')}...`, 'success');
+            
+            // Simulate AI processing
+            setTimeout(() => {
+                showToast('Suggestion applied successfully!', 'success');
+                
+                // In a real app, this would apply the specific AI suggestion
+                // For now, we'll just show a toast
+            }, 1000);
+        }
+
+        // Add tag to template body
+        function addTagToBody(tag) {
+            const cursorPos = templateBodyInput.selectionStart;
+            const textBefore = templateBodyInput.value.substring(0, cursorPos);
+            const textAfter = templateBodyInput.value.substring(cursorPos);
+            
+            templateBodyInput.value = textBefore + tag + textAfter;
+            
+            // Set cursor position after the inserted tag
+            templateBodyInput.selectionStart = cursorPos + tag.length;
+            templateBodyInput.selectionEnd = cursorPos + tag.length;
+            templateBodyInput.focus();
+        }
+
+        // Show toast notification
+        function showToast(message, type = 'success') {
+            let icon = 'fas fa-check-circle';
+            if (type === 'warning') icon = 'fas fa-exclamation-triangle';
+            if (type === 'error') icon = 'fas fa-times-circle';
+            
+            toast.innerHTML = `<i class="${icon}"></i> ${message}`;
+            toast.className = 'toast';
+            
+            // Set background color based on type
+            if (type === 'success') {
+                toast.style.background = 'linear-gradient(135deg, var(--purple-primary), var(--purple-dark))';
+            } else if (type === 'warning') {
+                toast.style.background = 'linear-gradient(135deg, #f59e0b, #d97706)';
+            } else if (type === 'error') {
+                toast.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+            } else if (type === 'ai') {
+                toast.style.background = 'linear-gradient(135deg, var(--ai-blue), var(--ai-purple))';
+            }
+            
+            toast.classList.add('show');
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Update template count
+        function updateTemplateCount() {
+            const count = templates.length;
+            templateCount.textContent = `${count} Template${count !== 1 ? 's' : ''}`;
+        }
+
+        // Update stats
+        function updateStats() {
+            totalTemplates.textContent = templates.length;
+            aiGenerated.textContent = templates.filter(t => t.aiGenerated).length;
+            
+            const avgPerformance = templates.reduce((sum, t) => sum + t.performanceScore, 0) / templates.length;
+            performanceScore.textContent = `${Math.round(avgPerformance)}%`;
+            
+            const categories = [...new Set(templates.map(t => t.category))];
+            categoriesCount.textContent = categories.length;
+        }
+
+        // Escape HTML for code preview
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        // Filter templates based on search query
+        function filterTemplates(query) {
+            const filteredTemplates = templates.filter(template => 
+                template.name.toLowerCase().includes(query.toLowerCase()) ||
+                template.subject.toLowerCase().includes(query.toLowerCase()) ||
+                template.category.toLowerCase().includes(query.toLowerCase())
+            );
+            
+            templateList.innerHTML = '';
+            
+            if (filteredTemplates.length === 0) {
+                templateList.innerHTML = `
+                    <div class="template-placeholder">
+                        <i class="fas fa-search"></i>
+                        <h3>No Templates Found</h3>
+                        <p>Try adjusting your search terms</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            filteredTemplates.forEach(template => {
+                const templateItem = document.createElement('li');
+                templateItem.className = 'template-item';
+                templateItem.setAttribute('data-id', template.id);
+                
+                const aiBadge = template.aiGenerated ? '<span class="status-badge status-active" style="background: rgba(59, 130, 246, 0.15); color: var(--ai-blue); border-color: rgba(59, 130, 246, 0.3); margin-left: 5px;">AI</span>' : '';
+                
+                templateItem.innerHTML = `
+                    <div class="template-info">
+                        <div style="display: flex; align-items: center; gap: 8px;">
+                            <h3>${template.name}</h3>
+                            ${aiBadge}
+                        </div>
+                        <p>Last updated: ${template.lastUpdated}</p>
+                        <span class="status-badge status-${template.status}">${template.status}</span>
+                        <div class="template-category">${template.category}</div>
+                    </div>
+                    <div class="template-actions">
+                        <button class="edit-btn" title="Edit template">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="delete-btn" title="Delete template">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                
+                templateItem.addEventListener('click', (e) => {
+                    if (!e.target.closest('.template-actions')) {
+                        selectTemplate(template);
+                    }
+                });
+                
+                const editBtn = templateItem.querySelector('.edit-btn');
+                editBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    selectTemplate(template);
+                    templateNameInput.focus();
+                });
+                
+                const deleteBtn = templateItem.querySelector('.delete-btn');
+                deleteBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    showDeleteModal(template);
+                });
+                
+                templateList.appendChild(templateItem);
+            });
+        }
+
+        // Event listeners
+        newTemplateBtn.addEventListener('click', createNewTemplate);
+        aiGenerateBtn.addEventListener('click', showAiGenerateModal);
+        saveBtn.addEventListener('click', saveTemplate);
+        cancelBtn.addEventListener('click', () => {
+            if (currentTemplate) {
+                selectTemplate(currentTemplate);
+            } else {
+                createNewTemplate();
+            }
+        });
+
+        previewDesktopBtn.addEventListener('click', () => {
+            previewMode = 'desktop';
+            emailTemplate.style.maxWidth = '600px';
+            emailTemplate.style.margin = '0 auto';
+            emailTemplate.style.display = 'block';
+            htmlPreview.style.display = 'none';
+            document.getElementById('ai-analysis').style.display = 'none';
+            templatePlaceholder.style.display = 'none';
+            
+            // Update button states
+            previewDesktopBtn.classList.add('btn-primary');
+            previewDesktopBtn.classList.remove('btn-outline');
+            previewMobileBtn.classList.remove('btn-primary');
+            previewMobileBtn.classList.add('btn-outline');
+            previewHtmlBtn.classList.remove('btn-primary');
+            previewHtmlBtn.classList.add('btn-outline');
+            aiAnalyzeBtn.classList.remove('btn-primary');
+            aiAnalyzeBtn.classList.add('btn-outline');
+        });
+
+        previewMobileBtn.addEventListener('click', () => {
+            previewMode = 'mobile';
+            emailTemplate.style.maxWidth = '100%';
+            emailTemplate.style.margin = '0';
+            emailTemplate.style.display = 'block';
+            htmlPreview.style.display = 'none';
+            document.getElementById('ai-analysis').style.display = 'none';
+            templatePlaceholder.style.display = 'none';
+            
+            // Update button states
+            previewMobileBtn.classList.add('btn-primary');
+            previewMobileBtn.classList.remove('btn-outline');
+            previewDesktopBtn.classList.remove('btn-primary');
+            previewDesktopBtn.classList.add('btn-outline');
+            previewHtmlBtn.classList.remove('btn-primary');
+            previewHtmlBtn.classList.add('btn-outline');
+            aiAnalyzeBtn.classList.remove('btn-primary');
+            aiAnalyzeBtn.classList.add('btn-outline');
+        });
+
+        previewHtmlBtn.addEventListener('click', () => {
+            previewMode = 'html';
+            emailTemplate.style.display = 'none';
+            htmlPreview.style.display = 'block';
+            document.getElementById('ai-analysis').style.display = 'none';
+            templatePlaceholder.style.display = 'none';
+            
+            // Update button states
+            previewHtmlBtn.classList.add('btn-primary');
+            previewHtmlBtn.classList.remove('btn-outline');
+            previewDesktopBtn.classList.remove('btn-primary');
+            previewDesktopBtn.classList.add('btn-outline');
+            previewMobileBtn.classList.remove('btn-primary');
+            previewMobileBtn.classList.add('btn-outline');
+            aiAnalyzeBtn.classList.remove('btn-primary');
+            aiAnalyzeBtn.classList.add('btn-outline');
+        });
+
+        aiAnalyzeBtn.addEventListener('click', () => {
+            if (!currentTemplate) {
+                showToast('Please select a template to analyze', 'warning');
+                return;
+            }
+            
+            previewMode = 'analysis';
+            emailTemplate.style.display = 'none';
+            htmlPreview.style.display = 'none';
+            document.getElementById('ai-analysis').style.display = 'block';
+            templatePlaceholder.style.display = 'none';
+            
+            // Update button states
+            aiAnalyzeBtn.classList.add('btn-primary');
+            aiAnalyzeBtn.classList.remove('btn-outline');
+            previewDesktopBtn.classList.remove('btn-primary');
+            previewDesktopBtn.classList.add('btn-outline');
+            previewMobileBtn.classList.remove('btn-primary');
+            previewMobileBtn.classList.add('btn-outline');
+            previewHtmlBtn.classList.remove('btn-primary');
+            previewHtmlBtn.classList.add('btn-outline');
+        });
+
+        templateTags.forEach(tag => {
+            tag.addEventListener('click', () => {
+                addTagToBody(tag.getAttribute('data-tag'));
+            });
+        });
+
+        templateSearch.addEventListener('input', (e) => {
+            filterTemplates(e.target.value);
+        });
+
+        confirmDeleteBtn.addEventListener('click', () => {
+            if (templateToDelete) {
+                deleteTemplate(templateToDelete);
+                hideDeleteModal();
+            }
+        });
+
+        cancelDeleteBtn.addEventListener('click', hideDeleteModal);
+        closeModalBtn.addEventListener('click', hideDeleteModal);
+
+        generateTemplateBtn.addEventListener('click', generateAiTemplate);
+        cancelAiGenerate.addEventListener('click', hideAiGenerateModal);
+        closeAiModal.addEventListener('click', hideAiGenerateModal);
+
+        aiRewriteBtn.addEventListener('click', aiRewriteContent);
+        aiOptimizeBtn.addEventListener('click', aiOptimizeContent);
+        aiToneBtn.addEventListener('click', aiChangeTone);
+        aiExpandBtn.addEventListener('click', aiExpandContent);
+
+        // AI suggestion items
+        aiSuggestionItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const type = item.getAttribute('data-type');
+                showAiGenerateModal();
+                aiPurpose.value = type;
+                aiPrompt.value = `Create a ${type} email template`;
+            });
+        });
+
+        // AI content suggestions
+        templateBodyInput.addEventListener('focus', showAiSuggestions);
+        templateBodyInput.addEventListener('blur', () => {
+            // Delay hiding to allow clicking on suggestions
+            setTimeout(hideAiSuggestions, 200);
+        });
+
+        // AI suggestion options
+        document.querySelectorAll('.ai-suggestion-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const action = option.getAttribute('data-action');
+                applyAiSuggestion(action);
+            });
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === deleteModal) {
+                hideDeleteModal();
+            }
+            if (e.target === aiGenerateModal) {
+                hideAiGenerateModal();
+            }
+        });
+
+        // Initialize the page
+        initTemplateList();
+        
+        // Select the first template by default
+        if (templates.length > 0) {
+            selectTemplate(templates[0]);
+        }
+
+        // Set initial preview mode
+        previewDesktopBtn.click();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1196 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drafts - Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        /* Main Header */
+        .main-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .city-logo {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 2px solid var(--orange-accent);
+            border-radius: 50px;
+            margin-bottom: 12px;
+        }
+
+        .city-logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .tagline {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .welcome-section h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-section p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* Drafts Dashboard */
+        .drafts-dashboard {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        /* Sidebar */
+        .drafts-sidebar {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            height: fit-content;
+        }
+
+        .drafts-sidebar h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .drafts-sidebar h3 i {
+            color: var(--purple-primary);
+        }
+
+        .drafts-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .drafts-action-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 12px 15px;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .drafts-action-btn:hover {
+            border-color: var(--orange-accent);
+            background: rgba(255, 140, 0, 0.05);
+        }
+
+        .drafts-action-btn i {
+            color: var(--purple-primary);
+        }
+
+        .drafts-stats {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+
+        .stat-label {
+            color: var(--text-gray);
+        }
+
+        .stat-value {
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .drafts-content {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .drafts-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .drafts-header h3 {
+            font-size: 20px;
+        }
+
+        .drafts-controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .search-box {
+            background: var(--bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 250px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            width: 100%;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: var(--orange-accent);
+        }
+
+        .search-box i {
+            color: var(--text-gray);
+        }
+
+        .filter-btn {
+            background: var(--bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px 15px;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--orange-accent);
+        }
+
+        /* Drafts List */
+        .drafts-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .draft-item {
+            background: var(--bg-dark);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .draft-item:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-2px);
+        }
+
+        .draft-item.selected {
+            border-color: var(--orange-accent);
+            background: rgba(255, 140, 0, 0.05);
+        }
+
+        .draft-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .draft-info {
+            flex: 1;
+        }
+
+        .draft-recipient {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .draft-recipient i {
+            color: var(--purple-primary);
+            font-size: 14px;
+        }
+
+        .draft-subject {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--text-light);
+        }
+
+        .draft-preview {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .draft-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        .draft-date {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .draft-attachment {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .draft-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .draft-action-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 8px 12px;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .draft-action-btn:hover {
+            background: var(--purple-primary);
+            border-color: var(--purple-primary);
+        }
+
+        .draft-action-btn.send {
+            background: var(--orange-accent);
+            border-color: var(--orange-accent);
+            font-weight: 600;
+        }
+
+        .draft-action-btn.send:hover {
+            background: #ff9900;
+            border-color: #ff9900;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-gray);
+        }
+
+        .empty-state i {
+            font-size: 50px;
+            margin-bottom: 20px;
+            color: var(--text-dim);
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .empty-state p {
+            margin-bottom: 25px;
+        }
+
+        /* Compose Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 700px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transform: translateY(20px);
+            transition: transform 0.3s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h3 {
+            font-size: 20px;
+        }
+
+        .modal-close {
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .compose-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-label {
+            font-size: 14px;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
+        .form-input {
+            background: var(--bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: var(--text-light);
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: var(--orange-accent);
+            outline: none;
+        }
+
+        .form-textarea {
+            min-height: 200px;
+            resize: vertical;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .compose-toolbar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .toolbar-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            padding: 8px 12px;
+            color: var(--text-light);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .toolbar-btn:hover {
+            background: var(--purple-primary);
+            border-color: var(--purple-primary);
+        }
+
+        .attachments {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .attachment-item {
+            background: var(--bg-dark);
+            border-radius: 8px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+        }
+
+        .attachment-item i {
+            color: var(--purple-primary);
+        }
+
+        .attachment-remove {
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .attachment-remove:hover {
+            color: var(--text-light);
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .compose-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--text-light);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .drafts-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .drafts-sidebar {
+                order: 2;
+            }
+            
+            .drafts-content {
+                order: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .top-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .drafts-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .drafts-controls {
+                width: 100%;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .draft-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .draft-actions {
+                width: 100%;
+                justify-content: flex-end;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="v11.html" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="v11.html">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Header -->
+        <header class="main-header">
+            <div class="city-logo">
+                <h1>LETTERS CITY</h1>
+            </div>
+            <p class="tagline">Private. Encrypted for you</p>
+            <a href="#" class="btn btn-primary">BACK TO INBOX</a>
+        </header>
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <h2>Drafts</h2>
+            <p>Your unsent messages - finish them when you're ready</p>
+        </section>
+
+        <!-- Drafts Dashboard -->
+        <div class="drafts-dashboard">
+            <!-- Sidebar -->
+            <div class="drafts-sidebar">
+                <h3><i class="fas fa-edit"></i> Draft Management</h3>
+                
+                <div class="drafts-actions">
+                    <button class="drafts-action-btn" id="compose-btn">
+                        <i class="fas fa-plus"></i>
+                        <span>Compose New</span>
+                    </button>
+                    <button class="drafts-action-btn">
+                        <i class="fas fa-search"></i>
+                        <span>Search Drafts</span>
+                    </button>
+                    <button class="drafts-action-btn">
+                        <i class="fas fa-filter"></i>
+                        <span>Filter by Date</span>
+                    </button>
+                    <button class="drafts-action-btn">
+                        <i class="fas fa-trash"></i>
+                        <span>Delete All Drafts</span>
+                    </button>
+                </div>
+                
+                <div class="drafts-stats">
+                    <div class="stat-item">
+                        <span class="stat-label">Total Drafts</span>
+                        <span class="stat-value">8</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Oldest Draft</span>
+                        <span class="stat-value">2 weeks ago</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Drafts with Attachments</span>
+                        <span class="stat-value">3</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Auto-saved</span>
+                        <span class="stat-value">Just now</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="drafts-content">
+                <div class="drafts-header">
+                    <h3>Your Drafts (8)</h3>
+                    <div class="drafts-controls">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search drafts...">
+                        </div>
+                        <button class="filter-btn">
+                            <i class="fas fa-filter"></i>
+                            <span>Filter</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="drafts-list">
+                    <div class="draft-item selected">
+                        <div class="draft-header">
+                            <div class="draft-info">
+                                <div class="draft-recipient">
+                                    <i class="fas fa-user"></i>
+                                    Alex Johnson, Marketing Team
+                                </div>
+                                <div class="draft-subject">Q4 Marketing Campaign Strategy</div>
+                                <div class="draft-preview">
+                                    Hi team, I've been working on the Q4 marketing strategy and wanted to share the initial draft. The focus will be on holiday campaigns with a special emphasis on our new product line. We'll be running social media ads across all platforms...
+                                </div>
+                                <div class="draft-meta">
+                                    <div class="draft-date">
+                                        <i class="far fa-clock"></i>
+                                        Last edited: Today, 10:24 AM
+                                    </div>
+                                    <div class="draft-attachment">
+                                        <i class="fas fa-paperclip"></i>
+                                        3 attachments
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="draft-actions">
+                                <button class="draft-action-btn send">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Send
+                                </button>
+                                <button class="draft-action-btn">
+                                    <i class="fas fa-edit"></i>
+                                    Edit
+                                </button>
+                                <button class="draft-action-btn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="draft-item">
+                        <div class="draft-header">
+                            <div class="draft-info">
+                                <div class="draft-recipient">
+                                    <i class="fas fa-user"></i>
+                                    Sarah Williams
+                                </div>
+                                <div class="draft-subject">Catch up over coffee next week?</div>
+                                <div class="draft-preview">
+                                    Hey Sarah, it's been too long! I was wondering if you'd be available for a coffee catch-up sometime next week. I'd love to hear about your new role and share some updates from my side as well. How does Tuesday or Wednesday work for you?
+                                </div>
+                                <div class="draft-meta">
+                                    <div class="draft-date">
+                                        <i class="far fa-clock"></i>
+                                        Last edited: Yesterday, 3:45 PM
+                                    </div>
+                                    <div class="draft-attachment">
+                                        <i class="fas fa-paperclip"></i>
+                                        No attachments
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="draft-actions">
+                                <button class="draft-action-btn send">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Send
+                                </button>
+                                <button class="draft-action-btn">
+                                    <i class="fas fa-edit"></i>
+                                    Edit
+                                </button>
+                                <button class="draft-action-btn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="draft-item">
+                        <div class="draft-header">
+                            <div class="draft-info">
+                                <div class="draft-recipient">
+                                    <i class="fas fa-user"></i>
+                                    Tech Support Team
+                                </div>
+                                <div class="draft-subject">Issue with the new software update</div>
+                                <div class="draft-preview">
+                                    Hello Tech Support, I'm experiencing an issue with the latest software update (v2.4.1). After installing it yesterday, I've noticed that the export function is no longer working properly. When I try to export files in PDF format, the process...
+                                </div>
+                                <div class="draft-meta">
+                                    <div class="draft-date">
+                                        <i class="far fa-clock"></i>
+                                        Last edited: 2 days ago
+                                    </div>
+                                    <div class="draft-attachment">
+                                        <i class="fas fa-paperclip"></i>
+                                        2 attachments
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="draft-actions">
+                                <button class="draft-action-btn send">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Send
+                                </button>
+                                <button class="draft-action-btn">
+                                    <i class="fas fa-edit"></i>
+                                    Edit
+                                </button>
+                                <button class="draft-action-btn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="draft-item">
+                        <div class="draft-header">
+                            <div class="draft-info">
+                                <div class="draft-recipient">
+                                    <i class="fas fa-users"></i>
+                                    Project Alpha Team
+                                </div>
+                                <div class="draft-subject">Updated timeline and deliverables</div>
+                                <div class="draft-preview">
+                                    Team, I've revised the project timeline based on our discussion yesterday. The main changes include pushing back the design phase by one week to accommodate the additional feedback we received from stakeholders. I've attached the updated Gantt chart...
+                                </div>
+                                <div class="draft-meta">
+                                    <div class="draft-date">
+                                        <i class="far fa-clock"></i>
+                                        Last edited: 5 days ago
+                                    </div>
+                                    <div class="draft-attachment">
+                                        <i class="fas fa-paperclip"></i>
+                                        1 attachment
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="draft-actions">
+                                <button class="draft-action-btn send">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Send
+                                </button>
+                                <button class="draft-action-btn">
+                                    <i class="fas fa-edit"></i>
+                                    Edit
+                                </button>
+                                <button class="draft-action-btn">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Compose Modal -->
+        <div class="modal-overlay" id="compose-modal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3>Compose New Email</h3>
+                    <button class="modal-close">&times;</button>
+                </div>
+                
+                <form class="compose-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">To</label>
+                            <input type="text" class="form-input" placeholder="Recipient email address">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Cc/Bcc</label>
+                            <input type="text" class="form-input" placeholder="Optional">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Subject</label>
+                        <input type="text" class="form-input" placeholder="Email subject">
+                    </div>
+                    
+                    <div class="compose-toolbar">
+                        <button type="button" class="toolbar-btn">
+                            <i class="fas fa-bold"></i>
+                        </button>
+                        <button type="button" class="toolbar-btn">
+                            <i class="fas fa-italic"></i>
+                        </button>
+                        <button type="button" class="toolbar-btn">
+                            <i class="fas fa-underline"></i>
+                        </button>
+                        <button type="button" class="toolbar-btn">
+                            <i class="fas fa-list-ul"></i>
+                        </button>
+                        <button type="button" class="toolbar-btn">
+                            <i class="fas fa-list-ol"></i>
+                        </button>
+                        <button type="button" class="toolbar-btn">
+                            <i class="fas fa-link"></i>
+                        </button>
+                        <button type="button" class="toolbar-btn">
+                            <i class="fas fa-paperclip"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <textarea class="form-input form-textarea" placeholder="Compose your email..."></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Attachments</label>
+                        <div class="attachments">
+                            <div class="attachment-item">
+                                <i class="fas fa-file-pdf"></i>
+                                <span>marketing-plan.pdf</span>
+                                <button class="attachment-remove">&times;</button>
+                            </div>
+                            <div class="attachment-item">
+                                <i class="fas fa-file-image"></i>
+                                <span>chart.png</span>
+                                <button class="attachment-remove">&times;</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <div class="compose-actions">
+                            <button type="button" class="btn btn-secondary">Save Draft</button>
+                            <button type="button" class="btn btn-secondary">Schedule</button>
+                        </div>
+                        <button type="button" class="btn btn-primary">Send</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising performance.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Modal Functionality
+        const composeBtn = document.getElementById('compose-btn');
+        const composeModal = document.getElementById('compose-modal');
+        const modalClose = document.querySelector('.modal-close');
+        
+        composeBtn.addEventListener('click', function() {
+            composeModal.classList.add('active');
+        });
+        
+        modalClose.addEventListener('click', function() {
+            composeModal.classList.remove('active');
+        });
+        
+        // Close modal when clicking outside
+        composeModal.addEventListener('click', function(e) {
+            if (e.target === composeModal) {
+                composeModal.classList.remove('active');
+            }
+        });
+        
+        // Draft selection
+        document.querySelectorAll('.draft-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.draft-item').forEach(draft => {
+                    draft.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+        
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.draft-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 40px rgba(168, 85, 247, 0.2)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

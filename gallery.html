@@ -1,0 +1,1214 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recovery Options - Account Recovery Setup | Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        /* Main Header */
+        .main-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .city-logo {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 2px solid var(--orange-accent);
+            border-radius: 50px;
+            margin-bottom: 12px;
+        }
+
+        .city-logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .tagline {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--orange-accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 140, 0, 0.1);
+        }
+
+        .btn-success {
+            background: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #0da271;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #e59409;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: transparent;
+            color: var(--pink-accent);
+            border: 1px solid var(--pink-accent);
+        }
+
+        .btn-danger:hover {
+            background: rgba(236, 72, 153, 0.1);
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .welcome-section h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-section p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* Recovery Status */
+        .recovery-status {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .recovery-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            color: white;
+        }
+
+        .recovery-content {
+            flex: 1;
+        }
+
+        .recovery-content h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .recovery-content p {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .progress-container {
+            margin-top: 20px;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--bg-darker);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--purple-primary), var(--orange-accent));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .security-level {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-color);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Recovery Methods Grid */
+        .methods-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .method-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .method-card:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .method-card.complete {
+            border-color: var(--success-color);
+        }
+
+        .method-card.in-progress {
+            border-color: var(--warning-color);
+        }
+
+        .method-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .method-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-darker);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--purple-primary);
+        }
+
+        .method-info {
+            flex: 1;
+        }
+
+        .method-info h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .method-badge {
+            font-size: 11px;
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .badge-complete {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
+        }
+
+        .badge-incomplete {
+            background: rgba(107, 114, 128, 0.2);
+            color: var(--text-gray);
+        }
+
+        .badge-recommended {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning-color);
+        }
+
+        .method-info p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .method-details {
+            margin-bottom: 25px;
+        }
+
+        .method-details p {
+            color: var(--text-gray);
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .method-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        /* Recovery Setup Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: 20px;
+            width: 100%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--orange-accent);
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 25px 30px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h3 {
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--text-light);
+        }
+
+        .modal-content {
+            padding: 0 30px 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-darker);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+        }
+
+        .verification-code {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .code-input {
+            width: 50px;
+            height: 60px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            background: var(--bg-darker);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-light);
+            transition: border-color 0.3s;
+        }
+
+        .code-input:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+        }
+
+        .backup-codes {
+            background: var(--bg-darker);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            font-family: monospace;
+            text-align: center;
+            border: 1px dashed var(--orange-accent);
+        }
+
+        .backup-code {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        /* Advanced Recovery Section */
+        .advanced-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .advanced-section h2 {
+            font-size: 22px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .advanced-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .advanced-card {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .advanced-card:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .advanced-card h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .advanced-card p {
+            color: var(--text-gray);
+            font-size: 13px;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        /* Recovery Timeline */
+        .timeline-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .timeline-section h2 {
+            font-size: 22px;
+            margin-bottom: 25px;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--purple-primary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: -30px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--purple-primary);
+            border: 3px solid var(--bg-card);
+        }
+
+        .timeline-content {
+            background: var(--bg-darker);
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .timeline-content h4 {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .timeline-content p {
+            color: var(--text-gray);
+            font-size: 13px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .methods-grid,
+            .advanced-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .recovery-status {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .top-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .verification-code {
+                justify-content: center;
+            }
+
+            .modal-actions {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(168, 85, 247, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(168, 85, 247, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="#" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Security</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Header -->
+        <header class="main-header">
+            <div class="city-logo">
+                <h1>LETTERS CITY</h1>
+            </div>
+            <p class="tagline">Recovery Options - Account Recovery Setup</p>
+        </header>
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <h2>Secure Your Digital Identity</h2>
+            <p>Establish multiple recovery pathways to ensure you always maintain access to your account, even in unexpected circumstances.</p>
+        </section>
+
+        <!-- Recovery Status -->
+        <section class="recovery-status">
+            <div class="recovery-icon">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <div class="recovery-content">
+                <h3>Your Recovery Security Level: <span class="security-level">Moderate</span></h3>
+                <p>Complete more recovery methods to strengthen your account protection and increase your recovery security level.</p>
+                <div class="progress-container">
+                    <div class="progress-info">
+                        <span>Recovery Completeness</span>
+                        <span>40%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 40%"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recovery Methods Grid -->
+        <div class="methods-grid">
+            <!-- Recovery Email -->
+            <div class="method-card in-progress">
+                <div class="method-header">
+                    <div class="method-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="method-info">
+                        <h3>Recovery Email <span class="method-badge badge-recommended">RECOMMENDED</span></h3>
+                        <p>Send recovery codes to a backup email address</p>
+                    </div>
+                </div>
+                <div class="method-details">
+                    <p>Currently set to: <strong>ba***@gmail.com</strong></p>
+                    <p>Last used: Never</p>
+                </div>
+                <div class="method-actions">
+                    <button class="btn-small btn-secondary" onclick="openModal('emailModal')">Update</button>
+                    <button class="btn-small btn-danger">Remove</button>
+                </div>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="method-card">
+                <div class="method-header">
+                    <div class="method-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="method-info">
+                        <h3>Phone Number <span class="method-badge badge-incomplete">NOT SET</span></h3>
+                        <p>Receive SMS verification codes for account recovery</p>
+                    </div>
+                </div>
+                <div class="method-details">
+                    <p>Add a mobile number for text-based recovery</p>
+                </div>
+                <div class="method-actions">
+                    <button class="btn-small btn-success" onclick="openModal('phoneModal')">Set Up</button>
+                </div>
+            </div>
+
+            <!-- Security Questions -->
+            <div class="method-card">
+                <div class="method-header">
+                    <div class="method-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div class="method-info">
+                        <h3>Security Questions <span class="method-badge badge-incomplete">NOT SET</span></h3>
+                        <p>Answer personal questions to verify your identity</p>
+                    </div>
+                </div>
+                <div class="method-details">
+                    <p>Choose from our library of security questions or create your own</p>
+                </div>
+                <div class="method-actions">
+                    <button class="btn-small btn-success" onclick="openModal('questionsModal')">Set Up</button>
+                </div>
+            </div>
+
+            <!-- Backup Codes -->
+            <div class="method-card complete">
+                <div class="method-header">
+                    <div class="method-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div class="method-info">
+                        <h3>Backup Codes <span class="method-badge badge-complete">ACTIVE</span></h3>
+                        <p>One-time use codes for account recovery</p>
+                    </div>
+                </div>
+                <div class="method-details">
+                    <p><strong>8 codes remaining</strong></p>
+                    <p>Last used: October 12, 2023</p>
+                </div>
+                <div class="method-actions">
+                    <button class="btn-small btn-secondary" onclick="openModal('codesModal')">View Codes</button>
+                    <button class="btn-small btn-warning">Regenerate</button>
+                </div>
+            </div>
+
+            <!-- Trusted Contacts -->
+            <div class="method-card">
+                <div class="method-header">
+                    <div class="method-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="method-info">
+                        <h3>Trusted Contacts <span class="method-badge badge-incomplete">NOT SET</span></h3>
+                        <p>Designate people who can help you recover your account</p>
+                    </div>
+                </div>
+                <div class="method-details">
+                    <p>Select 3-5 trusted individuals who can verify your identity</p>
+                </div>
+                <div class="method-actions">
+                    <button class="btn-small btn-success" onclick="openModal('contactsModal')">Set Up</button>
+                </div>
+            </div>
+
+            <!-- Biometric Recovery -->
+            <div class="method-card">
+                <div class="method-header">
+                    <div class="method-icon">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <div class="method-info">
+                        <h3>Biometric Recovery <span class="method-badge badge-incomplete">NOT SET</span></h3>
+                        <p>Use fingerprint or face recognition for recovery</p>
+                    </div>
+                </div>
+                <div class="method-details">
+                    <p>Available on supported devices with biometric sensors</p>
+                </div>
+                <div class="method-actions">
+                    <button class="btn-small btn-success" onclick="openModal('biometricModal')">Set Up</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Recovery Section -->
+        <section class="advanced-section">
+            <h2><i class="fas fa-cogs"></i> Advanced Recovery Options</h2>
+            <div class="advanced-grid">
+                <div class="advanced-card">
+                    <h3><i class="fas fa-history"></i> Recovery Time Delay</h3>
+                    <p>Set a mandatory waiting period before account recovery can be completed, providing time to cancel unauthorized recovery attempts.</p>
+                    <div class="method-actions">
+                        <button class="btn-small btn-secondary">Configure</button>
+                    </div>
+                </div>
+
+                <div class="advanced-card">
+                    <h3><i class="fas fa-map-marker-alt"></i> Geographic Restrictions</h3>
+                    <p>Limit recovery attempts to specific geographic regions where you normally access your account.</p>
+                    <div class="method-actions">
+                        <button class="btn-small btn-secondary">Configure</button>
+                    </div>
+                </div>
+
+                <div class="advanced-card">
+                    <h3><i class="fas fa-shield-alt"></i> Multi-Factor Recovery</h3>
+                    <p>Require multiple recovery methods to be used together for account restoration, increasing security.</p>
+                    <div class="method-actions">
+                        <button class="btn-small btn-secondary">Configure</button>
+                    </div>
+                </div>
+
+                <div class="advanced-card">
+                    <h3><i class="fas fa-user-clock"></i> Inheritance Planning</h3>
+                    <p>Designate someone to access your account in case of emergency or incapacitation.</p>
+                    <div class="method-actions">
+                        <button class="btn-small btn-secondary">Configure</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recovery Timeline -->
+        <section class="timeline-section">
+            <h2>Recovery Activity Timeline</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Backup Codes Generated</h4>
+                        <p>October 5, 2023 - You generated a new set of backup recovery codes.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Recovery Email Added</h4>
+                        <p>September 18, 2023 - You added a recovery email address to your account.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <h4>Account Created</h4>
+                        <p>August 12, 2023 - You created your Letters City account.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising security and recovery options.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Recovery</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Recovery Help</a></li>
+                        <li><a href="#">Security Questions</a></li>
+                        <li><a href="#">Trusted Contacts</a></li>
+                        <li><a href="#">Backup Codes</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Account Recovery</a></li>
+                        <li><a href="#">Security Tips</a></li>
+                        <li><a href="#">Contact Support</a></li>
+                        <li><a href="#">Emergency Access</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved. Your account recovery is our priority.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Recovery Email Modal -->
+    <div class="modal-overlay" id="emailModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-envelope"></i> Recovery Email Setup</h3>
+                <button class="close-modal" onclick="closeModal('emailModal')">&times;</button>
+            </div>
+            <div class="modal-content">
+                <p>Add or update the email address that will be used for account recovery. We'll send verification codes to this address if you need to recover your account.</p>
+                
+                <div class="form-group">
+                    <label for="recoveryEmail">Recovery Email Address</label>
+                    <input type="email" id="recoveryEmail" class="form-control" placeholder="your.backup@email.com" value="ba***@gmail.com">
+                </div>
+                
+                <div class="verification-code">
+                    <input type="text" class="code-input" maxlength="1">
+                    <input type="text" class="code-input" maxlength="1">
+                    <input type="text" class="code-input" maxlength="1">
+                    <input type="text" class="code-input" maxlength="1">
+                    <input type="text" class="code-input" maxlength="1">
+                    <input type="text" class="code-input" maxlength="1">
+                </div>
+                
+                <p style="font-size: 12px; color: var(--text-gray); margin-top: 10px;">We've sent a verification code to your recovery email. Enter it above to confirm.</p>
+                
+                <div class="modal-actions">
+                    <button class="btn-small btn-secondary" onclick="closeModal('emailModal')">Cancel</button>
+                    <button class="btn-small btn-success" onclick="completeSetup('email')">Verify & Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Backup Codes Modal -->
+    <div class="modal-overlay" id="codesModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-key"></i> Your Backup Recovery Codes</h3>
+                <button class="close-modal" onclick="closeModal('codesModal')">&times;</button>
+            </div>
+            <div class="modal-content">
+                <p>These codes can be used one time each to access your account if you lose your primary authentication method. Save them in a secure place.</p>
+                
+                <div class="backup-codes">
+                    <div class="backup-code">A7B9-C2D4</div>
+                    <div class="backup-code">E5F6-G8H1</div>
+                    <div class="backup-code">I2J3-K4L5</div>
+                    <div class="backup-code">M6N7-O8P9</div>
+                    <div class="backup-code">Q1R2-S3T4</div>
+                    <div class="backup-code">U5V6-W7X8</div>
+                    <div class="backup-code">Y9Z0-A1B2</div>
+                    <div class="backup-code">C3D4-E5F6</div>
+                </div>
+                
+                <div class="modal-actions">
+                    <button class="btn-small btn-secondary" onclick="closeModal('codesModal')">Close</button>
+                    <button class="btn-small btn-warning">Print Codes</button>
+                    <button class="btn-small btn-success">Download Codes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trusted Contacts Modal -->
+    <div class="modal-overlay" id="contactsModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-friends"></i> Trusted Contacts Setup</h3>
+                <button class="close-modal" onclick="closeModal('contactsModal')">&times;</button>
+            </div>
+            <div class="modal-content">
+                <p>Trusted contacts are people you designate who can help you recover your account if you get locked out. We recommend selecting 3-5 trusted individuals.</p>
+                
+                <div class="form-group">
+                    <label for="contact1">Trusted Contact #1</label>
+                    <input type="text" id="contact1" class="form-control" placeholder="Full Name">
+                    <input type="email" class="form-control" style="margin-top: 8px;" placeholder="Email Address">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact2">Trusted Contact #2</label>
+                    <input type="text" id="contact2" class="form-control" placeholder="Full Name">
+                    <input type="email" class="form-control" style="margin-top: 8px;" placeholder="Email Address">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contact3">Trusted Contact #3</label>
+                    <input type="text" id="contact3" class="form-control" placeholder="Full Name">
+                    <input type="email" class="form-control" style="margin-top: 8px;" placeholder="Email Address">
+                </div>
+                
+                <p style="font-size: 12px; color: var(--text-gray);">We'll send an invitation to each contact explaining how they can help you recover your account if needed.</p>
+                
+                <div class="modal-actions">
+                    <button class="btn-small btn-secondary" onclick="closeModal('contactsModal')">Cancel</button>
+                    <button class="btn-small btn-success" onclick="completeSetup('contacts')">Send Invitations</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal(this.id);
+                }
+            });
+        });
+
+        // Complete setup simulation
+        function completeSetup(method) {
+            // In a real app, this would make API calls
+            alert(`${method.charAt(0).toUpperCase() + method.slice(1)} recovery method has been successfully set up!`);
+            closeModal(`${method}Modal`);
+            
+            // Update progress bar
+            const progressFill = document.querySelector('.progress-fill');
+            let currentWidth = parseInt(progressFill.style.width);
+            progressFill.style.width = `${currentWidth + 15}%`;
+            
+            // Update security level if needed
+            if (currentWidth + 15 >= 70) {
+                document.querySelector('.security-level').textContent = 'Strong';
+                document.querySelector('.security-level').style.background = 'rgba(16, 185, 129, 0.2)';
+                document.querySelector('.security-level').style.color = 'var(--success-color)';
+            }
+        }
+
+        // Auto-focus next code input
+        document.querySelectorAll('.code-input').forEach((input, index, inputs) => {
+            input.addEventListener('input', function() {
+                if (this.value.length === 1 && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+            });
+            
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
+                    inputs[index - 1].focus();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

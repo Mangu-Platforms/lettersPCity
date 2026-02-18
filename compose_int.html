@@ -1,0 +1,1025 @@
+V1
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sent Messages | Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --purple-light: #c084fc;
+            --orange-accent: #ff8c00;
+            --orange-light: #ffa94d;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dark: #5a5a60;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-darker) 0%, var(--bg-dark) 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 260px;
+            background: var(--bg-card);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+            z-index: 100;
+        }
+
+        .logo {
+            padding: 24px 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--orange-accent));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--purple-primary), var(--orange-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-section {
+            padding: 20px 0;
+        }
+
+        .nav-title {
+            padding: 0 20px 12px;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-gray);
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-item:hover {
+            color: var(--text-light);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .nav-item.active {
+            color: var(--text-light);
+            background: rgba(168, 85, 247, 0.1);
+            border-right: 3px solid var(--orange-accent);
+        }
+
+        .nav-item i {
+            margin-right: 12px;
+            width: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .nav-count {
+            margin-left: auto;
+            background: var(--purple-primary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .compose-btn {
+            margin: 20px;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .compose-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(168, 85, 247, 0.3);
+            border: 1px solid var(--orange-accent);
+        }
+
+        .compose-btn i {
+            margin-right: 8px;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background: var(--bg-card);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 600px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 20px 12px 48px;
+            background: var(--bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            color: var(--text-light);
+            font-size: 15px;
+            transition: var(--transition);
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .header-action {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .header-action:hover {
+            color: var(--text-light);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: var(--orange-accent);
+            border-radius: 50%;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--orange-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .email-list-container {
+            width: 400px;
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .email-list-header {
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .email-list-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .email-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .email-action {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .email-action:hover {
+            color: var(--text-light);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--orange-accent);
+        }
+
+        .email-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .email-item {
+            padding: 20px 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .email-item:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .email-item.selected {
+            background: rgba(168, 85, 247, 0.08);
+            border-left: 3px solid var(--orange-accent);
+        }
+
+        .email-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+
+        .email-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .email-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 6px;
+        }
+
+        .email-sender {
+            font-weight: 600;
+            font-size: 15px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .email-time {
+            font-size: 13px;
+            color: var(--text-gray);
+            flex-shrink: 0;
+            margin-left: 8px;
+        }
+
+        .email-subject {
+            font-weight: 500;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .email-preview {
+            font-size: 14px;
+            color: var(--text-gray);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .email-attachment {
+            margin-top: 8px;
+            color: var(--purple-light);
+            font-size: 13px;
+        }
+
+        .email-attachment i {
+            margin-right: 4px;
+        }
+
+        /* Email View */
+        .email-view {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-card);
+            margin: 24px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .email-view-header {
+            padding: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .email-view-subject {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .email-view-subject i {
+            margin-right: 12px;
+            color: var(--orange-accent);
+        }
+
+        .email-view-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .email-sender-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .email-sender-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--orange-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 16px;
+        }
+
+        .email-sender-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .email-sender-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .email-sender-address {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .email-view-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .email-view-action {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .email-view-action:hover {
+            color: var(--text-light);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--orange-accent);
+        }
+
+        .email-view-body {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .email-body {
+            line-height: 1.7;
+            font-size: 15px;
+        }
+
+        .email-body p {
+            margin-bottom: 16px;
+        }
+
+        .email-attachments {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .attachments-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        .attachments-title i {
+            margin-right: 8px;
+            color: var(--orange-accent);
+        }
+
+        .attachment-list {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .attachment-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .attachment-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+            border-color: var(--orange-accent);
+        }
+
+        .attachment-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(168, 85, 247, 0.1);
+            border-radius: 8px;
+            margin-right: 12px;
+            color: var(--purple-primary);
+        }
+
+        .attachment-details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .attachment-name {
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .attachment-size {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 80px;
+            }
+            
+            .logo-text, .nav-title, .nav-item span {
+                display: none;
+            }
+            
+            .nav-item {
+                justify-content: center;
+                padding: 16px;
+            }
+            
+            .nav-item i {
+                margin-right: 0;
+                font-size: 20px;
+            }
+            
+            .compose-btn span {
+                display: none;
+            }
+            
+            .compose-btn i {
+                margin-right: 0;
+            }
+            
+            .email-list-container {
+                width: 320px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                overflow-x: auto;
+            }
+            
+            .logo {
+                border-right: 1px solid rgba(255, 255, 255, 0.05);
+                border-bottom: none;
+                min-width: 80px;
+                justify-content: center;
+            }
+            
+            .logo-text {
+                display: none;
+            }
+            
+            .nav-section {
+                padding: 0;
+                display: flex;
+            }
+            
+            .nav-title {
+                display: none;
+            }
+            
+            .nav-item {
+                min-width: 70px;
+                flex-direction: column;
+                padding: 12px 8px;
+                font-size: 12px;
+            }
+            
+            .nav-item i {
+                margin-right: 0;
+                margin-bottom: 4px;
+                font-size: 18px;
+            }
+            
+            .nav-count {
+                position: absolute;
+                top: 8px;
+                right: 8px;
+                margin-left: 0;
+            }
+            
+            .compose-btn {
+                margin: 12px;
+                min-width: auto;
+                padding: 12px;
+            }
+            
+            .content-area {
+                flex-direction: column;
+            }
+            
+            .email-list-container {
+                width: 100%;
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+            
+            .email-view {
+                margin: 0;
+                border-radius: 0;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--purple-primary);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--purple-dark);
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .email-item {
+            animation: fadeIn 0.3s ease;
+        }
+
+        .email-item:nth-child(2) { animation-delay: 0.05s; }
+        .email-item:nth-child(3) { animation-delay: 0.1s; }
+        .email-item:nth-child(4) { animation-delay: 0.15s; }
+        .email-item:nth-child(5) { animation-delay: 0.2s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <div class="logo-icon">LC</div>
+                <div class="logo-text">Letters City</div>
+            </div>
+            
+            <div class="compose-btn">
+                <i class="fas fa-plus"></i>
+                <span>Compose</span>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">Mail</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-inbox"></i>
+                    <span>Inbox</span>
+                    <span class="nav-count">12</span>
+                </a>
+                <a href="#" class="nav-item active">
+                    <i class="fas fa-paper-plane"></i>
+                    <span>Sent</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-edit"></i>
+                    <span>Drafts</span>
+                    <span class="nav-count">3</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-star"></i>
+                    <span>Starred</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-trash-alt"></i>
+                    <span>Trash</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">Labels</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-circle" style="color: #ff8c00;"></i>
+                    <span>Work</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-circle" style="color: #a855f7;"></i>
+                    <span>Personal</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-circle" style="color: #3b82f6;"></i>
+                    <span>Travel</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-circle" style="color: #10b981;"></i>
+                    <span>Finance</span>
+                </a>
+            </div>
+            
+            <div class="nav-section">
+                <div class="nav-title">Apps</div>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Calendar</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-address-book"></i>
+                    <span>Contacts</span>
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="fas fa-tasks"></i>
+                    <span>Tasks</span>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search in sent messages...">
+                </div>
+                
+                <div class="header-actions">
+                    <div class="header-action">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <div class="header-action">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <div class="header-action">
+                        <i class="fas fa-bell"></i>
+                        <div class="notification-dot"></div>
+                    </div>
+                    <div class="user-avatar">JD</div>
+                </div>
+            </div>
+            
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Email List -->
+                <div class="email-list-container">
+                    <div class="email-list-header">
+                        <div class="email-list-title">Sent Messages</div>
+                        <div class="email-actions">
+                            <div class="email-action">
+                                <i class="fas fa-archive"></i>
+                            </div>
+                            <div class="email-action">
+                                <i class="fas fa-trash-alt"></i>
+                            </div>
+                            <div class="email-action">
+                                <i class="fas fa-filter"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="email-list">
+                        <!-- Email Item 1 -->
+                        <div class="email-item selected">
+                            <div class="email-avatar">AC</div>
+                            <div class="email-content">
+                                <div class="email-header">
+                                    <div class="email-sender">Alex Chen</div>
+                                    <div class="email-time">10:42 AM</div>
+                                </div>
+                                <div class="email-subject">Project Timeline Update</div>
+                                <div class="email-preview">Hi Alex, I've updated the project timeline as we discussed. Please review the attached document and let me know if...</div>
+                                <div class="email-attachment">
+                                    <i class="fas fa-paperclip"></i>
+                                    <span>timeline.pdf (2.4 MB)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Email Item 2 -->
+                        <div class="email-item">
+                            <div class="email-avatar">MJ</div>
+                            <div class="email-content">
+                                <div class="email-header">
+                                    <div class="email-sender">Marketing Team</div>
+                                    <div class="email-time">Yesterday</div>
+                                </div>
+                                <div class="email-subject">Q3 Campaign Results</div>
+                                <div class="email-preview">Great news! The Q3 campaign exceeded expectations with a 34% increase in engagement. I've attached the detailed...</div>
+                                <div class="email-attachment">
+                                    <i class="fas fa-paperclip"></i>
+                                    <span>results.pdf (1.8 MB)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Email Item 3 -->
+                        <div class="email-item">
+                            <div class="email-avatar">SR</div>
+                            <div class="email-content">
+                                <div class="email-header">
+                                    <div class="email-sender">Sarah Rodriguez</div>
+                                    <div class="email-time">Oct 12</div>
+                                </div>
+                                <div class="email-subject">Meeting Notes</div>
+                                <div class="email-preview">Here are the notes from our product strategy meeting yesterday. Let me know if I missed anything important...</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Email Item 4 -->
+                        <div class="email-item">
+                            <div class="email-avatar">TC</div>
+                            <div class="email-content">
+                                <div class="email-header">
+                                    <div class="email-sender">Tech Conference</div>
+                                    <div class="email-time">Oct 10</div>
+                                </div>
+                                <div class="email-subject">Registration Confirmation</div>
+                                <div class="email-preview">Thank you for registering for the FutureTech 2023 conference! We're excited to have you join us...</div>
+                                <div class="email-attachment">
+                                    <i class="fas fa-paperclip"></i>
+                                    <span>ticket.pdf (356 KB)</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Email Item 5 -->
+                        <div class="email-item">
+                            <div class="email-avatar">DR</div>
+                            <div class="email-content">
+                                <div class="email-header">
+                                    <div class="email-sender">Design Review</div>
+                                    <div class="email-time">Oct 8</div>
+                                </div>
+                                <div class="email-subject">Feedback on new UI mockups</div>
+                                <div class="email-preview">I've reviewed the latest UI mockups and have some suggestions for improvement. Overall, the direction is...</div>
+                                <div class="email-attachment">
+                                    <i class="fas fa-paperclip"></i>
+                                    <span>feedback.pdf (3.1 MB)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Email View -->
+                <div class="email-view">
+                    <div class="email-view-header">
+                        <div class="email-view-subject">
+                            <i class="fas fa-paper-plane"></i>
+                            Project Timeline Update
+                        </div>
+                        
+                        <div class="email-view-meta">
+                            <div class="email-sender-info">
+                                <div class="email-sender-avatar">JD</div>
+                                <div class="email-sender-details">
+                                    <div class="email-sender-name">You</div>
+                                    <div class="email-sender-address">to Alex Chen</div>
+                                </div>
+                            </div>
+                            
+                            <div class="email-view-actions">
+                                <div class="email-view-action">
+                                    <i class="fas fa-reply"></i>
+                                </div>
+                                <div class="email-view-action">
+                                    <i class="fas fa-archive"></i>
+                                </div>
+                                <div class="email-view-action">
+                                    <i class="fas fa-trash-alt"></i>
+                                </div>
+                                <div class="email-view-action">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="email-view-body">
+                        <div class="email-body">
+                            <p>Hi Alex,</p>
+                            
+                            <p>I've updated the project timeline as we discussed during our call yesterday. The revised schedule accounts for the additional testing phase and includes buffer time for potential delays.</p>
+                            
+                            <p>Key changes in the updated timeline:</p>
+                            
+                            <ul>
+                                <li>Extended design phase by 3 days to accommodate the new branding requirements</li>
+                                <li>Added a dedicated QA cycle before the beta release</li>
+                                <li>Moved the final deployment to November 15th</li>
+                            </ul>
+                            
+                            <p>I've attached the detailed timeline document with all milestones and dependencies. Please review it and let me know if you have any questions or if there are adjustments needed.</p>
+                            
+                            <p>Looking forward to your feedback.</p>
+                            
+                            <p>Best regards,<br>
+                            John</p>
+                        </div>
+                        
+                        <div class="email-attachments">
+                            <div class="attachments-title">
+                                <i class="fas fa-paperclip"></i>
+                                Attachments (1)
+                            </div>
+                            
+                            <div class="attachment-list">
+                                <div class="attachment-item">
+                                    <div class="attachment-icon">
+                                        <i class="fas fa-file-pdf"></i>
+                                    </div>
+                                    <div class="attachment-details">
+                                        <div class="attachment-name">project_timeline_v3.pdf</div>
+                                        <div class="attachment-size">2.4 MB</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add interactivity to email items
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailItems = document.querySelectorAll('.email-item');
+            
+            emailItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    // Remove selected class from all items
+                    emailItems.forEach(i => i.classList.remove('selected'));
+                    
+                    // Add selected class to clicked item
+                    this.classList.add('selected');
+                });
+            });
+            
+            // Add animation to compose button
+            const composeBtn = document.querySelector('.compose-btn');
+            composeBtn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+            });
+            
+            composeBtn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

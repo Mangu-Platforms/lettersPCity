@@ -1,0 +1,1633 @@
+V14 - Original and beloved one that we will always keep too
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mangu Mail - Revolutionary Email Experience</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    // Global State Management
+    const appState = {
+      user: {
+        id: "user_123",
+        name: "Your Name",
+        email: "your.email@company.com",
+        balance: 327.50,
+        aliases: [
+          { address: "user+work@domain.com", category: "work", expiresAt: null },
+          { address: "user+shopping@domain.com", category: "shopping", expiresAt: "2023-12-31" }
+        ]
+      },
+      emails: {
+        inbox: [
+          {
+            id: "email_1",
+            sender: { name: "Alex Johnson", email: "alex.johnson@company.com" },
+            subject: "Project Update: Q3 Deliverables",
+            body: "Hi there,\n\nI wanted to provide an update on the Q3 deliverables...",
+            timestamp: "2023-07-26T10:24:00Z",
+            labels: ["work", "update"],
+            attachments: [
+              { name: "Q3_Progress_Report.pdf", size: "2.4 MB", type: "pdf" },
+              { name: "Voice_Note.mp3", size: "1.2 MB", type: "audio" }
+            ],
+            stake: 5.00,
+            thread: [
+              {
+                id: "reply_1",
+                sender: { name: "You", email: "your.email@company.com" },
+                body: "Thanks for the update Alex! The dashboard looks great...",
+                timestamp: "2023-07-26T11:30:00Z"
+              }
+            ]
+          }
+        ],
+        sent: [],
+        drafts: [],
+        starred: []
+      },
+      marketplace: {
+        stakes: [
+          { id: "stake_1", amount: 5.00, recipient: "alex.johnson@company.com", status: "accepted" },
+          { id: "stake_2", amount: 10.00, recipient: "sarah.williams@company.com", status: "pending" }
+        ],
+        earnings: { daily: 15.50, weekly: 87.25, monthly: 327.50 },
+        leaderboard: [
+          { name: "You", earnings: 327.50 },
+          { name: "Alex Johnson", earnings: 285.75 },
+          { name: "Sarah Williams", earnings: 243.20 }
+        ]
+      },
+      channels: {
+        "project-phoenix": {
+          id: "project-phoenix",
+          name: "Project Phoenix",
+          members: ["You", "Alex Johnson", "Sarah Williams"],
+          messages: [
+            { id: "msg_1", sender: "Alex Johnson", text: "Has anyone reviewed the latest design?", timestamp: "2023-07-26T10:30:00Z" },
+            { id: "msg_2", sender: "Sarah Williams", text: "I just sent feedback", timestamp: "2023-07-26T10:32:00Z" }
+          ],
+          emailAddress: "phoenix@company.com"
+        }
+      },
+      social: {
+        posts: [
+          {
+            id: "post_1",
+            author: { name: "Michael Chen", initials: "MC" },
+            content: "Just launched our new dashboard feature! 🚀 Huge thanks to the entire team...",
+            timestamp: "2023-07-25T14:30:00Z",
+            reactions: { likes: 42, comments: 7, shares: 3 }
+          }
+        ],
+        connections: 24
+      },
+      workflows: {
+        active: [
+          { id: "workflow_1", title: "Review Quarterly Report", status: "pending" }
+        ]
+      },
+      currentView: "inbox",
+      selectedEmailId: "email_1",
+      aiAssistActive: false
+    };
+
+    // API Structure
+    const api = {
+      emails: {
+        fetch: async () => {
+          return new Promise(resolve => setTimeout(() => resolve(appState.emails), 500));
+        },
+        send: async (email) => {
+          return new Promise(resolve => setTimeout(() => {
+            appState.emails.sent.push(email);
+            resolve({ success: true });
+          }, 500));
+        },
+        stake: async (amount, recipient) => {
+          return new Promise(resolve => setTimeout(() => {
+            if (appState.user.balance >= amount) {
+              appState.user.balance -= amount;
+              const stake = {
+                id: `stake_${Date.now()}`,
+                amount,
+                recipient,
+                status: "pending",
+                timestamp: new Date().toISOString()
+              };
+              appState.marketplace.stakes.push(stake);
+              resolve({ success: true, stake });
+            } else {
+              resolve({ success: false, error: "Insufficient balance" });
+            }
+          }, 500));
+        }
+      },
+      marketplace: {
+        getBalance: async () => {
+          return new Promise(resolve => setTimeout(() => resolve(appState.user.balance), 300));
+        },
+        claimEarnings: async () => {
+          return new Promise(resolve => setTimeout(() => {
+            appState.user.balance += appState.marketplace.earnings.weekly;
+            appState.marketplace.earnings.weekly = 0;
+            resolve({ success: true, balance: appState.user.balance });
+          }, 500));
+        }
+      },
+      ai: {
+        summarize: async (email) => {
+          return new Promise(resolve => setTimeout(() => {
+            const summary = `
+              <ul class="list-disc pl-5 text-slate-700 dark:text-slate-300 space-y-1 text-sm">
+                <li>Project is on track for Friday completion</li>
+                <li>API integration completed successfully</li>
+                <li>Dashboard UI finalized with design team</li>
+                <li>Minor setback with reporting module but solution identified</li>
+                <li>Action required: Review attached progress report</li>
+              </ul>
+            `;
+            resolve(summary);
+          }, 800));
+        },
+        morphToDocument: async (threadId) => {
+          return new Promise(resolve => setTimeout(() => {
+            const document = {
+              id: `doc_${Date.now()}`,
+              title: "Project Phoenix Q3 Report",
+              content: `
+                <h1 class="text-2xl font-bold mb-4">Project Phoenix Q3 Report</h1>
+                <h2 class="text-xl font-semibold mt-6 mb-2">Key Decisions</h2>
+                <ul class="list-disc pl-5 mb-4">
+                  <li>Adopted new authentication system</li>
+                  <li>Approved dashboard redesign</li>
+                </ul>
+                <h2 class="text-xl font-semibold mt-6 mb-2">Action Items</h2>
+                <ul class="list-disc pl-5">
+                  <li>Review final API documentation</li>
+                  <li>Schedule user testing session</li>
+                </ul>
+              `,
+              participants: ["You", "Alex Johnson"],
+              createdFrom: threadId
+            };
+            resolve(document);
+          }, 1000));
+        }
+      },
+      voice: {
+        record: async () => {
+          return new Promise((resolve, reject) => {
+            resolve({ url: "https://example.com/voice_note.mp3", duration: 120 });
+          });
+        }
+      }
+    };
+
+    // Event Bus for component communication
+    const eventBus = {
+      events: {},
+      on(event, callback) {
+        if (!this.events[event]) this.events[event] = [];
+        this.events[event].push(callback);
+      },
+      emit(event, data) {
+        if (this.events[event]) {
+          this.events[event].forEach(callback => callback(data));
+        }
+      },
+      off(event, callback) {
+        if (this.events[event]) {
+          this.events[event] = this.events[event].filter(cb => cb !== callback);
+        }
+      }
+    };
+
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      renderApp();
+      initEventListeners();
+      loadInitialData();
+    });
+
+    function initTheme() {
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        document.getElementById('theme-icon').textContent = 'light_mode';
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.getElementById('theme-icon').textContent = 'dark_mode';
+      }
+    }
+
+    function initEventListeners() {
+      document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+      
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          const view = e.currentTarget.getAttribute('onclick').match(/showView\('(.*)'\)/)[1];
+          showView(view);
+        });
+      });
+      
+      document.querySelectorAll('.email-row').forEach(row => {
+        row.addEventListener('click', () => {
+          const emailId = row.getAttribute('data-email-id');
+          selectEmail(emailId);
+        });
+      });
+      
+      document.getElementById('stake-form')?.addEventListener('submit', handleStakeSubmit);
+      document.getElementById('claim-earnings')?.addEventListener('click', claimEarnings);
+      document.getElementById('record-voice-btn')?.addEventListener('click', toggleVoiceRecording);
+      document.querySelector('.floating-action')?.addEventListener('click', toggleAIAssist);
+      document.getElementById('morph-to-doc')?.addEventListener('click', morphToDocument);
+    }
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      if (document.documentElement.classList.contains('dark')) {
+        document.getElementById('theme-icon').textContent = 'light_mode';
+        localStorage.theme = 'dark';
+      } else {
+        document.getElementById('theme-icon').textContent = 'dark_mode';
+        localStorage.theme = 'light';
+      }
+    }
+
+    async function loadInitialData() {
+      try {
+        const emails = await api.emails.fetch();
+        appState.emails = emails;
+        renderEmailList();
+        
+        const balance = await api.marketplace.getBalance();
+        appState.user.balance = balance;
+        renderMarketplace();
+      } catch (error) {
+        console.error("Error loading initial data:", error);
+      }
+    }
+
+    function renderApp() {
+      renderEmailList();
+      renderSelectedEmail();
+      renderMarketplace();
+      renderKanbanBoard();
+      renderSocialGraph();
+      renderSocialFeed();
+      renderSettings();
+      renderProfile();
+    }
+
+    function renderEmailList() {
+      const container = document.querySelector('.email-list-container');
+      if (!container) return;
+      
+      container.innerHTML = '';
+      
+      const emails = appState.emails[appState.currentView] || [];
+      emails.forEach(email => {
+        const row = document.createElement('div');
+        row.className = 'email-row flex flex-col gap-0.5 px-4 py-3 cursor-pointer';
+        row.setAttribute('data-email-id', email.id);
+        row.onclick = () => selectEmail(email.id);
+        
+        if (appState.selectedEmailId === email.id) {
+          row.classList.add('selected-email');
+        }
+        
+        row.innerHTML = `
+          <div class="flex justify-between items-center">
+            <p class="font-medium text-slate-900 dark:text-white">${email.sender.name}</p>
+            <span class="text-xs text-slate-500 dark:text-slate-400">${new Date(email.timestamp).toLocaleTimeString()}</span>
+          </div>
+          <p class="truncate text-slate-800 font-semibold dark:text-white">${email.subject}</p>
+          <div class="flex items-center mt-1">
+            ${email.labels.map(label => `<span class="smart-label label-${label}">${label}</span>`).join('')}
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 email-preview">${email.body.substring(0, 100)}...</p>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function showView(viewName) {
+      appState.currentView = viewName;
+      document.querySelectorAll('[id$="-view"]').forEach(view => {
+        view.classList.add('hidden');
+      });
+      document.getElementById(`${viewName}-view`).classList.remove('hidden');
+      
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      const activeItem = document.querySelector(`.nav-item[onclick*="showView('${viewName}')"]`);
+      if (activeItem) activeItem.classList.add('active');
+      
+      if (viewName === 'inbox' || viewName === 'starred') {
+        renderEmailList();
+      }
+    }
+
+    function selectEmail(emailId) {
+      appState.selectedEmailId = emailId;
+      renderSelectedEmail();
+      
+      document.querySelectorAll('.email-row').forEach(row => {
+        row.classList.remove('selected-email');
+      });
+      const selectedRow = document.querySelector(`.email-row[data-email-id="${emailId}"]`);
+      if (selectedRow) selectedRow.classList.add('selected-email');
+    }
+
+    async function renderSelectedEmail() {
+      const email = appState.emails.inbox.find(e => e.id === appState.selectedEmailId);
+      if (!email) return;
+      
+      document.getElementById('email-content').classList.remove('hidden');
+      document.getElementById('empty-state').classList.add('hidden');
+      
+      document.getElementById('email-subject').textContent = email.subject;
+      document.getElementById('email-sender').textContent = `${email.sender.name} <${email.sender.email}>`;
+      
+      if (!email.aiSummary) {
+        email.aiSummary = await api.ai.summarize(email);
+      }
+      document.getElementById('ai-summary').innerHTML = email.aiSummary;
+      
+      document.getElementById('email-body').textContent = email.body;
+      
+      const attachmentsContainer = document.getElementById('email-attachments');
+      attachmentsContainer.innerHTML = '';
+      email.attachments.forEach(attachment => {
+        const attachmentEl = document.createElement('div');
+        attachmentEl.className = 'flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-lg dark:border-slate-700';
+        attachmentEl.innerHTML = `
+          <span class="material-icons text-slate-600 dark:text-slate-400">${attachment.type === 'audio' ? 'mic' : 'attach_file'}</span>
+          <span class="text-sm text-slate-700 dark:text-slate-300">${attachment.name}</span>
+          <span class="text-xs text-slate-500 dark:text-slate-500">${attachment.size}</span>
+        `;
+        attachmentsContainer.appendChild(attachmentEl);
+      });
+      
+      const threadContainer = document.getElementById('email-thread');
+      threadContainer.innerHTML = '';
+      email.thread.forEach(message => {
+        const messageEl = document.createElement('div');
+        messageEl.className = 'border-t border-slate-200 pt-4 mt-6 dark:border-slate-700';
+        messageEl.innerHTML = `
+          <div class="flex justify-between mb-2">
+            <p class="font-medium text-slate-900 dark:text-white">${message.sender.name}</p>
+            <span class="text-xs text-slate-500 dark:text-slate-400">${new Date(message.timestamp).toLocaleTimeString()}</span>
+          </div>
+          <p class="text-slate-700 dark:text-slate-300">${message.body}</p>
+        `;
+        threadContainer.appendChild(messageEl);
+      });
+    }
+
+    // Attention Marketplace
+    async function handleStakeSubmit(e) {
+      e.preventDefault();
+      const amount = parseFloat(document.getElementById('stake-amount').value);
+      const recipient = document.getElementById('stake-recipient').value;
+      
+      const result = await api.emails.stake(amount, recipient);
+      if (result.success) {
+        renderMarketplace();
+        document.getElementById('stake-form').reset();
+      } else {
+        alert(`Error: ${result.error}`);
+      }
+    }
+
+    async function claimEarnings() {
+      const result = await api.marketplace.claimEarnings();
+      if (result.success) {
+        renderMarketplace();
+        alert(`Successfully claimed $${appState.marketplace.earnings.weekly}! New balance: $${result.balance}`);
+      }
+    }
+
+    function renderMarketplace() {
+      if (!document.getElementById('marketplace-view')) return;
+      
+      document.getElementById('marketplace-balance').textContent = appState.user.balance.toFixed(2);
+      
+      const stakesContainer = document.getElementById('pending-stakes');
+      stakesContainer.innerHTML = '';
+      
+      appState.marketplace.stakes.filter(s => s.status === 'pending').forEach(stake => {
+        const stakeEl = document.createElement('div');
+        stakeEl.className = 'bg-white rounded-2xl p-4 shadow dark:bg-slate-800';
+        stakeEl.innerHTML = `
+          <div class="flex justify-between">
+            <div>
+              <h4 class="font-medium text-slate-900 dark:text-white">${stake.recipient}</h4>
+              <p class="text-sm text-slate-600 dark:text-slate-400">Amount: $${stake.amount.toFixed(2)}</p>
+            </div>
+            <div class="text-right">
+              <p class="text-sm text-slate-500 dark:text-slate-400">${new Date(stake.timestamp).toLocaleTimeString()}</p>
+              <span class="text-xs bg-yellow-100 text-yellow-800 rounded-full px-2 py-1 dark:bg-yellow-900/50 dark:text-yellow-200">Pending</span>
+            </div>
+          </div>
+        `;
+        stakesContainer.appendChild(stakeEl);
+      });
+      
+      const leaderboardContainer = document.getElementById('leaderboard');
+      leaderboardContainer.innerHTML = '';
+      
+      appState.marketplace.leaderboard.forEach((user, index) => {
+        const rankClass = index === 0 ? 'bg-gradient-to-r from-yellow-500 to-amber-500 text-white' : 'bg-white dark:bg-slate-800';
+        
+        const userEl = document.createElement('div');
+        userEl.className = `flex items-center justify-between p-4 ${index === 0 ? 'rounded-t-xl' : ''} ${rankClass}`;
+        userEl.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="font-medium ${index === 0 ? 'text-white' : 'text-slate-900 dark:text-white'}">${index + 1}.</span>
+            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xs">
+              ${user.name.charAt(0)}
+            </div>
+            <span class="font-medium ${index === 0 ? 'text-white' : 'text-slate-900 dark:text-white'}">${user.name}</span>
+          </div>
+          <span class="font-bold ${index === 0 ? 'text-white' : 'text-green-600'}">$${user.earnings.toFixed(2)}</span>
+        `;
+        leaderboardContainer.appendChild(userEl);
+      });
+    }
+
+    // Thread Morphing
+    async function morphToDocument() {
+      const email = appState.emails.inbox.find(e => e.id === appState.selectedEmailId);
+      if (!email) return;
+      
+      document.getElementById('morph-to-doc').innerHTML = `
+        <span class="material-icons animate-spin">autorenew</span> Processing...
+      `;
+      
+      try {
+        const document = await api.ai.morphToDocument(email.id);
+        
+        document.getElementById('email-content').classList.add('hidden');
+        document.getElementById('document-view').classList.remove('hidden');
+        
+        document.getElementById('document-title').textContent = document.title;
+        document.getElementById('document-content').innerHTML = document.content;
+        
+        initDocumentEditor();
+        
+      } catch (error) {
+        console.error("Error morphing to document:", error);
+        alert("Failed to convert thread to document");
+      } finally {
+        document.getElementById('morph-to-doc').innerHTML = `
+          Morph Thread → Doc <span class="material-icons text-sm">auto_awesome_motion</span>
+        `;
+      }
+    }
+
+    function initDocumentEditor() {
+      const editor = document.getElementById('document-content');
+      editor.contentEditable = true;
+      
+      const toolbar = document.createElement('div');
+      toolbar.className = 'flex gap-2 mb-4 p-2 bg-slate-100 rounded-lg dark:bg-slate-700';
+      toolbar.innerHTML = `
+        <button class="p-2 rounded hover:bg-slate-200 dark:hover:bg-slate-600" data-command="bold" title="Bold">
+          <span class="material-icons">format_bold</span>
+        </button>
+        <button class="p-2 rounded hover:bg-slate-200 dark:hover:bg-slate-600" data-command="italic" title="Italic">
+          <span class="material-icons">format_italic</span>
+        </button>
+        <button class="p-2 rounded hover:bg-slate-200 dark:hover:bg-slate-600" data-command="insertUnorderedList" title="Bullet List">
+          <span class="material-icons">format_list_bulleted</span>
+        </button>
+      `;
+      
+      editor.parentNode.insertBefore(toolbar, editor);
+      
+      toolbar.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.execCommand(btn.dataset.command, false, null);
+          editor.focus();
+        });
+      });
+    }
+
+    // Voice Notes Integration
+    let mediaRecorder;
+    let audioChunks = [];
+    
+    async function toggleVoiceRecording() {
+      const button = document.getElementById('record-voice-btn');
+      
+      if (mediaRecorder && mediaRecorder.state === 'recording') {
+        mediaRecorder.stop();
+        button.innerHTML = '<span class="material-icons">mic</span> Record';
+        return;
+      }
+      
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+        
+        mediaRecorder.ondataavailable = event => {
+          audioChunks.push(event.data);
+        };
+        
+        mediaRecorder.onstop = async () => {
+          const audioBlob = new Blob(audioChunks, { type: 'audio/webm' });
+          
+          const audioUrl = URL.createObjectURL(audioBlob);
+          const audioPlayer = document.createElement('div');
+          audioPlayer.className = 'voice-note-player rounded-xl p-4 mt-4 flex items-center gap-3';
+          audioPlayer.innerHTML = `
+            <button class="play-pause-btn w-10 h-10 rounded-full bg-indigo-600 flex items-center justify-center text-white">
+              <span class="material-icons">play_arrow</span>
+            </button>
+            <div class="flex-1">
+              <div class="flex justify-between text-sm mb-1">
+                <span>Voice Note</span>
+                <span>2:00</span>
+              </div>
+              <div class="h-2 bg-slate-200 rounded-full overflow-hidden dark:bg-slate-700">
+                <div class="voice-progress h-full bg-indigo-600" style="width: 0%"></div>
+              </div>
+            </div>
+            <button class="download-btn text-slate-600 dark:text-slate-300">
+              <span class="material-icons">download</span>
+            </button>
+          `;
+          
+          document.getElementById('email-thread').prepend(audioPlayer);
+          initVoicePlayer(audioPlayer, audioUrl);
+        };
+        
+        mediaRecorder.start();
+        button.innerHTML = '<span class="material-icons">stop</span> Stop Recording';
+        
+      } catch (error) {
+        console.error("Error accessing microphone:", error);
+        alert("Microphone access denied. Please enable microphone permissions.");
+      }
+    }
+
+    function initVoicePlayer(player, audioUrl) {
+      const audio = new Audio(audioUrl);
+      const playPauseBtn = player.querySelector('.play-pause-btn');
+      const progressBar = player.querySelector('.voice-progress');
+      
+      playPauseBtn.addEventListener('click', () => {
+        if (audio.paused) {
+          audio.play();
+          playPauseBtn.innerHTML = '<span class="material-icons">pause</span>';
+        } else {
+          audio.pause();
+          playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+        }
+      });
+      
+      audio.addEventListener('timeupdate', () => {
+        const progress = (audio.currentTime / audio.duration) * 100;
+        progressBar.style.width = `${progress}%`;
+      });
+      
+      audio.addEventListener('ended', () => {
+        playPauseBtn.innerHTML = '<span class="material-icons">play_arrow</span>';
+        progressBar.style.width = '0%';
+      });
+      
+      player.querySelector('.download-btn').addEventListener('click', () => {
+        const a = document.createElement('a');
+        a.href = audioUrl;
+        a.download = `voice-note-${new Date().toISOString()}.webm`;
+        a.click();
+      });
+    }
+
+    // AI Assist
+    function toggleAIAssist() {
+      appState.aiAssistActive = !appState.aiAssistActive;
+      document.getElementById('aiAssistModal').classList.toggle('hidden');
+    }
+
+    async function handleAIAction(action) {
+      const email = appState.emails.inbox.find(e => e.id === appState.selectedEmailId);
+      if (!email) return;
+      
+      switch(action) {
+        case 'draft':
+          // Draft implementation
+          break;
+        case 'summarize':
+          email.aiSummary = await api.ai.summarize(email);
+          renderSelectedEmail();
+          break;
+        case 'schedule':
+          // Scheduling implementation
+          break;
+        case 'document':
+          morphToDocument();
+          break;
+      }
+      
+      toggleAIAssist();
+    }
+
+    // Kanban Board
+    function renderKanbanBoard() {
+      if (!document.getElementById('kanban-view')) return;
+      // Kanban rendering logic
+    }
+
+    function initKanban() {
+      const columns = document.querySelectorAll('.kanban-column');
+      
+      columns.forEach(column => {
+        column.addEventListener('dragover', (e) => {
+          e.preventDefault();
+        });
+        
+        column.addEventListener('drop', (e) => {
+          e.preventDefault();
+          const taskId = e.dataTransfer.getData('text/plain');
+          const task = document.getElementById(taskId);
+          column.appendChild(task);
+          
+          const status = column.querySelector('h3').textContent.trim();
+          eventBus.emit('task-moved', { taskId, status });
+        });
+      });
+      
+      const cards = document.querySelectorAll('.kanban-card');
+      cards.forEach(card => {
+        card.setAttribute('draggable', 'true');
+        
+        card.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/plain', card.id);
+          setTimeout(() => card.classList.add('opacity-50'), 0);
+        });
+        
+        card.addEventListener('dragend', () => {
+          card.classList.remove('opacity-50');
+        });
+      });
+    }
+
+    // Social Graph
+    function renderSocialGraph() {
+      if (!document.getElementById('social-graph-view')) return;
+      // Social graph rendering logic
+    }
+
+    // Social Feed
+    function renderSocialFeed() {
+      if (!document.getElementById('social-feed-view')) return;
+      // Social feed rendering logic
+    }
+
+    // Settings
+    function renderSettings() {
+      if (!document.getElementById('settings-view')) return;
+      // Settings rendering logic
+    }
+
+    // Profile
+    function renderProfile() {
+      if (!document.getElementById('profile-view')) return;
+      // Profile rendering logic
+    }
+
+    // Swipe Gestures
+    function initSwipeGestures() {
+      if (!('ontouchstart' in window)) return;
+      
+      const emailRows = document.querySelectorAll('.email-row-container');
+      
+      emailRows.forEach(row => {
+        let startX = 0;
+        let endX = 0;
+        
+        row.addEventListener('touchstart', e => {
+          startX = e.touches[0].clientX;
+        });
+        
+        row.addEventListener('touchmove', e => {
+          endX = e.touches[0].clientX;
+        });
+        
+        row.addEventListener('touchend', () => {
+          const diff = startX - endX;
+          
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+              row.style.transform = 'translateX(-100%)';
+              setTimeout(() => {
+                eventBus.emit('email-archived', row.dataset.emailId);
+                row.remove();
+              }, 300);
+            } else {
+              row.style.transform = 'translateX(100%)';
+              setTimeout(() => {
+                eventBus.emit('email-deleted', row.dataset.emailId);
+                row.remove();
+              }, 300);
+            }
+          }
+        });
+      });
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    
+    .gradient-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .gradient-secondary { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+    .gradient-success { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+    .gradient-warning { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+    
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .floating-action {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .ai-glow {
+      box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+      animation: ai-pulse 3s ease-in-out infinite;
+    }
+    
+    @keyframes ai-pulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.3); }
+      50% { box-shadow: 0 0 30px rgba(147, 51, 234, 0.6); }
+    }
+    
+    .attention-marketplace {
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      border: 2px solid #f6ad55;
+    }
+    
+    .voice-note-player {
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    }
+    
+    .selected-email {
+      border-left: 4px solid #7c3aed;
+      background-color: #f5f3ff;
+    }
+    
+    .dark .selected-email {
+      background-color: rgba(55, 48, 163, 0.2);
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.3s ease-in;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .gradient-button {
+      background-image: linear-gradient(to right, #7c3aed, #6366f1);
+      transition: all 0.3s ease;
+    }
+    
+    .gradient-button:hover {
+      background-image: linear-gradient(to right, #6d28d9, #4446e5);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+    }
+    
+    .sidebar-gradient {
+      background-image: linear-gradient(to bottom, #7c3aed, #6366f1);
+    }
+    
+    .dark .sidebar-gradient {
+      background-image: linear-gradient(to bottom, #4c1d95, #3730a3);
+    }
+    
+    .smart-label {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      margin-right: 6px;
+    }
+    
+    .label-work {
+      background-color: #e0f2fe;
+      color: #0369a1;
+    }
+    
+    .label-personal {
+      background-color: #ede9fe;
+      color: #5b21b6;
+    }
+    
+    .label-update {
+      background-color: #dcfce7;
+      color: #166534;
+    }
+    
+    .label-urgent {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+    
+    .label-social {
+      background-color: #ffedd5;
+      color: #c2410c;
+    }
+    
+    .dark .label-work {
+      background-color: #0c4a6e;
+      color: #bae6fd;
+    }
+    
+    .dark .label-personal {
+      background-color: #4c1d95;
+      color: #ddd6fe;
+    }
+    
+    .dark .label-update {
+      background-color: #14532d;
+      color: #bbf7d0;
+    }
+    
+    .dark .label-urgent {
+      background-color: #7f1d1d;
+      color: #fecaca;
+    }
+    
+    .dark .label-social {
+      background-color: #7c2d12;
+      color: #fed7aa;
+    }
+    
+    .sentiment-positive { background-color: #dcfce7; color: #166534; }
+    .sentiment-neutral { background-color: #fef9c3; color: #854d0e; }
+    .sentiment-negative { background-color: #fee2e2; color: #b91c1c; }
+    
+    .burning-email {
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .burning-email::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(transparent, rgba(255, 100, 100, 0.3));
+      animation: burnEffect 2s infinite linear;
+      z-index: 1;
+    }
+    
+    @keyframes burnEffect {
+      0% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+      100% { opacity: 0.3; }
+    }
+    
+    .burn-timer {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: bold;
+      z-index: 2;
+    }
+    
+    .ephemeral-badge {
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    
+    .nft-badge {
+      background: linear-gradient(45deg, #8e2de2, #4a00e0);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .sentiment-radar {
+      width: 120px;
+      height: 120px;
+      position: relative;
+      border-radius: 50%;
+      background: conic-gradient(
+        #ef4444 0% 20%,
+        #f97316 20% 40%,
+        #eab308 40% 60%,
+        #22c55e 60% 80%,
+        #3b82f6 80% 100%
+      );
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .sentiment-radar::after {
+      content: '';
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: white;
+    }
+    
+    .sentiment-pointer {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #7c3aed;
+      border-radius: 50%;
+      z-index: 10;
+      transform: translate(-50%, -50%);
+    }
+    
+    .voice-wave {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      height: 24px;
+    }
+    
+    .voice-bar {
+      width: 4px;
+      background-color: #7c3aed;
+      border-radius: 2px;
+      animation: voicePulse 1.2s infinite ease-in-out;
+    }
+    
+    .voice-bar:nth-child(1) { animation-delay: 0s; height: 8px; }
+    .voice-bar:nth-child(2) { animation-delay: 0.2s; height: 14px; }
+    .voice-bar:nth-child(3) { animation-delay: 0.4s; height: 18px; }
+    .voice-bar:nth-child(4) { animation-delay: 0.6s; height: 14px; }
+    .voice-bar:nth-child(5) { animation-delay: 0.8s; height: 8px; }
+    
+    @keyframes voicePulse {
+      0%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(0.5); }
+    }
+    
+    .kanban-card {
+      transition: all 0.3s ease;
+      cursor: grab;
+    }
+    
+    .kanban-card:active {
+      cursor: grabbing;
+    }
+    
+    .kanban-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .alias-card {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .alias-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #7c3aed, #6366f1);
+    }
+    
+    .alias-expiry {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(0,0,0,0.1);
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+    }
+    
+    .sentiment-bubble {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      z-index: 10;
+    }
+    
+    .sentiment-positive-bg { background-color: #22c55e; }
+    .sentiment-neutral-bg { background-color: #eab308; }
+    .sentiment-negative-bg { background-color: #ef4444; }
+    
+    .encrypted-badge {
+      background: linear-gradient(45deg, #0f766e, #14b8a6);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+  </style>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            },
+            secondary: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="h-screen flex flex-col bg-slate-50 font-sans text-slate-800 dark:bg-slate-900 dark:text-slate-200">
+  <!-- AI Assist Bubble -->
+  <div class="ai-assist-bubble">
+    <div class="floating-action w-16 h-16 rounded-full text-white shadow-2xl flex items-center justify-center cursor-pointer" onclick="toggleAIAssist()">
+      <i class="fas fa-magic text-xl"></i>
+    </div>
+  </div>
+
+  <!-- Top Bar -->
+  <header class="h-16 bg-white border-b flex items-center px-6 justify-between shadow-sm dark:bg-slate-800 dark:border-slate-700">
+    <div class="flex items-center space-x-3">
+      <span class="material-icons text-3xl text-indigo-600 dark:text-indigo-400">mail_outline</span>
+      <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Mangu Mail</h1>
+      <span class="text-xs bg-indigo-100 text-indigo-800 rounded-full px-2 py-1 ml-2 dark:bg-indigo-900 dark:text-indigo-100">Revolutionary Email</span>
+    </div>
+    
+    <!-- Search Bar -->
+    <div class="relative flex-1 max-w-xl mx-6">
+      <span class="material-icons absolute left-3 top-2.5 text-slate-400 dark:text-slate-500">search</span>
+      <input type="text" placeholder="Search mail, contacts, docs..." 
+             class="w-full pl-10 pr-4 py-2 rounded-full bg-slate-100 border border-slate-200 focus:ring-2 focus:ring-indigo-300 focus:bg-white transition-all dark:bg-slate-700 dark:border-slate-600 dark:text-white dark:focus:bg-slate-600" />
+    </div>
+    
+    <div class="flex items-center space-x-4">
+      <button id="theme-toggle" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700">
+        <span id="theme-icon" class="material-icons">dark_mode</span>
+      </button>
+      <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700">
+        <span class="material-icons text-slate-600 dark:text-slate-300">notifications_none</span>
+        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+      </button>
+      <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700" onclick="showView('settings')">
+        <span class="material-icons text-slate-600 dark:text-slate-300">settings</span>
+      </button>
+      <div class="social-ring">
+        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-600 cursor-pointer" onclick="showView('profile')">
+          <i class="fas fa-user"></i>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-60 sidebar-gradient text-white flex flex-col shadow-lg z-20 dark:bg-gradient-to-b dark:from-indigo-900 dark:to-purple-900">
+      <header class="h-16 flex items-center px-6 text-xl font-bold tracking-tight">
+        <span class="material-icons mr-2">mail</span> Mangu
+      </header>
+      
+      <nav class="flex-1 overflow-y-auto px-2 space-y-1 text-sm font-medium mt-4">
+        <a href="#" class="nav-item active flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('inbox')">
+          <span class="material-icons">inbox</span> Inbox
+          <span class="ml-auto text-xs bg-white/20 rounded-full px-2">24</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('starred')">
+          <span class="material-icons">star</span> Starred
+          <span class="ml-auto text-xs bg-white/20 rounded-full px-2">5</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('ephemeral')">
+          <span class="material-icons">hourglass_top</span> Ephemeral
+          <span class="ml-auto text-xs bg-white/20 rounded-full px-2">3</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('sent')">
+          <span class="material-icons">send</span> Sent
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('workflows')">
+          <i class="fas fa-bolt w-5"></i>
+          <span>AI Workflows</span>
+          <span class="ml-auto ai-glow text-xs px-2 py-1 bg-purple-500 rounded-full">NEW</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('aliases')">
+          <i class="fas fa-user-secret w-5"></i>
+          <span>Email Aliases</span>
+          <span class="ml-auto text-xs bg-white/20 rounded-full px-2">5</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('kanban')">
+          <i class="fas fa-columns w-5"></i>
+          <span>Kanban Board</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('marketplace')">
+          <i class="fas fa-store w-5"></i>
+          <span>Marketplace</span>
+          <span class="ml-auto text-xs px-2 py-1 bg-yellow-500 rounded-full">💰</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('social-graph')">
+          <i class="fas fa-heart w-5"></i>
+          <span>Social Graph</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('social-feed')">
+          <i class="fas fa-users w-5"></i>
+          <span>Social Feed</span>
+          <span class="ml-auto text-xs bg-white/20 rounded-full px-2">12</span>
+        </a>
+        
+        <section class="mt-6 px-2">
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="uppercase text-xs opacity-80">Channels</h3>
+            <button class="text-xs opacity-80 hover:opacity-100">+ Add</button>
+          </div>
+          <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer" onclick="showView('project-phoenix')">
+            <span class="material-icons">groups</span>
+            <span>Project Phoenix</span>
+          </div>
+          <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer" onclick="showView('design-guild')">
+            <span class="material-icons">palette</span>
+            <span>Design Guild</span>
+          </div>
+          <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer" onclick="showView('marketing-team')">
+            <span class="material-icons">campaign</span>
+            <span>Marketing Team</span>
+          </div>
+        </section>
+      </nav>
+      
+      <button onclick="toggleCompose()" class="m-4 flex items-center justify-center bg-white text-slate-900 font-semibold rounded-xl h-12 gap-2 hover:shadow-lg transition-shadow dark:bg-slate-800 dark:text-white">
+        <span class="material-icons">add</span> Compose
+      </button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 grid grid-cols-12 overflow-hidden">
+      <!-- Inbox View -->
+      <section id="inbox-view" class="col-span-12 flex flex-col">
+        <!-- Focused Inbox Tabs -->
+        <div class="flex border-b dark:border-slate-700">
+          <button class="flex-1 py-3 text-center focused-tab active" onclick="switchInboxTab('all')">All</button>
+          <button class="flex-1 py-3 text-center focused-tab" onclick="switchInboxTab('focused')">Focused</button>
+          <button class="flex-1 py-3 text-center focused-tab" onclick="switchInboxTab('other')">Other</button>
+          <button class="flex-1 py-3 text-center focused-tab" onclick="switchInboxTab('social')">Social</button>
+        </div>
+
+        <!-- Workflow Cards -->
+        <div class="p-4 space-y-3 border-b bg-slate-50/80 backdrop-blur-sm dark:bg-slate-800/80 dark:border-slate-700">
+          <div class="workflow-card rounded-xl border border-slate-200 px-4 py-3 bg-white shadow-sm slide-up dark:bg-slate-800 dark:border-slate-700">
+            <div class="flex items-center justify-between">
+              <h4 class="font-semibold text-slate-900 dark:text-white mb-1">Review Quarterly Report</h4>
+              <span class="material-icons text-indigo-500">auto_awesome</span>
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">The Q3 financial report is ready for your review before sending to stakeholders.</p>
+            <div class="flex gap-2">
+              <button class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs hover:bg-indigo-700">Review</button>
+              <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">Schedule</button>
+              <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">Share</button>
+            </div>
+          </div>
+
+          <div class="workflow-card rounded-xl border border-slate-200 px-4 py-3 bg-white shadow-sm slide-up dark:bg-slate-800 dark:border-slate-700">
+            <h4 class="font-semibold text-slate-900 dark:text-white mb-1">Team Meeting Follow-up</h4>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">Action items from yesterday's leadership meeting need assignment.</p>
+            <div class="flex gap-2">
+              <button class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs hover:bg-indigo-700">Assign</button>
+              <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">Postpone</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email List -->
+        <div class="flex-1 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-700 email-list-container">
+          <!-- Emails rendered dynamically -->
+        </div>
+      </section>
+      
+      <!-- Starred View -->
+      <section id="starred-view" class="col-span-12 hidden flex flex-col">
+        <div class="flex border-b dark:border-slate-700">
+          <div class="flex-1 py-3 text-center bg-gradient-to-r from-amber-500 to-yellow-500 text-white">
+            Starred Messages
+          </div>
+        </div>
+        <div class="flex-1 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-700 email-list-container">
+          <!-- Starred emails rendered dynamically -->
+        </div>
+      </section>
+      
+      <!-- Marketplace View -->
+      <section id="marketplace-view" class="col-span-12 hidden p-6 overflow-y-auto">
+        <div class="max-w-6xl mx-auto">
+          <div class="flex justify-between items-center mb-8">
+            <div>
+              <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Attention Marketplace</h2>
+              <p class="text-slate-600 dark:text-slate-400">Pay to prioritize and earn for your attention</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="bg-indigo-100 dark:bg-indigo-900/50 rounded-full px-4 py-2 text-indigo-800 dark:text-indigo-200">
+                Balance: $<span id="marketplace-balance">327.50</span>
+              </div>
+              <button id="claim-earnings" class="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl hover:opacity-90 transition-opacity">
+                Claim Earnings
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Stake Form -->
+            <div class="lg:col-span-2 bg-white rounded-2xl p-6 shadow-lg dark:bg-slate-800">
+              <h3 class="text-lg font-semibold text-slate-900 mb-4 dark:text-white">Create New Stake</h3>
+              <form id="stake-form" class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1 dark:text-slate-300">Recipient Email</label>
+                  <input type="email" id="stake-recipient" required class="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-300 dark:bg-slate-700 dark:border-slate-600 dark:text-white" placeholder="recipient@example.com">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1 dark:text-slate-300">Amount ($)</label>
+                    <input type="number" id="stake-amount" min="1" max="100" step="0.5" required class="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-300 dark:bg-slate-700 dark:border-slate-600 dark:text-white" placeholder="5.00">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1 dark:text-slate-300">Priority Level</label>
+                    <select class="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-300 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+                      <option>Standard (1-2 days)</option>
+                      <option>Urgent (4-8 hours)</option>
+                      <option>Critical (1 hour)</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1 dark:text-slate-300">Message</label>
+                  <textarea required class="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-300 h-32 resize-none dark:bg-slate-700 dark:border-slate-600 dark:text-white" placeholder="Why this deserves attention..."></textarea>
+                </div>
+                <button type="submit" class="w-full gradient-button px-4 py-3 rounded-lg text-white shadow-lg font-semibold">
+                  Stake & Send
+                </button>
+              </form>
+            </div>
+
+            <!-- Stats & Leaderboard -->
+            <div class="space-y-6">
+              <!-- Earnings Stats -->
+              <div class="bg-white rounded-2xl p-6 shadow-lg dark:bg-slate-800">
+                <h3 class="text-lg font-semibold text-slate-900 mb-4 dark:text-white">Your Earnings</h3>
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center">
+                    <span class="text-slate-600 dark:text-slate-300">Today</span>
+                    <span class="font-semibold text-green-600">$15.50</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-slate-600 dark:text-slate-300">This Week</span>
+                    <span class="font-semibold text-green-600">$87.25</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-slate-600 dark:text-slate-300">This Month</span>
+                    <span class="font-semibold text-green-600">$327.50</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Leaderboard -->
+              <div class="bg-white rounded-2xl shadow-lg overflow-hidden dark:bg-slate-800">
+                <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-4 text-white">
+                  <h3 class="text-lg font-semibold">Top Earners</h3>
+                </div>
+                <div id="leaderboard" class="divide-y divide-slate-200 dark:divide-slate-700">
+                  <!-- Filled dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Pending Stakes -->
+          <div class="mt-8">
+            <h3 class="text-lg font-semibold text-slate-900 mb-4 dark:text-white">Your Active Stakes</h3>
+            <div id="pending-stakes" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <!-- Filled dynamically -->
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Social Graph View -->
+      <section id="social-graph-view" class="col-span-12 hidden flex flex-col p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-8">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Your Social Graph</h2>
+            <p class="text-slate-600 dark:text-slate-400">Visualize your professional relationships</p>
+          </div>
+          <div class="flex gap-3">
+            <button class="px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors">
+              <i class="fas fa-sync mr-2"></i>
+              Refresh
+            </button>
+            <button class="px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors dark:border-slate-600 dark:hover:bg-slate-700">
+              <i class="fas fa-filter mr-2"></i>
+              Filter
+            </button>
+          </div>
+        </div>
+        
+        <div class="bg-white rounded-2xl p-6 flex-1 relative overflow-hidden dark:bg-slate-800">
+          <div class="absolute inset-0">
+            <svg width="100%" height="100%" class="absolute inset-0">
+              <line x1="20%" y1="30%" x2="40%" y2="50%" class="social-connection"></line>
+              <line x1="20%" y1="30%" x2="60%" y2="40%" class="social-connection"></line>
+              <line x1="40%" y1="50%" x2="60%" y2="40%" class="social-connection"></line>
+              <line x1="60%" y1="40%" x2="70%" y2="60%" class="social-connection"></line>
+              <line x1="70%" y1="60%" x2="50%" y2="70%" class="social-connection"></line>
+            </svg>
+            
+            <div class="social-node absolute w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl" style="top: 30%; left: 20%;">
+              You
+            </div>
+            
+            <div class="social-node absolute w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold text-lg" style="top: 50%; left: 40%;">
+              MC
+            </div>
+            
+            <div class="social-node absolute w-14 h-14 rounded-full bg-gradient-to-br from-pink-500 to-rose-400 flex items-center justify-center text-white font-bold text-lg" style="top: 40%; left: 60%;">
+              SW
+            </div>
+            
+            <div class="social-node absolute w-14 h-14 rounded-full bg-gradient-to-br from-yellow-500 to-amber-400 flex items-center justify-center text-white font-bold text-lg" style="top: 60%; left: 70%;">
+              DP
+            </div>
+            
+            <div class="social-node absolute w-14 h-14 rounded-full bg-gradient-to-br from-green-500 to-emerald-400 flex items-center justify-center text-white font-bold text-lg" style="top: 70%; left: 50%;">
+              LZ
+            </div>
+          </div>
+          
+          <div class="absolute bottom-6 left-6 bg-white/80 backdrop-blur-sm p-4 rounded-xl shadow dark:bg-slate-700/80">
+            <h3 class="font-semibold mb-2 dark:text-white">Connection Insights</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300">You have <span class="font-semibold">24 connections</span> across <span class="font-semibold">5 companies</span>. Your strongest connection is with Michael Chen (12 interactions last month).</p>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Email Detail View -->
+      <section id="email-detail" class="col-span-8 flex flex-col bg-white dark:bg-slate-800">
+        <div id="empty-state" class="flex items-center justify-center h-full text-slate-400 dark:text-slate-500">
+          <div class="text-center">
+            <span class="material-icons text-5xl mb-4">drafts</span>
+            <p class="text-xl font-light">Select an email to view</p>
+            <p class="text-slate-500 dark:text-slate-500 mt-2">Your messages will appear here</p>
+          </div>
+        </div>
+
+        <div id="email-content" class="hidden flex-col h-full fade-in">
+          <header class="h-16 flex items-center justify-between border-b px-6 dark:border-slate-700">
+            <h2 id="email-subject" class="font-semibold text-lg text-slate-900 dark:text-white"></h2>
+            <div class="flex gap-1">
+              <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+                <span class="material-icons text-slate-600 dark:text-slate-300">archive</span>
+              </button>
+              <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+                <span class="material-icons text-slate-600 dark:text-slate-300">delete</span>
+              </button>
+              <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+                <span class="material-icons text-slate-600 dark:text-slate-300">send</span>
+              </button>
+              <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700" title="Burner Thread">
+                <span class="material-icons text-slate-600 dark:text-slate-300">shield</span>
+              </button>
+            </div>
+          </header>
+
+          <article class="flex-1 overflow-y-auto p-8 space-y-6 dark:text-slate-300">
+            <section class="space-y-1">
+              <p id="email-sender" class="font-medium text-slate-900 dark:text-white"></p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">To: You • Today at 10:24 AM</p>
+              <div class="flex gap-2 mt-2">
+                <span class="smart-label label-work">Work</span>
+                <span class="smart-label label-update">Update</span>
+                <span class="nft-badge">
+                  <span class="material-icons text-xs">verified</span>
+                  NFT Verified
+                </span>
+              </div>
+            </section>
+
+            <div class="py-6">
+              <div class="ai-glow rounded-2xl p-4 mb-6 bg-gradient-to-r from-purple-50 to-indigo-50 dark:bg-slate-700/50">
+                <div class="flex items-center gap-2 mb-2">
+                  <i class="fas fa-robot text-purple-500"></i>
+                  <h3 class="font-semibold text-slate-900 dark:text-white">AI Summary</h3>
+                </div>
+                <div id="ai-summary"></div>
+              </div>
+              
+              <p id="email-body" class="leading-relaxed text-slate-700 dark:text-slate-300"></p>
+            </div>
+
+            <div id="email-attachments" class="flex gap-2"></div>
+            <div id="email-thread" class="mt-8 space-y-4"></div>
+
+            <div class="mt-8 flex gap-3 flex-wrap">
+              <button class="gradient-button px-4 py-2 rounded-lg text-white shadow">
+                Reply
+              </button>
+              <button class="px-4 py-2 border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700">
+                Forward
+              </button>
+              <button class="px-4 py-2 flex items-center gap-1 border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700">
+                <span class="material-icons text-sm">schedule</span> Send Later
+              </button>
+              <button id="morph-to-doc" class="gradient-button px-4 py-2 rounded-lg text-white shadow flex items-center gap-1">
+                <span class="material-icons text-sm">auto_awesome_motion</span> Convert to Document
+              </button>
+              <button id="record-voice-btn" class="px-4 py-2 flex items-center gap-1 border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700">
+                <span class="material-icons text-sm">mic</span> Voice Reply
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+      
+      <!-- Document View -->
+      <section id="document-view" class="col-span-8 hidden flex-col bg-white dark:bg-slate-800">
+        <header class="h-16 flex items-center justify-between border-b px-6 dark:border-slate-700">
+          <h2 id="document-title" class="font-semibold text-lg text-slate-900 dark:text-white"></h2>
+          <div class="flex gap-1">
+            <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+              <span class="material-icons text-slate-600 dark:text-slate-300">edit</span>
+            </button>
+            <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+              <span class="material-icons text-slate-600 dark:text-slate-300">save</span>
+            </button>
+            <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+              <span class="material-icons text-slate-600 dark:text-slate-300">share</span>
+            </button>
+            <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700" onclick="document.getElementById('document-view').classList.add('hidden'); document.getElementById('email-content').classList.remove('hidden');">
+              <span class="material-icons text-slate-600 dark:text-slate-300">close</span>
+            </button>
+          </div>
+        </header>
+
+        <article class="flex-1 overflow-y-auto p-8 dark:text-slate-300">
+          <div id="document-content" class="document-editor prose dark:prose-invert max-w-none">
+            <!-- Filled dynamically -->
+          </div>
+        </article>
+      </section>
+      
+      <!-- AI Assist Modal -->
+      <div id="aiAssistModal" class="hidden fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+        <div class="bg-white rounded-2xl w-full max-w-2xl shadow-xl overflow-hidden slide-up dark:bg-slate-800">
+          <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-4 text-white flex justify-between items-center">
+            <div class="flex items-center gap-3">
+              <i class="fas fa-robot text-2xl"></i>
+              <h3 class="text-xl font-semibold">AI Assistant</h3>
+            </div>
+            <button onclick="toggleAIAssist()" class="material-icons hover:text-slate-200">close</button>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="ai-glow w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white">
+                <i class="fas fa-robot text-2xl"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-slate-900 dark:text-white">How can I assist you?</h4>
+                <p class="text-sm text-slate-600 dark:text-slate-400">I can help with drafting, summarizing, and more</p>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <button class="text-left p-4 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors dark:bg-slate-700 dark:hover:bg-slate-600" onclick="handleAIAction('draft')">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="material-icons text-indigo-600 dark:text-indigo-400">drafts</span>
+                  <span class="font-medium">Draft a Response</span>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Generate a thoughtful reply to this email</p>
+              </button>
+              
+              <button class="text-left p-4 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors dark:bg-slate-700 dark:hover:bg-slate-600" onclick="handleAIAction('summarize')">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="material-icons text-indigo-600 dark:text-indigo-400">summarize</span>
+                  <span class="font-medium">Summarize Thread</span>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Create a concise summary of this conversation</p>
+              </button>
+              
+              <button class="text-left p-4 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors dark:bg-slate-700 dark:hover:bg-slate-600" onclick="handleAIAction('schedule')">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="material-icons text-indigo-600 dark:text-indigo-400">schedule</span>
+                  <span class="font-medium">Schedule Meeting</span>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Find available times and schedule a meeting</p>
+              </button>
+              
+              <button class="text-left p-4 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors dark:bg-slate-700 dark:hover:bg-slate-600" onclick="handleAIAction('document')">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="material-icons text-indigo-600 dark:text-indigo-400">description</span>
+                  <span class="font-medium">Convert to Document</span>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Transform this thread into an editable document</p>
+              </button>
+            </div>
+            
+            <div class="mt-8">
+              <h4 class="font-medium text-slate-900 mb-2 dark:text-white">Custom Request</h4>
+              <div class="flex gap-2">
+                <input type="text" placeholder="What would you like me to do?" class="flex-1 bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-300 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+                <button class="px-4 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700">Go</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,1656 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Language & Region - Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --error: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        .top-nav-links a.active {
+            color: var(--orange-accent);
+        }
+
+        /* Main Header */
+        .main-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .city-logo {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 2px solid var(--orange-accent);
+            border-radius: 50px;
+            margin-bottom: 12px;
+        }
+
+        .city-logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .tagline {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Settings Layout */
+        .settings-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        /* Settings Sidebar */
+        .settings-sidebar {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            height: fit-content;
+        }
+
+        .settings-sidebar h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+            color: var(--text-light);
+        }
+
+        .settings-nav {
+            list-style: none;
+        }
+
+        .settings-nav li {
+            margin-bottom: 15px;
+        }
+
+        .settings-nav a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .settings-nav a:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-light);
+        }
+
+        .settings-nav a.active {
+            background: var(--bg-card-hover);
+            color: var(--orange-accent);
+            border-left: 3px solid var(--orange-accent);
+        }
+
+        /* Settings Content */
+        .settings-content {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .settings-header {
+            margin-bottom: 30px;
+        }
+
+        .settings-header h2 {
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .settings-header p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* Tabs */
+        .settings-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 15px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab-btn:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-light);
+        }
+
+        .tab-btn.active {
+            background: var(--bg-card-hover);
+            color: var(--orange-accent);
+            border-bottom: 2px solid var(--orange-accent);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Language Card */
+        .language-card {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .language-card:hover {
+            border-color: var(--border-color);
+            transform: translateY(-3px);
+        }
+
+        .language-card h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .language-card h3 i {
+            color: var(--purple-primary);
+        }
+
+        .language-search {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .language-search input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border-radius: 10px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .language-search input:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+        }
+
+        .language-search i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+        }
+
+        .language-categories {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-gray);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .category-btn:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-light);
+        }
+
+        .category-btn.active {
+            background: var(--purple-primary);
+            color: white;
+            border-color: var(--purple-primary);
+        }
+
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .language-grid::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .language-grid::-webkit-scrollbar-track {
+            background: var(--bg-card);
+            border-radius: 10px;
+        }
+
+        .language-grid::-webkit-scrollbar-thumb {
+            background: var(--purple-primary);
+            border-radius: 10px;
+        }
+
+        .language-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            background: var(--bg-card);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .language-option:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .language-option.selected {
+            border: 1px solid var(--orange-accent);
+            background: rgba(255, 140, 0, 0.05);
+        }
+
+        .language-flag {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            background: var(--purple-primary);
+        }
+
+        .language-info {
+            flex: 1;
+        }
+
+        .language-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .language-info p {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .language-check {
+            color: var(--orange-accent);
+            font-size: 18px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .language-option.selected .language-check {
+            opacity: 1;
+        }
+
+        /* Region Card */
+        .region-card {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .region-card:hover {
+            border-color: var(--border-color);
+            transform: translateY(-3px);
+        }
+
+        .region-card h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .region-card h3 i {
+            color: var(--purple-primary);
+        }
+
+        .region-map {
+            height: 200px;
+            background: linear-gradient(135deg, #1e3a5f, #2d5a8f);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .region-map::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0wIDBoMjAwdjIwMEgweiIvPjxwYXRoIGQ9Ik0xMDAgMTUwYzI3LjYxIDAgNTAtMjIuMzkgNTAtNTBzLTIyLjM5LTUwLTUwLTUwLTUwIDIyLjM5LTUwIDUwIDIyLjM5IDUwIDUwIDUweiIgZmlsbD0icmdiYSgyNTUsMjU1LDI1NSwwLjEpIi8+PC9nPjwvc3ZnPg==');
+            opacity: 0.3;
+        }
+
+        .region-map-content {
+            text-align: center;
+            z-index: 1;
+        }
+
+        .region-map-content i {
+            font-size: 40px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 10px;
+        }
+
+        .region-map-content h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .region-map-content p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .region-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .region-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            background: var(--bg-card);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .region-option:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .region-option.selected {
+            border: 1px solid var(--orange-accent);
+            background: rgba(255, 140, 0, 0.05);
+        }
+
+        .region-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            background: var(--purple-dark);
+        }
+
+        .region-info {
+            flex: 1;
+        }
+
+        .region-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .region-info p {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .region-check {
+            color: var(--orange-accent);
+            font-size: 18px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .region-option.selected .region-check {
+            opacity: 1;
+        }
+
+        /* Timezone Card */
+        .timezone-card {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .timezone-card:hover {
+            border-color: var(--border-color);
+            transform: translateY(-3px);
+        }
+
+        .timezone-card h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timezone-card h3 i {
+            color: var(--purple-primary);
+        }
+
+        .timezone-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .timezone-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .timezone-group {
+            margin-bottom: 20px;
+        }
+
+        .timezone-group h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: var(--text-light);
+            padding-bottom: 5px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .timezone-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .timezone-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            background: var(--bg-card);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .timezone-option:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .timezone-option.selected {
+            border: 1px solid var(--orange-accent);
+            background: rgba(255, 140, 0, 0.05);
+        }
+
+        .timezone-info {
+            flex: 1;
+        }
+
+        .timezone-info h5 {
+            font-size: 14px;
+            margin-bottom: 3px;
+        }
+
+        .timezone-info p {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .timezone-check {
+            color: var(--orange-accent);
+            font-size: 16px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .timezone-option.selected .timezone-check {
+            opacity: 1;
+        }
+
+        .current-time {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-top: 15px;
+            padding: 15px;
+            background: var(--bg-card);
+            border-radius: 10px;
+        }
+
+        .current-time i {
+            color: var(--purple-primary);
+        }
+
+        /* Date Format Card */
+        .date-format-card {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .date-format-card:hover {
+            border-color: var(--border-color);
+            transform: translateY(-3px);
+        }
+
+        .date-format-card h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .date-format-card h3 i {
+            color: var(--purple-primary);
+        }
+
+        .format-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .format-option {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            background: var(--bg-card);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .format-option:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .format-option.selected {
+            border: 1px solid var(--orange-accent);
+            background: rgba(255, 140, 0, 0.05);
+        }
+
+        .format-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .format-info p {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .format-check {
+            color: var(--orange-accent);
+            font-size: 18px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .format-option.selected .format-check {
+            opacity: 1;
+        }
+
+        /* Advanced Settings Card */
+        .advanced-card {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .advanced-card:hover {
+            border-color: var(--border-color);
+            transform: translateY(-3px);
+        }
+
+        .advanced-card h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .advanced-card h3 i {
+            color: var(--purple-primary);
+        }
+
+        .advanced-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .advanced-option {
+            padding: 20px;
+            border-radius: 10px;
+            background: var(--bg-card);
+        }
+
+        .advanced-option h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .advanced-option h4 i {
+            color: var(--purple-primary);
+        }
+
+        .advanced-option p {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-bottom: 15px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bg-card-hover);
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--purple-primary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-gray);
+            border: 1px solid var(--text-dim);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-light);
+            border-color: var(--text-light);
+        }
+
+        .btn-save {
+            background: var(--purple-primary);
+            color: white;
+        }
+
+        .btn-save:hover {
+            background: var(--purple-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .settings-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .settings-sidebar {
+                order: 2;
+            }
+
+            .settings-content {
+                order: 1;
+            }
+
+            .language-options,
+            .format-options,
+            .advanced-options {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .top-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="#" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#" class="active">Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Header -->
+        <header class="main-header">
+            <div class="city-logo">
+                <h1>LETTERS CITY</h1>
+            </div>
+            <p class="tagline">Private. Encrypted for you</p>
+        </header>
+
+        <!-- Settings Layout -->
+        <div class="settings-layout">
+            <!-- Settings Sidebar -->
+            <aside class="settings-sidebar">
+                <h3>Settings</h3>
+                <ul class="settings-nav">
+                    <li><a href="#"><i class="fas fa-user"></i> Account</a></li>
+                    <li><a href="#"><i class="fas fa-shield-alt"></i> Security</a></li>
+                    <li><a href="#" class="active"><i class="fas fa-globe"></i> Language & Region</a></li>
+                    <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
+                    <li><a href="#"><i class="fas fa-palette"></i> Appearance</a></li>
+                    <li><a href="#"><i class="fas fa-plug"></i> Integrations</a></li>
+                    <li><a href="#"><i class="fas fa-file-invoice"></i> Billing</a></li>
+                </ul>
+            </aside>
+
+            <!-- Settings Content -->
+            <main class="settings-content">
+                <div class="settings-header">
+                    <h2>Advanced Language & Region</h2>
+                    <p>Globalize your experience with comprehensive language, region, and localization settings</p>
+                </div>
+
+                <!-- Settings Tabs -->
+                <div class="settings-tabs">
+                    <button class="tab-btn active" data-tab="basic">Basic Settings</button>
+                    <button class="tab-btn" data-tab="advanced">Advanced Options</button>
+                    <button class="tab-btn" data-tab="preview">Live Preview</button>
+                </div>
+
+                <!-- Basic Settings Tab -->
+                <div class="tab-content active" id="basic-tab">
+                    <!-- Language Selection -->
+                    <div class="language-card">
+                        <h3><i class="fas fa-language"></i> Display Language</h3>
+                        <div class="language-search">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Search languages...">
+                        </div>
+                        <div class="language-categories">
+                            <button class="category-btn active" data-category="all">All Languages</button>
+                            <button class="category-btn" data-category="popular">Most Popular</button>
+                            <button class="category-btn" data-category="europe">European</button>
+                            <button class="category-btn" data-category="asia">Asian</button>
+                            <button class="category-btn" data-category="middle-east">Middle Eastern</button>
+                        </div>
+                        <div class="language-grid">
+                            <div class="language-option selected">
+                                <div class="language-flag">🇺🇸</div>
+                                <div class="language-info">
+                                    <h4>English (United States)</h4>
+                                    <p>American English - Default</p>
+                                </div>
+                                <div class="language-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="language-option">
+                                <div class="language-flag">🇬🇧</div>
+                                <div class="language-info">
+                                    <h4>English (United Kingdom)</h4>
+                                    <p>British English</p>
+                                </div>
+                                <div class="language-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="language-option">
+                                <div class="language-flag">🇪🇸</div>
+                                <div class="language-info">
+                                    <h4>Español</h4>
+                                    <p>Spanish - 500 million speakers</p>
+                                </div>
+                                <div class="language-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="language-option">
+                                <div class="language-flag">🇫🇷</div>
+                                <div class="language-info">
+                                    <h4>Français</h4>
+                                    <p>French - 300 million speakers</p>
+                                </div>
+                                <div class="language-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="language-option">
+                                <div class="language-flag">🇩🇪</div>
+                                <div class="language-info">
+                                    <h4>Deutsch</h4>
+                                    <p>German - 130 million speakers</p>
+                                </div>
+                                <div class="language-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="language-option">
+                                <div class="language-flag">🇯🇵</div>
+                                <div class="language-info">
+                                    <h4>日本語</h4>
+                                    <p>Japanese - 125 million speakers</p>
+                                </div>
+                                <div class="language-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="language-option">
+                                <div class="language-flag">🇨🇳</div>
+                                <div class="language-info">
+                                    <h4>中文 (简体)</h4>
+                                    <p>Simplified Chinese - 1.1 billion speakers</p>
+                                </div>
+                                <div class="language-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="language-option">
+                                <div class="language-flag">🇦🇪</div>
+                                <div class="language-info">
+                                    <h4>العربية</h4>
+                                    <p>Arabic - 310 million speakers</p>
+                                </div>
+                                <div class="language-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="language-option">
+                                <div class="language-flag">🇷🇺</div>
+                                <div class="language-info">
+                                    <h4>Русский</h4>
+                                    <p>Russian - 260 million speakers</p>
+                                </div>
+                                <div class="language-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="language-option">
+                                <div class="language-flag">🇵🇹</div>
+                                <div class="language-info">
+                                    <h4>Português</h4>
+                                    <p>Portuguese - 260 million speakers</p>
+                                </div>
+                                <div class="language-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="language-option">
+                                <div class="language-flag">🇮🇳</div>
+                                <div class="language-info">
+                                    <h4>हिन्दी</h4>
+                                    <p>Hindi - 600 million speakers</p>
+                                </div>
+                                <div class="language-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="language-option">
+                                <div class="language-flag">🇮🇹</div>
+                                <div class="language-info">
+                                    <h4>Italiano</h4>
+                                    <p>Italian - 65 million speakers</p>
+                                </div>
+                                <div class="language-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Region Selection -->
+                    <div class="region-card">
+                        <h3><i class="fas fa-map-marker-alt"></i> Region & Localization</h3>
+                        <div class="region-map">
+                            <div class="region-map-content">
+                                <i class="fas fa-globe-americas"></i>
+                                <h4>North America</h4>
+                                <p>United States - English</p>
+                            </div>
+                        </div>
+                        <div class="region-selector">
+                            <div class="region-option selected">
+                                <div class="region-icon"><i class="fas fa-globe-americas"></i></div>
+                                <div class="region-info">
+                                    <h4>United States</h4>
+                                    <p>North America - English (US)</p>
+                                </div>
+                                <div class="region-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="region-option">
+                                <div class="region-icon"><i class="fas fa-globe-europe"></i></div>
+                                <div class="region-info">
+                                    <h4>United Kingdom</h4>
+                                    <p>Europe - English (UK)</p>
+                                </div>
+                                <div class="region-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="region-option">
+                                <div class="region-icon"><i class="fas fa-globe-asia"></i></div>
+                                <div class="region-info">
+                                    <h4>Japan</h4>
+                                    <p>Asia - Japanese</p>
+                                </div>
+                                <div class="region-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="region-option">
+                                <div class="region-icon"><i class="fas fa-globe-asia"></i></div>
+                                <div class="region-info">
+                                    <h4>China</h4>
+                                    <p>Asia - Chinese</p>
+                                </div>
+                                <div class="region-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="region-option">
+                                <div class="region-icon"><i class="fas fa-globe-europe"></i></div>
+                                <div class="region-info">
+                                    <h4>Germany</h4>
+                                    <p>Europe - German</p>
+                                </div>
+                                <div class="region-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="region-option">
+                                <div class="region-icon"><i class="fas fa-globe-africa"></i></div>
+                                <div class="region-info">
+                                    <h4>South Africa</h4>
+                                    <p>Africa - English, Afrikaans</p>
+                                </div>
+                                <div class="region-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Timezone Selection -->
+                    <div class="timezone-card">
+                        <h3><i class="fas fa-clock"></i> Timezone & Working Hours</h3>
+                        <div class="timezone-selector">
+                            <div>
+                                <div class="timezone-group">
+                                    <h4>Americas</h4>
+                                    <div class="timezone-options">
+                                        <div class="timezone-option selected">
+                                            <div class="timezone-info">
+                                                <h5>Eastern Time (ET)</h5>
+                                                <p>UTC-05:00 - New York, Toronto</p>
+                                            </div>
+                                            <div class="timezone-check"><i class="fas fa-check-circle"></i></div>
+                                        </div>
+                                        <div class="timezone-option">
+                                            <div class="timezone-info">
+                                                <h5>Central Time (CT)</h5>
+                                                <p>UTC-06:00 - Chicago, Mexico City</p>
+                                            </div>
+                                            <div class="timezone-check"><i class="fas fa-check-circle"></i></div>
+                                        </div>
+                                        <div class="timezone-option">
+                                            <div class="timezone-info">
+                                                <h5>Pacific Time (PT)</h5>
+                                                <p>UTC-08:00 - Los Angeles, Vancouver</p>
+                                            </div>
+                                            <div class="timezone-check"><i class="fas fa-check-circle"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="timezone-group">
+                                    <h4>Europe & Africa</h4>
+                                    <div class="timezone-options">
+                                        <div class="timezone-option">
+                                            <div class="timezone-info">
+                                                <h5>Greenwich Mean Time (GMT)</h5>
+                                                <p>UTC+00:00 - London, Lisbon</p>
+                                            </div>
+                                            <div class="timezone-check"><i class="fas fa-check-circle"></i></div>
+                                        </div>
+                                        <div class="timezone-option">
+                                            <div class="timezone-info">
+                                                <h5>Central European Time (CET)</h5>
+                                                <p>UTC+01:00 - Paris, Berlin</p>
+                                            </div>
+                                            <div class="timezone-check"><i class="fas fa-check-circle"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="timezone-group">
+                                    <h4>Asia & Pacific</h4>
+                                    <div class="timezone-options">
+                                        <div class="timezone-option">
+                                            <div class="timezone-info">
+                                                <h5>Japan Standard Time (JST)</h5>
+                                                <p>UTC+09:00 - Tokyo, Seoul</p>
+                                            </div>
+                                            <div class="timezone-check"><i class="fas fa-check-circle"></i></div>
+                                        </div>
+                                        <div class="timezone-option">
+                                            <div class="timezone-info">
+                                                <h5>China Standard Time (CST)</h5>
+                                                <p>UTC+08:00 - Beijing, Singapore</p>
+                                            </div>
+                                            <div class="timezone-check"><i class="fas fa-check-circle"></i></div>
+                                        </div>
+                                        <div class="timezone-option">
+                                            <div class="timezone-info">
+                                                <h5>Australian Eastern Time (AET)</h5>
+                                                <p>UTC+10:00 - Sydney, Melbourne</p>
+                                            </div>
+                                            <div class="timezone-check"><i class="fas fa-check-circle"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="current-time">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Current time in your timezone: <strong id="current-time">2:45 PM, Wednesday, October 25, 2023</strong></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Date Format Selection -->
+                    <div class="date-format-card">
+                        <h3><i class="fas fa-calendar-alt"></i> Date & Time Format</h3>
+                        <div class="format-options">
+                            <div class="format-option selected">
+                                <div class="format-info">
+                                    <h4>MM/DD/YYYY</h4>
+                                    <p>10/25/2023 - United States standard</p>
+                                </div>
+                                <div class="format-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="format-option">
+                                <div class="format-info">
+                                    <h4>DD/MM/YYYY</h4>
+                                    <p>25/10/2023 - European standard</p>
+                                </div>
+                                <div class="format-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="format-option">
+                                <div class="format-info">
+                                    <h4>YYYY-MM-DD</h4>
+                                    <p>2023-10-25 - ISO standard</p>
+                                </div>
+                                <div class="format-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="format-option">
+                                <div class="format-info">
+                                    <h4>Month DD, YYYY</h4>
+                                    <p>October 25, 2023 - Long format</p>
+                                </div>
+                                <div class="format-check"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Settings Tab -->
+                <div class="tab-content" id="advanced-tab">
+                    <div class="advanced-card">
+                        <h3><i class="fas fa-cogs"></i> Advanced Localization</h3>
+                        <div class="advanced-options">
+                            <div class="advanced-option">
+                                <h4><i class="fas fa-language"></i> Multilingual Support</h4>
+                                <p>Enable multiple languages and switch between them seamlessly</p>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="advanced-option">
+                                <h4><i class="fas fa-font"></i> Font Rendering</h4>
+                                <p>Optimize font rendering for your selected language</p>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="advanced-option">
+                                <h4><i class="fas fa-text-height"></i> Text Direction</h4>
+                                <p>Automatically adjust for right-to-left languages</p>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="advanced-option">
+                                <h4><i class="fas fa-calendar-week"></i> First Day of Week</h4>
+                                <p>Set which day starts your calendar week</p>
+                                <select style="width: 100%; padding: 10px; border-radius: 8px; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.1); color: var(--text-light);">
+                                    <option>Sunday (US standard)</option>
+                                    <option>Monday (International standard)</option>
+                                </select>
+                            </div>
+                            <div class="advanced-option">
+                                <h4><i class="fas fa-ruler"></i> Measurement System</h4>
+                                <p>Choose between metric and imperial units</p>
+                                <select style="width: 100%; padding: 10px; border-radius: 8px; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.1); color: var(--text-light);">
+                                    <option>Imperial (miles, feet, Fahrenheit)</option>
+                                    <option>Metric (kilometers, meters, Celsius)</option>
+                                </select>
+                            </div>
+                            <div class="advanced-option">
+                                <h4><i class="fas fa-money-bill-wave"></i> Currency Format</h4>
+                                <p>Set your preferred currency display format</p>
+                                <select style="width: 100%; padding: 10px; border-radius: 8px; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.1); color: var(--text-light);">
+                                    <option>$1,000.00 (US Dollar)</option>
+                                    <option>€1.000,00 (Euro)</option>
+                                    <option>¥1,000 (Japanese Yen)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="advanced-card">
+                        <h3><i class="fas fa-network-wired"></i> Regional Services</h3>
+                        <div class="advanced-options">
+                            <div class="advanced-option">
+                                <h4><i class="fas fa-cloud"></i> Regional Cloud</h4>
+                                <p>Store data in your region for better performance and compliance</p>
+                                <select style="width: 100%; padding: 10px; border-radius: 8px; background: var(--bg-card); border: 1px solid rgba(255,255,255,0.1); color: var(--text-light);">
+                                    <option>North America (US East)</option>
+                                    <option>Europe (Ireland)</option>
+                                    <option>Asia (Singapore)</option>
+                                </select>
+                            </div>
+                            <div class="advanced-option">
+                                <h4><i class="fas fa-bolt"></i> CDN Optimization</h4>
+                                <p>Optimize content delivery for your region</p>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                            <div class="advanced-option">
+                                <h4><i class="fas fa-shield-alt"></i> Regional Compliance</h4>
+                                <p>Enable region-specific data protection (GDPR, CCPA, etc.)</p>
+                                <label class="toggle-switch">
+                                    <input type="checkbox" checked>
+                                    <span class="toggle-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Tab -->
+                <div class="tab-content" id="preview-tab">
+                    <div class="advanced-card">
+                        <h3><i class="fas fa-eye"></i> Live Preview</h3>
+                        <p style="margin-bottom: 20px; color: var(--text-gray);">See how your settings will look in the actual interface</p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div style="background: var(--bg-card); border-radius: 10px; padding: 20px;">
+                                <h4 style="margin-bottom: 15px;">Email Preview</h4>
+                                <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 15px; background: var(--bg-darker);">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                        <span style="font-weight: bold;">Welcome to Letters City</span>
+                                        <span style="color: var(--text-gray); font-size: 12px;">Oct 25, 2023</span>
+                                    </div>
+                                    <p style="color: var(--text-gray); font-size: 14px; margin-bottom: 10px;">Thank you for choosing our premium email service. Your account has been successfully activated.</p>
+                                    <div style="display: flex; gap: 10px;">
+                                        <button style="padding: 8px 15px; background: var(--purple-primary); border: none; border-radius: 5px; color: white; font-size: 12px; cursor: pointer;">View Details</button>
+                                        <button style="padding: 8px 15px; background: transparent; border: 1px solid var(--text-gray); border-radius: 5px; color: var(--text-gray); font-size: 12px; cursor: pointer;">Dismiss</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="background: var(--bg-card); border-radius: 10px; padding: 20px;">
+                                <h4 style="margin-bottom: 15px;">Calendar Preview</h4>
+                                <div style="border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; padding: 15px; background: var(--bg-darker);">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                        <span style="font-weight: bold;">October 2023</span>
+                                        <div style="display: flex; gap: 10px;">
+                                            <button style="background: transparent; border: none; color: var(--text-gray); cursor: pointer;"><i class="fas fa-chevron-left"></i></button>
+                                            <button style="background: transparent; border: none; color: var(--text-gray); cursor: pointer;"><i class="fas fa-chevron-right"></i></button>
+                                        </div>
+                                    </div>
+                                    <div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; text-align: center;">
+                                        <div style="padding: 5px; font-size: 12px; color: var(--text-gray);">S</div>
+                                        <div style="padding: 5px; font-size: 12px; color: var(--text-gray);">M</div>
+                                        <div style="padding: 5px; font-size: 12px; color: var(--text-gray);">T</div>
+                                        <div style="padding: 5px; font-size: 12px; color: var(--text-gray);">W</div>
+                                        <div style="padding: 5px; font-size: 12px; color: var(--text-gray);">T</div>
+                                        <div style="padding: 5px; font-size: 12px; color: var(--text-gray);">F</div>
+                                        <div style="padding: 5px; font-size: 12px; color: var(--text-gray);">S</div>
+                                        
+                                        <!-- Dates would go here in a real implementation -->
+                                        <div style="padding: 5px; font-size: 12px; color: var(--text-gray);">1</div>
+                                        <div style="padding: 5px; font-size: 12px; color: var(--text-gray);">2</div>
+                                        <div style="padding: 5px; font-size: 12px; color: var(--text-gray);">3</div>
+                                        <div style="padding: 5px; font-size: 12px; border: 1px solid var(--orange-accent); background: rgba(255,140,0,0.1); border-radius: 50%;">4</div>
+                                        <div style="padding: 5px; font-size: 12px; color: var(--text-light);">5</div>
+                                        <div style="padding: 5px; font-size: 12px; color: var(--text-light);">6</div>
+                                        <div style="padding: 5px; font-size: 12px; color: var(--text-light);">7</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-secondary">Reset to Defaults</button>
+                    <button class="btn btn-save">Apply Changes</button>
+                </div>
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising performance.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all tabs and contents
+                document.querySelectorAll('.tab-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Show corresponding content
+                const tabId = this.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Language selection
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.language-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+
+        // Region selection
+        document.querySelectorAll('.region-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.region-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+
+        // Timezone selection
+        document.querySelectorAll('.timezone-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.timezone-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+                
+                // Update current time display
+                const timezone = this.querySelector('h5').textContent;
+                document.getElementById('current-time').textContent = `2:45 PM, Wednesday, October 25, 2023 (${timezone})`;
+            });
+        });
+
+        // Date format selection
+        document.querySelectorAll('.format-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.format-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+
+        // Language category filtering
+        document.querySelectorAll('.category-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.category-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // In a real implementation, this would filter the language options
+                // For this demo, we'll just show a message
+                const category = this.getAttribute('data-category');
+                console.log(`Filtering by: ${category}`);
+            });
+        });
+
+        // Language search
+        const searchInput = document.querySelector('.language-search input');
+        searchInput.addEventListener('input', function() {
+            // In a real implementation, this would filter the language options
+            // For this demo, we'll just log the search term
+            console.log(`Searching for: ${this.value}`);
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.language-card, .region-card, .timezone-card, .date-format-card, .advanced-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 40px rgba(168, 85, 247, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

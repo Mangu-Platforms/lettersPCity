@@ -1,0 +1,860 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        /* Main Layout */
+        .auth-container {
+            display: flex;
+            min-height: 80vh;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+        }
+
+        .brand-section {
+            flex: 1;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIiBmaWxsPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMSkiLz48L3N2Zz4=');
+            opacity: 0.2;
+        }
+
+        .form-section {
+            flex: 1;
+            background: var(--bg-card);
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .city-logo {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 2px solid var(--orange-accent);
+            border-radius: 50px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .city-logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .brand-tagline {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 18px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-features {
+            list-style: none;
+            margin-top: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .brand-features li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 15px;
+        }
+
+        .brand-features i {
+            font-size: 20px;
+            color: var(--orange-accent);
+        }
+
+        /* Form Styling */
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .form-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .auth-tab.active {
+            color: var(--orange-accent);
+            border-bottom-color: var(--orange-accent);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            font-size: 16px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            background: var(--bg-darker);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+            box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.2);
+        }
+
+        .password-strength {
+            margin-top: 10px;
+        }
+
+        .strength-bar {
+            height: 5px;
+            background: var(--bg-darker);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+
+        .strength-text {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .remember-me input {
+            accent-color: var(--purple-primary);
+        }
+
+        .forgot-password {
+            color: var(--purple-primary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .forgot-password:hover {
+            color: var(--orange-accent);
+        }
+
+        .btn {
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            color: var(--text-light);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+            border: 1px solid var(--orange-accent);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 30px 0;
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .divider span {
+            padding: 0 15px;
+        }
+
+        .social-login {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            background: var(--bg-darker);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-2px);
+            border-color: var(--orange-accent);
+        }
+
+        .social-btn.google {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+        }
+
+        .social-btn.apple {
+            background: linear-gradient(135deg, #000000, #434343);
+        }
+
+        .social-btn.facebook {
+            background: linear-gradient(135deg, #1877f2, #0d64c0);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .form-footer a {
+            color: var(--purple-primary);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .form-footer a:hover {
+            color: var(--orange-accent);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .auth-container {
+                flex-direction: column;
+            }
+            
+            .brand-section {
+                padding: 40px 20px;
+            }
+            
+            .form-section {
+                padding: 40px 20px;
+            }
+            
+            .social-login {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .top-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Password Strength Indicator */
+        .strength-weak .strength-fill {
+            width: 30%;
+            background: #ff4757;
+        }
+        
+        .strength-medium .strength-fill {
+            width: 60%;
+            background: #ffa502;
+        }
+        
+        .strength-strong .strength-fill {
+            width: 100%;
+            background: #2ed573;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="#" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="#">Features</a></li>
+                <li><a href="#">Pricing</a></li>
+                <li><a href="#">Help Center</a></li>
+            </ul>
+        </nav>
+
+        <!-- Authentication Container -->
+        <div class="auth-container">
+            <!-- Brand Section -->
+            <div class="brand-section">
+                <div class="city-logo">
+                    <h1>LETTERS CITY</h1>
+                </div>
+                <p class="brand-tagline">Private. Encrypted for you</p>
+                
+                <ul class="brand-features">
+                    <li>
+                        <i class="fas fa-shield-alt"></i>
+                        <span>End-to-end encryption for maximum security</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-bolt"></i>
+                        <span>Lightning-fast performance with smart organization</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-sync"></i>
+                        <span>Seamless synchronization across all your devices</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-palette"></i>
+                        <span>Customizable interface with dark theme options</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Form Section -->
+            <div class="form-section">
+                <div class="form-header">
+                    <h2>Welcome to Letters City</h2>
+                    <p>Sign in to your account or create a new one</p>
+                </div>
+
+                <div class="auth-tabs">
+                    <div class="auth-tab active" id="login-tab">Sign In</div>
+                    <div class="auth-tab" id="signup-tab">Create Account</div>
+                </div>
+
+                <!-- Login Form -->
+                <form id="login-form" class="auth-form active">
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="login-email" class="form-control" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="login-password" class="form-control" placeholder="Enter your password" required>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" checked>
+                            Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Sign In</button>
+
+                    <div class="divider">
+                        <span>Or continue with</span>
+                    </div>
+
+                    <div class="social-login">
+                        <button type="button" class="social-btn google">
+                            <i class="fab fa-google"></i>
+                            Google
+                        </button>
+                        <button type="button" class="social-btn apple">
+                            <i class="fab fa-apple"></i>
+                            Apple
+                        </button>
+                        <button type="button" class="social-btn facebook">
+                            <i class="fab fa-facebook-f"></i>
+                            Facebook
+                        </button>
+                    </div>
+
+                    <div class="form-footer">
+                        Don't have an account? <a href="#" id="switch-to-signup">Sign up</a>
+                    </div>
+                </form>
+
+                <!-- Signup Form -->
+                <form id="signup-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="signup-name" class="form-control" placeholder="Your full name" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-email">Email Address</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="signup-email" class="form-control" placeholder="you@example.com" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="signup-password" class="form-control" placeholder="Create a strong password" required>
+                        </div>
+                        <div class="password-strength">
+                            <div class="strength-bar">
+                                <div class="strength-fill"></div>
+                            </div>
+                            <div class="strength-text">Password strength: None</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirm-password" class="form-control" placeholder="Confirm your password" required>
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="remember-me">
+                            <input type="checkbox" required>
+                            I agree to the <a href="#" style="color: var(--purple-primary);">Terms of Service</a> and <a href="#" style="color: var(--purple-primary);">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+
+                    <div class="divider">
+                        <span>Or sign up with</span>
+                    </div>
+
+                    <div class="social-login">
+                        <button type="button" class="social-btn google">
+                            <i class="fab fa-google"></i>
+                            Google
+                        </button>
+                        <button type="button" class="social-btn apple">
+                            <i class="fab fa-apple"></i>
+                            Apple
+                        </button>
+                        <button type="button" class="social-btn facebook">
+                            <i class="fab fa-facebook-f"></i>
+                            Facebook
+                        </button>
+                    </div>
+
+                    <div class="form-footer">
+                        Already have an account? <a href="#" id="switch-to-login">Sign in</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising performance.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        document.getElementById('login-tab').addEventListener('click', function() {
+            switchToLogin();
+        });
+
+        document.getElementById('signup-tab').addEventListener('click', function() {
+            switchToSignup();
+        });
+
+        document.getElementById('switch-to-signup').addEventListener('click', function(e) {
+            e.preventDefault();
+            switchToSignup();
+        });
+
+        document.getElementById('switch-to-login').addEventListener('click', function(e) {
+            e.preventDefault();
+            switchToLogin();
+        });
+
+        function switchToLogin() {
+            document.getElementById('login-form').classList.add('active');
+            document.getElementById('signup-form').classList.remove('active');
+            document.getElementById('login-tab').classList.add('active');
+            document.getElementById('signup-tab').classList.remove('active');
+        }
+
+        function switchToSignup() {
+            document.getElementById('signup-form').classList.add('active');
+            document.getElementById('login-form').classList.remove('active');
+            document.getElementById('signup-tab').classList.add('active');
+            document.getElementById('login-tab').classList.remove('active');
+        }
+
+        // Password strength indicator
+        const passwordInput = document.getElementById('signup-password');
+        const strengthBar = document.querySelector('.strength-fill');
+        const strengthText = document.querySelector('.strength-text');
+        const passwordStrength = document.querySelector('.password-strength');
+
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+            let feedback = '';
+
+            // Check password length
+            if (password.length >= 8) strength += 1;
+            
+            // Check for mixed case
+            if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength += 1;
+            
+            // Check for numbers
+            if (password.match(/\d/)) strength += 1;
+            
+            // Check for special characters
+            if (password.match(/[^a-zA-Z\d]/)) strength += 1;
+
+            // Update strength indicator
+            passwordStrength.className = 'password-strength';
+            
+            if (password.length === 0) {
+                strengthText.textContent = 'Password strength: None';
+                return;
+            }
+            
+            if (strength <= 1) {
+                passwordStrength.classList.add('strength-weak');
+                strengthText.textContent = 'Password strength: Weak';
+            } else if (strength <= 2) {
+                passwordStrength.classList.add('strength-medium');
+                strengthText.textContent = 'Password strength: Medium';
+            } else {
+                passwordStrength.classList.add('strength-strong');
+                strengthText.textContent = 'Password strength: Strong';
+            }
+        });
+
+        // Form submission
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In a real application, you would handle authentication here
+            alert('Login functionality would be implemented here');
+        });
+
+        document.getElementById('signup-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In a real application, you would handle registration here
+            alert('Registration functionality would be implemented here');
+        });
+
+        // Social login buttons
+        document.querySelectorAll('.social-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const platform = this.textContent.trim();
+                alert(`${platform} authentication would be implemented here`);
+            });
+        });
+    </script>
+</body>
+</html>

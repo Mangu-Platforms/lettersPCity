@@ -1,0 +1,1184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Two-Factor Authentication - Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        .top-nav-links a.active {
+            color: var(--orange-accent);
+        }
+
+        /* User Menu */
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 40px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            color: var(--text-gray);
+            font-size: 16px;
+        }
+
+        /* Two Column Layout */
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Status Card */
+        .status-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .status-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .status-title {
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--green), #0da271);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--green);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .status-badge.inactive {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--red);
+        }
+
+        .status-content p {
+            color: var(--text-gray);
+            margin-bottom: 20px;
+        }
+
+        /* Method Cards */
+        .method-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .method-card:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .method-card.active {
+            border: 2px solid var(--orange-accent);
+        }
+
+        .method-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .method-title {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .method-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .method-badge {
+            padding: 6px 12px;
+            border-radius: 15px;
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--green);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .method-content p {
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .method-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--purple-primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--purple-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-success {
+            background: var(--green);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #0da271;
+            transform: translateY(-2px);
+        }
+
+        /* Setup Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            font-size: 20px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .modal-close:hover {
+            color: var(--text-light);
+        }
+
+        .setup-steps {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .setup-steps:before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            height: 2px;
+            background: var(--bg-darker);
+            z-index: 1;
+        }
+
+        .step {
+            flex: 1;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--bg-darker);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .step.active .step-number {
+            background: var(--orange-accent);
+            color: white;
+        }
+
+        .step.completed .step-number {
+            background: var(--green);
+            color: white;
+        }
+
+        .step-label {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .step.active .step-label {
+            color: var(--orange-accent);
+        }
+
+        .step-content {
+            margin-bottom: 30px;
+        }
+
+        .step-content h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .step-content p {
+            color: var(--text-gray);
+            margin-bottom: 20px;
+        }
+
+        .qr-code {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            margin: 0 auto 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .manual-code {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .manual-code code {
+            font-family: monospace;
+            font-size: 16px;
+            color: var(--text-light);
+            word-break: break-all;
+        }
+
+        .verification-input {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .verification-input input {
+            width: 50px;
+            height: 60px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-darker);
+            color: var(--text-light);
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .verification-input input:focus {
+            border-color: var(--orange-accent);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.2);
+        }
+
+        .backup-codes {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .backup-codes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .backup-code {
+            padding: 10px;
+            background: var(--bg-darker);
+            border-radius: 8px;
+            text-align: center;
+            font-family: monospace;
+            font-size: 14px;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        /* Recovery Options */
+        .recovery-options {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .recovery-options h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .recovery-methods {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .recovery-method {
+            display: flex;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            transition: all 0.3s;
+        }
+
+        .recovery-method:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-3px);
+        }
+
+        .recovery-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--orange-accent), #ff6b00);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .recovery-content h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .recovery-content p {
+            font-size: 13px;
+            color: var(--text-gray);
+            margin-bottom: 12px;
+        }
+
+        /* Activity Log */
+        .activity-log {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin-bottom: 30px;
+        }
+
+        .activity-log h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .activity-list {
+            list-style: none;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: rgba(168, 85, 247, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--purple-primary);
+            font-size: 16px;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .activity-description {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .two-column,
+            .recovery-methods {
+                grid-template-columns: 1fr;
+            }
+
+            .backup-codes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .top-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .modal {
+                padding: 30px 20px;
+            }
+
+            .verification-input {
+                flex-wrap: wrap;
+            }
+
+            .verification-input input {
+                width: 40px;
+                height: 50px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="#" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="#">Inbox</a></li>
+                <li><a href="#">Calendar</a></li>
+                <li><a href="#">Contacts</a></li>
+                <li><a href="#" class="active">Security</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+            <div class="user-menu">
+                <div class="user-avatar">JS</div>
+            </div>
+        </nav>
+
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1 class="page-title">Two-Factor Authentication</h1>
+            <p class="page-subtitle">Add an extra layer of security to your account</p>
+        </header>
+
+        <!-- Status Card -->
+        <section class="status-card">
+            <div class="status-header">
+                <h2 class="status-title">
+                    <div class="status-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    Two-Factor Authentication Status
+                </h2>
+                <div class="status-badge">Active</div>
+            </div>
+            <div class="status-content">
+                <p>Two-factor authentication is currently protecting your account. When signing in, you'll need to enter both your password and a verification code from your authenticator app.</p>
+                <div class="method-actions">
+                    <button class="btn btn-outline" id="disable-2fa">Disable 2FA</button>
+                    <button class="btn btn-primary" id="manage-settings">Manage Settings</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Two Column Layout -->
+        <div class="two-column">
+            <!-- Authentication Methods -->
+            <div>
+                <h2 style="margin-bottom: 20px;">Authentication Methods</h2>
+                
+                <!-- Authenticator App Card -->
+                <div class="method-card active">
+                    <div class="method-header">
+                        <h3 class="method-title">
+                            <div class="method-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            Authenticator App
+                        </h3>
+                        <div class="method-badge">Primary</div>
+                    </div>
+                    <div class="method-content">
+                        <p>Use an authenticator app like Google Authenticator, Authy, or Microsoft Authenticator to generate verification codes.</p>
+                        <div class="method-actions">
+                            <button class="btn btn-outline" id="view-backup-codes">View Backup Codes</button>
+                            <button class="btn btn-primary" id="reconfigure-app">Reconfigure</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SMS Verification Card -->
+                <div class="method-card">
+                    <div class="method-header">
+                        <h3 class="method-title">
+                            <div class="method-icon">
+                                <i class="fas fa-sms"></i>
+                            </div>
+                            SMS Verification
+                        </h3>
+                        <div class="method-badge">Inactive</div>
+                    </div>
+                    <div class="method-content">
+                        <p>Receive verification codes via text message to your phone.</p>
+                        <div class="method-actions">
+                            <button class="btn btn-outline" id="setup-sms">Set Up</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backup Phone Card -->
+                <div class="method-card">
+                    <div class="method-header">
+                        <h3 class="method-title">
+                            <div class="method-icon">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            Backup Phone
+                        </h3>
+                        <div class="method-badge">Inactive</div>
+                    </div>
+                    <div class="method-content">
+                        <p>Add a backup phone number to receive verification codes if you lose access to your primary device.</p>
+                        <div class="method-actions">
+                            <button class="btn btn-outline" id="add-backup-phone">Add Phone</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recovery Options -->
+            <div class="recovery-options">
+                <h3>Recovery Options</h3>
+                <div class="recovery-methods">
+                    <div class="recovery-method">
+                        <div class="recovery-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <div class="recovery-content">
+                            <h4>Backup Codes</h4>
+                            <p>One-time use codes to access your account if you lose your device.</p>
+                            <button class="btn btn-outline">View Codes</button>
+                        </div>
+                    </div>
+                    <div class="recovery-method">
+                        <div class="recovery-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="recovery-content">
+                            <h4>Recovery Email</h4>
+                            <p>Send account recovery instructions to your backup email.</p>
+                            <button class="btn btn-outline">Manage</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Activity Log -->
+        <section class="activity-log">
+            <h3>Recent 2FA Activity</h3>
+            <ul class="activity-list">
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-title">Successful login with 2FA</div>
+                        <div class="activity-description">Chrome on Windows • San Francisco, CA</div>
+                    </div>
+                    <div class="activity-time">2 hours ago</div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-title">Authenticator app reconfigured</div>
+                        <div class="activity-description">New device added to your account</div>
+                    </div>
+                    <div class="activity-time">3 days ago</div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-title">Backup codes regenerated</div>
+                        <div class="activity-description">Previous codes are no longer valid</div>
+                    </div>
+                    <div class="activity-time">1 week ago</div>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-title">Two-factor authentication enabled</div>
+                        <div class="activity-description">Your account security has been upgraded</div>
+                    </div>
+                    <div class="activity-time">2 weeks ago</div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Setup Modal -->
+        <div class="modal-overlay" id="setup-modal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h2 class="modal-title">
+                        <div class="method-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        Set Up Authenticator App
+                    </h2>
+                    <button class="modal-close" id="close-modal">&times;</button>
+                </div>
+
+                <div class="setup-steps">
+                    <div class="step completed">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Install App</div>
+                    </div>
+                    <div class="step active">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Scan QR Code</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Verify Code</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-label">Backup Codes</div>
+                    </div>
+                </div>
+
+                <div class="step-content">
+                    <h3>Scan the QR Code</h3>
+                    <p>Open your authenticator app and scan this QR code with your phone's camera.</p>
+                    
+                    <div class="qr-placeholder">
+                        [QR Code Placeholder]
+                    </div>
+                    
+                    <div class="manual-code">
+                        <p>Can't scan the code? Enter this key manually:</p>
+                        <code>JBSWY3DPEHPK3PXP</code>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn btn-outline">Back</button>
+                    <button class="btn btn-primary">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Backup Codes Modal -->
+        <div class="modal-overlay" id="backup-codes-modal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h2 class="modal-title">
+                        <div class="method-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        Backup Codes
+                    </h2>
+                    <button class="modal-close" id="close-backup-modal">&times;</button>
+                </div>
+
+                <div class="step-content">
+                    <h3>Save Your Backup Codes</h3>
+                    <p>These codes can be used to access your account if you lose your device. Each code can only be used once.</p>
+                    
+                    <div class="backup-codes">
+                        <div class="backup-codes-grid">
+                            <div class="backup-code">A1B2-C3D4</div>
+                            <div class="backup-code">E5F6-G7H8</div>
+                            <div class="backup-code">I9J0-K1L2</div>
+                            <div class="backup-code">M3N4-O5P6</div>
+                            <div class="backup-code">Q7R8-S9T0</div>
+                            <div class="backup-code">U1V2-W3X4</div>
+                            <div class="backup-code">Y5Z6-A7B8</div>
+                            <div class="backup-code">C9D0-E1F2</div>
+                        </div>
+                        
+                        <div class="method-actions">
+                            <button class="btn btn-outline">
+                                <i class="fas fa-print"></i> Print
+                            </button>
+                            <button class="btn btn-outline">
+                                <i class="fas fa-download"></i> Download
+                            </button>
+                            <button class="btn btn-primary">
+                                <i class="fas fa-redo"></i> Generate New Codes
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-actions">
+                    <button class="btn btn-primary" id="close-backup-codes">Done</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising security.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Security</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Security Overview</a></li>
+                        <li><a href="#">Two-Factor Auth</a></li>
+                        <li><a href="#">Report an Issue</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Security Tips</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">System Status</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved. Your security is our priority.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Modal functionality
+        const setupModal = document.getElementById('setup-modal');
+        const backupCodesModal = document.getElementById('backup-codes-modal');
+        const closeModal = document.getElementById('close-modal');
+        const closeBackupModal = document.getElementById('close-backup-modal');
+        const closeBackupCodes = document.getElementById('close-backup-codes');
+        const viewBackupCodes = document.getElementById('view-backup-codes');
+        const setupSms = document.getElementById('setup-sms');
+
+        // Open setup modal
+        document.getElementById('reconfigure-app').addEventListener('click', function() {
+            setupModal.classList.add('active');
+        });
+
+        // Close setup modal
+        closeModal.addEventListener('click', function() {
+            setupModal.classList.remove('active');
+        });
+
+        // Open backup codes modal
+        viewBackupCodes.addEventListener('click', function() {
+            backupCodesModal.classList.add('active');
+        });
+
+        // Close backup codes modal
+        closeBackupModal.addEventListener('click', function() {
+            backupCodesModal.classList.remove('active');
+        });
+
+        closeBackupCodes.addEventListener('click', function() {
+            backupCodesModal.classList.remove('active');
+        });
+
+        // Setup SMS verification
+        setupSms.addEventListener('click', function() {
+            alert('SMS verification setup would be initiated here.');
+        });
+
+        // Disable 2FA confirmation
+        document.getElementById('disable-2fa').addEventListener('click', function() {
+            if (confirm('Are you sure you want to disable two-factor authentication? This will make your account less secure.')) {
+                alert('Two-factor authentication has been disabled.');
+                // In a real app, this would make an API call to disable 2FA
+            }
+        });
+
+        // Manage settings
+        document.getElementById('manage-settings').addEventListener('click', function() {
+            alert('Additional 2FA settings would be shown here.');
+        });
+
+        // Add backup phone
+        document.getElementById('add-backup-phone').addEventListener('click', function() {
+            alert('Backup phone setup would be initiated here.');
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            if (event.target === setupModal) {
+                setupModal.classList.remove('active');
+            }
+            if (event.target === backupCodesModal) {
+                backupCodesModal.classList.remove('active');
+            }
+        });
+
+        // Verification code input auto-focus
+        const verificationInputs = document.querySelectorAll('.verification-input input');
+        verificationInputs.forEach((input, index) => {
+            input.addEventListener('input', function() {
+                if (this.value.length === 1 && index < verificationInputs.length - 1) {
+                    verificationInputs[index + 1].focus();
+                }
+            });
+            
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && this.value.length === 0 && index > 0) {
+                    verificationInputs[index - 1].focus();
+                }
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.method-card, .recovery-method').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 40px rgba(168, 85, 247, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

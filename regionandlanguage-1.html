@@ -1,0 +1,978 @@
+V1
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snooze & Schedule - Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        .top-nav-links a.active {
+            color: var(--orange-accent);
+        }
+
+        /* Main Header */
+        .main-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .city-logo {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 2px solid var(--orange-accent);
+            border-radius: 50px;
+            margin-bottom: 12px;
+        }
+
+        .city-logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .tagline {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Main Content Layout */
+        .content-layout {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            height: fit-content;
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sidebar-title i {
+            color: var(--orange-accent);
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 12px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-gray);
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-nav a:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-light);
+        }
+
+        .sidebar-nav a.active {
+            background: var(--bg-card-hover);
+            color: var(--orange-accent);
+            border-left: 3px solid var(--orange-accent);
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        /* Feature Cards */
+        .feature-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-3px);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+        }
+
+        .feature-title {
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .feature-description {
+            color: var(--text-gray);
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        /* Snooze Options */
+        .snooze-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .snooze-option {
+            background: var(--bg-darker);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .snooze-option:hover {
+            border-color: var(--border-color);
+            transform: translateY(-2px);
+        }
+
+        .snooze-option.active {
+            border-color: var(--orange-accent);
+            background: rgba(255, 140, 0, 0.1);
+        }
+
+        .snooze-time {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .snooze-label {
+            color: var(--text-gray);
+            font-size: 13px;
+        }
+
+        /* Custom Snooze */
+        .custom-snooze {
+            background: var(--bg-darker);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
+        .custom-snooze-title {
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .custom-snooze-title i {
+            color: var(--orange-accent);
+        }
+
+        .custom-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .input-group label {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .input-group select,
+        .input-group input {
+            padding: 12px 15px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .input-group select:focus,
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+        }
+
+        /* Schedule Email */
+        .schedule-email {
+            background: var(--bg-darker);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .schedule-title {
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .schedule-title i {
+            color: var(--orange-accent);
+        }
+
+        .datetime-inputs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .datetime-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .datetime-group label {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .datetime-group input {
+            padding: 12px 15px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .datetime-group input:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn-snooze {
+            background: var(--purple-primary);
+            color: white;
+            padding: 14px 25px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-snooze:hover {
+            background: var(--purple-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-schedule {
+            background: var(--orange-accent);
+            color: white;
+            padding: 14px 25px;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-schedule:hover {
+            background: #e67e00;
+            transform: translateY(-2px);
+        }
+
+        .btn-cancel {
+            background: transparent;
+            color: var(--text-gray);
+            padding: 14px 25px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-cancel:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+        }
+
+        /* Scheduled Emails List */
+        .scheduled-list {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .list-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .list-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .scheduled-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .scheduled-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px;
+            background: var(--bg-darker);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .scheduled-item:hover {
+            border-color: var(--border-color);
+        }
+
+        .item-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .item-content {
+            flex: 1;
+        }
+
+        .item-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .item-details {
+            display: flex;
+            gap: 20px;
+            color: var(--text-gray);
+            font-size: 13px;
+        }
+
+        .item-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .item-action {
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .item-action:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+        }
+
+        .item-action.edit:hover {
+            color: var(--purple-primary);
+        }
+
+        .item-action.delete:hover {
+            color: var(--pink-accent);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .snooze-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .snooze-options {
+                grid-template-columns: 1fr;
+            }
+            
+            .custom-inputs,
+            .datetime-inputs {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .top-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .scheduled-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .item-actions {
+                align-self: flex-end;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="#" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="keyboard-shortcuts.html">Shortcuts</a></li>
+                <li><a href="#" class="active">Snooze & Schedule</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Header -->
+        <header class="main-header">
+            <div class="city-logo">
+                <h1>LETTERS CITY</h1>
+            </div>
+            <p class="tagline">Snooze & Schedule - Control when emails appear and send</p>
+            <a href="#" class="btn btn-primary">SIGN IN</a>
+        </header>
+
+        <!-- Main Content -->
+        <div class="content-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <h2 class="sidebar-title"><i class="fas fa-clock"></i> Delay Options</h2>
+                <ul class="sidebar-nav">
+                    <li><a href="#" class="active"><i class="fas fa-bell"></i> Snooze Email</a></li>
+                    <li><a href="#"><i class="fas fa-paper-plane"></i> Schedule Send</a></li>
+                    <li><a href="#"><i class="fas fa-history"></i> Send Later</a></li>
+                    <li><a href="#"><i class="fas fa-calendar-alt"></i> Scheduled Emails</a></li>
+                    <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content Area -->
+            <div class="main-content">
+                <!-- Snooze Email Card -->
+                <section class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <h2 class="feature-title">Snooze Email</h2>
+                    </div>
+                    <p class="feature-description">
+                        Temporarily remove emails from your inbox and have them return at a more convenient time. 
+                        Perfect for decluttering your inbox while ensuring you don't forget important messages.
+                    </p>
+
+                    <h3 class="custom-snooze-title"><i class="fas fa-star"></i> Quick Snooze Options</h3>
+                    <div class="snooze-options">
+                        <div class="snooze-option active">
+                            <div class="snooze-time">Later Today</div>
+                            <div class="snooze-label">5:00 PM</div>
+                        </div>
+                        <div class="snooze-option">
+                            <div class="snooze-time">Tomorrow</div>
+                            <div class="snooze-label">8:00 AM</div>
+                        </div>
+                        <div class="snooze-option">
+                            <div class="snooze-time">This Weekend</div>
+                            <div class="snooze-label">Saturday</div>
+                        </div>
+                        <div class="snooze-option">
+                            <div class="snooze-time">Next Week</div>
+                            <div class="snooze-label">Monday</div>
+                        </div>
+                        <div class="snooze-option">
+                            <div class="snooze-time">In a Month</div>
+                            <div class="snooze-label">30 days</div>
+                        </div>
+                        <div class="snooze-option">
+                            <div class="snooze-time">Custom</div>
+                            <div class="snooze-label">Set your own</div>
+                        </div>
+                    </div>
+
+                    <div class="custom-snooze">
+                        <h3 class="custom-snooze-title"><i class="fas fa-cog"></i> Custom Snooze</h3>
+                        <div class="custom-inputs">
+                            <div class="input-group">
+                                <label for="snooze-date">Date</label>
+                                <input type="date" id="snooze-date">
+                            </div>
+                            <div class="input-group">
+                                <label for="snooze-time">Time</label>
+                                <input type="time" id="snooze-time" value="09:00">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-snooze"><i class="fas fa-bell"></i> Snooze Email</button>
+                        <button class="btn-cancel">Cancel</button>
+                    </div>
+                </section>
+
+                <!-- Schedule Email Card -->
+                <section class="feature-card">
+                    <div class="feature-header">
+                        <div class="feature-icon">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        <h2 class="feature-title">Schedule Email</h2>
+                    </div>
+                    <p class="feature-description">
+                        Compose your email now but schedule it to be sent at a later time. Perfect for sending 
+                        messages during business hours, across time zones, or when you want to ensure optimal delivery timing.
+                    </p>
+
+                    <div class="schedule-email">
+                        <h3 class="schedule-title"><i class="fas fa-calendar-alt"></i> Schedule Send</h3>
+                        <div class="datetime-inputs">
+                            <div class="datetime-group">
+                                <label for="send-date">Send Date</label>
+                                <input type="date" id="send-date">
+                            </div>
+                            <div class="datetime-group">
+                                <label for="send-time">Send Time</label>
+                                <input type="time" id="send-time" value="09:00">
+                            </div>
+                        </div>
+                        <div class="action-buttons">
+                            <button class="btn-schedule"><i class="fas fa-paper-plane"></i> Schedule Send</button>
+                            <button class="btn-cancel">Cancel</button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Scheduled Emails List -->
+                <section class="scheduled-list">
+                    <div class="list-header">
+                        <h2 class="list-title">Scheduled Emails</h2>
+                    </div>
+                    <div class="scheduled-items">
+                        <div class="scheduled-item">
+                            <div class="item-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="item-content">
+                                <div class="item-title">Project Update - Q3 Results</div>
+                                <div class="item-details">
+                                    <span><i class="fas fa-clock"></i> Scheduled for: Tomorrow, 9:00 AM</span>
+                                    <span><i class="fas fa-user"></i> To: Team Leads</span>
+                                </div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="item-action edit" title="Edit schedule"><i class="fas fa-edit"></i></button>
+                                <button class="item-action delete" title="Cancel send"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="scheduled-item">
+                            <div class="item-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="item-content">
+                                <div class="item-title">Weekly Newsletter</div>
+                                <div class="item-details">
+                                    <span><i class="fas fa-clock"></i> Scheduled for: Friday, 10:00 AM</span>
+                                    <span><i class="fas fa-user"></i> To: Subscribers</span>
+                                </div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="item-action edit" title="Edit schedule"><i class="fas fa-edit"></i></button>
+                                <button class="item-action delete" title="Cancel send"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                        <div class="scheduled-item">
+                            <div class="item-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="item-content">
+                                <div class="item-title">Invoice Reminder</div>
+                                <div class="item-details">
+                                    <span><i class="fas fa-clock"></i> Scheduled for: Next Monday, 11:00 AM</span>
+                                    <span><i class="fas fa-user"></i> To: Accounting Dept</span>
+                                </div>
+                            </div>
+                            <div class="item-actions">
+                                <button class="item-action edit" title="Edit schedule"><i class="fas fa-edit"></i></button>
+                                <button class="item-action delete" title="Cancel send"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising performance.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.feature-card, .scheduled-item, .snooze-option').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 40px rgba(168, 85, 247, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Snooze option selection
+        const snoozeOptions = document.querySelectorAll('.snooze-option');
+        snoozeOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                snoozeOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                
+                // If custom option is selected, focus on the date input
+                if (this.querySelector('.snooze-time').textContent === 'Custom') {
+                    document.getElementById('snooze-date').focus();
+                }
+            });
+        });
+
+        // Set default date values to tomorrow
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        
+        const formatDate = (date) => {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        };
+        
+        document.getElementById('snooze-date').value = formatDate(tomorrow);
+        document.getElementById('send-date').value = formatDate(tomorrow);
+
+        // Sidebar navigation
+        const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+        sidebarLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                sidebarLinks.forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

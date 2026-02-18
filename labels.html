@@ -1,0 +1,1715 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letters City - Next-Gen Email</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --cyan-accent: #00f5d4;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --gradient-primary: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            --gradient-secondary: linear-gradient(135deg, var(--cyan-accent), var(--purple-primary));
+            --gradient-accent: linear-gradient(135deg, var(--orange-accent), var(--pink-accent));
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 140, 0, 0.05) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        /* Enhanced Top Navigation */
+        .mobile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .mobile-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            padding: 5px;
+        }
+
+        .logo-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .logo-link:hover::before {
+            left: 100%;
+        }
+
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .logo-link:hover .logo-icon {
+            transform: rotate(15deg) scale(1.1);
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 18px;
+            font-weight: 700;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .header-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--bg-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-accent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .header-btn:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 140, 0, 0.3);
+        }
+
+        .header-btn:hover::before {
+            opacity: 0.1;
+        }
+
+        .header-btn i {
+            position: relative;
+            z-index: 1;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 18px;
+            height: 18px;
+            background: var(--pink-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+            z-index: 2;
+            box-shadow: 0 2px 8px rgba(236, 72, 153, 0.5);
+        }
+
+        /* Enhanced Search Bar */
+        .search-bar {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 18px 50px 18px 20px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            color: var(--text-light);
+            font-size: 16px;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            font-size: 18px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .search-btn:hover {
+            color: var(--orange-accent);
+        }
+
+        .ai-search-suggestions {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            overflow-x: auto;
+            padding-bottom: 5px;
+            scrollbar-width: none;
+        }
+
+        .ai-search-suggestions::-webkit-scrollbar {
+            display: none;
+        }
+
+        .search-suggestion {
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            color: var(--text-gray);
+            font-size: 14px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-suggestion:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-light);
+            border-color: var(--purple-primary);
+        }
+
+        /* Enhanced Folder Navigation */
+        .folder-nav {
+            display: flex;
+            overflow-x: auto;
+            gap: 12px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            scrollbar-width: none;
+            position: relative;
+        }
+
+        .folder-nav::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        }
+
+        .folder-nav::-webkit-scrollbar {
+            display: none;
+        }
+
+        .folder-btn {
+            padding: 12px 24px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            color: var(--text-gray);
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .folder-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: all 0.3s;
+        }
+
+        .folder-btn.active {
+            background: var(--bg-card-hover);
+            color: white;
+            border-color: var(--purple-primary);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.3);
+        }
+
+        .folder-btn.active::before {
+            left: 0;
+            opacity: 0.1;
+        }
+
+        .folder-btn:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-2px);
+        }
+
+        .folder-count {
+            margin-left: 8px;
+            background: var(--bg-darker);
+            color: var(--text-gray);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .folder-btn.active .folder-count {
+            background: var(--purple-primary);
+            color: white;
+        }
+
+        /* Enhanced Email List */
+        .email-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            margin-bottom: 100px;
+        }
+
+        .email-item {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 22px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .email-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.03), transparent);
+            transition: left 0.6s;
+        }
+
+        .email-item:hover::before {
+            left: 100%;
+        }
+
+        .email-item:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .email-item.unread {
+            border-left: 4px solid var(--orange-accent);
+        }
+
+        .email-item.selected {
+            border-color: var(--purple-primary);
+            box-shadow: 0 0 0 2px rgba(168, 85, 247, 0.2);
+        }
+
+        .email-item.ai-priority {
+            position: relative;
+            border-top: 2px solid var(--cyan-accent);
+        }
+
+        .ai-priority-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0, 245, 212, 0.4);
+        }
+
+        .email-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .sender-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sender-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+            transition: transform 0.3s;
+        }
+
+        .email-item:hover .sender-avatar {
+            transform: scale(1.1);
+        }
+
+        .sender-details {
+            flex: 1;
+        }
+
+        .sender-name {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 4px;
+        }
+
+        .email-subject {
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-light);
+            margin-bottom: 6px;
+        }
+
+        .email-preview {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 12px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .email-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .email-time {
+            color: var(--text-dim);
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .email-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--bg-darker);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .action-btn:hover {
+            background: var(--bg-card-hover);
+            transform: scale(1.1);
+        }
+
+        .action-btn:hover::before {
+            opacity: 0.1;
+        }
+
+        .action-btn.starred i {
+            color: var(--orange-accent);
+        }
+
+        /* Enhanced Compose Button */
+        .compose-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: var(--gradient-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 26px;
+            box-shadow: 0 8px 25px rgba(255, 140, 0, 0.5);
+            cursor: pointer;
+            transition: all 0.4s;
+            z-index: 100;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 8px 25px rgba(255, 140, 0, 0.5);
+            }
+            50% {
+                box-shadow: 0 8px 30px rgba(255, 140, 0, 0.8);
+            }
+            100% {
+                box-shadow: 0 8px 25px rgba(255, 140, 0, 0.5);
+            }
+        }
+
+        .compose-btn:hover {
+            transform: translateY(-8px) scale(1.1);
+            box-shadow: 0 15px 35px rgba(255, 140, 0, 0.7);
+            animation: none;
+        }
+
+        /* Enhanced Bottom Navigation */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-around;
+            padding: 18px 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-gray);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-item.active {
+            color: var(--orange-accent);
+        }
+
+        .nav-icon {
+            font-size: 22px;
+            margin-bottom: 6px;
+            transition: transform 0.3s;
+        }
+
+        .nav-item:hover .nav-icon {
+            transform: translateY(-3px);
+        }
+
+        .nav-item:hover {
+            color: var(--text-light);
+        }
+
+        .nav-indicator {
+            position: absolute;
+            top: -8px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--orange-accent);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .nav-item.active .nav-indicator {
+            opacity: 1;
+        }
+
+        /* Enhanced Compose Modal */
+        .compose-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(5, 5, 10, 0.95);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .compose-modal.active {
+            transform: translateY(0);
+        }
+
+        .compose-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 20px;
+            background: var(--bg-card);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .compose-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        }
+
+        .compose-title {
+            font-size: 20px;
+            font-weight: 700;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .close-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--bg-darker);
+            border: none;
+            color: var(--text-gray);
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .close-btn:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-light);
+            transform: rotate(90deg);
+        }
+
+        .compose-form {
+            flex: 1;
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-label {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            padding: 18px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+            box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.2);
+        }
+
+        .message-input {
+            flex: 1;
+            min-height: 200px;
+            resize: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .compose-toolbar {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 20px;
+            background: var(--bg-card);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .toolbar-left, .toolbar-right {
+            display: flex;
+            gap: 12px;
+        }
+
+        .toolbar-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--bg-darker);
+            border: none;
+            color: var(--text-gray);
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .toolbar-btn:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-light);
+            transform: translateY(-2px);
+        }
+
+        .ai-assist-btn {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+        }
+
+        .ai-assist-btn:hover {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.6);
+        }
+
+        .compose-actions {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background: var(--bg-card);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .action-secondary {
+            padding: 15px 25px;
+            background: var(--bg-darker);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .action-secondary:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-2px);
+        }
+
+        .action-primary {
+            padding: 15px 30px;
+            background: var(--gradient-accent);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 6px 20px rgba(255, 140, 0, 0.4);
+        }
+
+        .action-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 140, 0, 0.6);
+        }
+
+        /* AI Assist Panel */
+        .ai-assist-panel {
+            position: absolute;
+            bottom: 100%;
+            left: 0;
+            right: 0;
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 25px;
+            box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            z-index: 1001;
+        }
+
+        .ai-assist-panel.active {
+            transform: translateY(0);
+        }
+
+        .ai-panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .ai-panel-title {
+            font-size: 18px;
+            font-weight: 700;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .ai-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .ai-option {
+            padding: 20px;
+            background: var(--bg-darker);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            border: 1px solid transparent;
+        }
+
+        .ai-option:hover {
+            background: var(--bg-card-hover);
+            border-color: var(--purple-primary);
+            transform: translateY(-5px);
+        }
+
+        .ai-option-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: var(--purple-primary);
+        }
+
+        .ai-option-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .ai-option-desc {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        /* Enhanced Email Detail View */
+        .email-detail {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg-dark);
+            display: flex;
+            flex-direction: column;
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .email-detail.active {
+            transform: translateX(0);
+        }
+
+        .email-detail-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 20px;
+            background: var(--bg-card);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .email-detail-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+        }
+
+        .back-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--bg-darker);
+            border: none;
+            color: var(--text-gray);
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .back-btn:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-light);
+            transform: translateX(-3px);
+        }
+
+        .email-detail-content {
+            flex: 1;
+            padding: 25px 20px;
+            overflow-y: auto;
+        }
+
+        .email-detail-subject {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--text-light);
+            line-height: 1.3;
+        }
+
+        .email-detail-sender {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sender-avatar.large {
+            width: 56px;
+            height: 56px;
+            font-size: 22px;
+            box-shadow: 0 6px 18px rgba(168, 85, 247, 0.5);
+        }
+
+        .sender-details-full .sender-name {
+            font-size: 18px;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .sender-email {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .email-detail-time {
+            color: var(--text-dim);
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .email-detail-body {
+            line-height: 1.7;
+            color: var(--text-light);
+            font-size: 16px;
+        }
+
+        .email-detail-body p {
+            margin-bottom: 20px;
+        }
+
+        .email-detail-actions {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px;
+            background: var(--bg-card);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .detail-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-gray);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 10px;
+            border-radius: 12px;
+            min-width: 70px;
+        }
+
+        .detail-action:hover {
+            color: var(--text-light);
+            background: var(--bg-darker);
+            transform: translateY(-3px);
+        }
+
+        .detail-action i {
+            font-size: 22px;
+        }
+
+        /* AI Features Section */
+        .ai-features {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-secondary);
+        }
+
+        .ai-features-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ai-features-title i {
+            color: var(--cyan-accent);
+        }
+
+        .ai-features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .ai-feature {
+            background: var(--bg-darker);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .ai-feature:hover {
+            border-color: var(--purple-primary);
+            transform: translateY(-5px);
+        }
+
+        .ai-feature-icon {
+            font-size: 24px;
+            margin-bottom: 12px;
+            color: var(--purple-primary);
+        }
+
+        .ai-feature-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .ai-feature-desc {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .email-item {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .email-detail.active .email-detail-content {
+            animation: slideInRight 0.5s ease-out 0.2s both;
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .container {
+                max-width: 700px;
+            }
+            
+            .email-list {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px;
+            }
+            
+            .ai-features-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                max-width: 900px;
+            }
+            
+            .email-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .compose-modal {
+                width: 700px;
+                height: 800px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0.9);
+                border-radius: 25px;
+                overflow: hidden;
+                box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+            }
+            
+            .compose-modal.active {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            
+            .email-detail {
+                width: 800px;
+                height: 900px;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) scale(0.9);
+                border-radius: 25px;
+                overflow: hidden;
+                box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6);
+            }
+            
+            .email-detail.active {
+                transform: translate(-50%, -50%) scale(1);
+            }
+            
+            .ai-assist-panel {
+                width: 500px;
+                left: 50%;
+                transform: translate(-50%, 100%);
+                border-radius: 20px;
+            }
+            
+            .ai-assist-panel.active {
+                transform: translate(-50%, 0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Enhanced Mobile Header -->
+        <header class="mobile-header">
+            <a href="#" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <div class="header-actions">
+                <button class="header-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+                <button class="header-btn">
+                    <i class="fas fa-filter"></i>
+                </button>
+                <button class="header-btn">
+                    <i class="fas fa-bell"></i>
+                    <span class="notification-badge">3</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Enhanced Search Bar -->
+        <div class="search-bar">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search emails with AI...">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+            <div class="ai-search-suggestions">
+                <div class="search-suggestion">Unread messages</div>
+                <div class="search-suggestion">From: John</div>
+                <div class="search-suggestion">Attachments</div>
+                <div class="search-suggestion">Important</div>
+                <div class="search-suggestion">This week</div>
+            </div>
+        </div>
+
+        <!-- Enhanced Folder Navigation -->
+        <nav class="folder-nav">
+            <button class="folder-btn active">
+                Inbox <span class="folder-count">12</span>
+            </button>
+            <button class="folder-btn">
+                Starred <span class="folder-count">5</span>
+            </button>
+            <button class="folder-btn">
+                Sent <span class="folder-count">24</span>
+            </button>
+            <button class="folder-btn">
+                Drafts <span class="folder-count">3</span>
+            </button>
+            <button class="folder-btn">
+                Archive <span class="folder-count">47</span>
+            </button>
+        </nav>
+
+        <!-- AI Features Section -->
+        <div class="ai-features">
+            <div class="ai-features-title">
+                <i class="fas fa-robot"></i>
+                AI Assistant
+            </div>
+            <div class="ai-features-grid">
+                <div class="ai-feature">
+                    <div class="ai-feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="ai-feature-title">Smart Replies</div>
+                    <div class="ai-feature-desc">AI-generated responses based on email content</div>
+                </div>
+                <div class="ai-feature">
+                    <div class="ai-feature-icon">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <div class="ai-feature-title">Content Summarization</div>
+                    <div class="ai-feature-desc">Get quick summaries of long emails</div>
+                </div>
+                <div class="ai-feature">
+                    <div class="ai-feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="ai-feature-title">Priority Inbox</div>
+                    <div class="ai-feature-desc">AI sorts your emails by importance</div>
+                </div>
+                <div class="ai-feature">
+                    <div class="ai-feature-icon">
+                        <i class="fas fa-pen-fancy"></i>
+                    </div>
+                    <div class="ai-feature-title">Tone Adjustment</div>
+                    <div class="ai-feature-desc">Make your emails sound more professional or casual</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Email List -->
+        <div class="email-list">
+            <!-- Email Item 1 -->
+            <div class="email-item unread selected ai-priority">
+                <div class="ai-priority-badge">AI Priority</div>
+                <div class="email-header">
+                    <div class="sender-info">
+                        <div class="sender-avatar">JD</div>
+                        <div class="sender-details">
+                            <div class="sender-name">John Doe</div>
+                            <div class="email-subject">Project Update & Timeline</div>
+                        </div>
+                    </div>
+                    <div class="email-time">10:30 AM</div>
+                </div>
+                <div class="email-preview">Hi team, I wanted to provide an update on our current project status. We've made significant progress on the frontend implementation and the design system is now fully integrated. The mobile interface is responsive...</div>
+                <div class="email-meta">
+                    <div class="email-tags">
+                        <span style="color: var(--purple-primary); font-size: 12px; font-weight: 500;">Work</span>
+                        <span style="color: var(--orange-accent); font-size: 12px; font-weight: 500; margin-left: 8px;">Urgent</span>
+                    </div>
+                    <div class="email-actions">
+                        <button class="action-btn starred"><i class="fas fa-star"></i></button>
+                        <button class="action-btn"><i class="far fa-bookmark"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Item 2 -->
+            <div class="email-item unread">
+                <div class="email-header">
+                    <div class="sender-info">
+                        <div class="sender-avatar">AS</div>
+                        <div class="sender-details">
+                            <div class="sender-name">Alice Smith</div>
+                            <div class="email-subject">Meeting Notes & Action Items</div>
+                        </div>
+                    </div>
+                    <div class="email-time">Yesterday</div>
+                </div>
+                <div class="email-preview">Here are the notes from our meeting yesterday. Please review and let me know if you have any questions. I've attached the presentation slides and the project timeline document for your reference...</div>
+                <div class="email-meta">
+                    <div class="email-tags">
+                        <span style="color: var(--orange-accent); font-size: 12px; font-weight: 500;">Important</span>
+                    </div>
+                    <div class="email-actions">
+                        <button class="action-btn"><i class="far fa-star"></i></button>
+                        <button class="action-btn"><i class="far fa-bookmark"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Item 3 -->
+            <div class="email-item">
+                <div class="email-header">
+                    <div class="sender-info">
+                        <div class="sender-avatar">RB</div>
+                        <div class="sender-details">
+                            <div class="sender-name">Robert Brown</div>
+                            <div class="email-subject">Weekly Tech Newsletter</div>
+                        </div>
+                    </div>
+                    <div class="email-time">Mar 12</div>
+                </div>
+                <div class="email-preview">This week in tech: New developments in AI, security updates, and industry trends you need to know. Also featuring an exclusive interview with the CTO of TechCorp about their new product launch...</div>
+                <div class="email-meta">
+                    <div class="email-tags">
+                        <span style="color: var(--text-dim); font-size: 12px; font-weight: 500;">Newsletter</span>
+                    </div>
+                    <div class="email-actions">
+                        <button class="action-btn"><i class="far fa-star"></i></button>
+                        <button class="action-btn"><i class="far fa-bookmark"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enhanced Compose Button -->
+        <div class="compose-btn" id="composeBtn">
+            <i class="fas fa-pen"></i>
+        </div>
+
+        <!-- Enhanced Bottom Navigation -->
+        <nav class="bottom-nav">
+            <div class="nav-item active">
+                <div class="nav-indicator"></div>
+                <i class="fas fa-inbox nav-icon"></i>
+                <span>Inbox</span>
+            </div>
+            <div class="nav-item">
+                <i class="far fa-star nav-icon"></i>
+                <span>Starred</span>
+            </div>
+            <div class="nav-item">
+                <i class="far fa-paper-plane nav-icon"></i>
+                <span>Sent</span>
+            </div>
+            <div class="nav-item">
+                <i class="far fa-folder nav-icon"></i>
+                <span>Folders</span>
+            </div>
+            <div class="nav-item">
+                <i class="fas fa-robot nav-icon"></i>
+                <span>AI</span>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Enhanced Compose Modal -->
+    <div class="compose-modal" id="composeModal">
+        <div class="compose-header">
+            <div class="compose-title">Compose Message</div>
+            <button class="close-btn" id="closeCompose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <form class="compose-form">
+            <div class="form-group">
+                <label class="form-label">To</label>
+                <input type="email" class="form-input" placeholder="Recipient email">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Subject</label>
+                <input type="text" class="form-input" placeholder="Email subject">
+            </div>
+            <div class="form-group" style="flex: 1;">
+                <label class="form-label">Message</label>
+                <textarea class="form-input message-input" placeholder="Type your message here..."></textarea>
+            </div>
+        </form>
+        <div class="compose-toolbar">
+            <div class="toolbar-left">
+                <button class="toolbar-btn">
+                    <i class="fas fa-paperclip"></i>
+                </button>
+                <button class="toolbar-btn">
+                    <i class="fas fa-image"></i>
+                </button>
+                <button class="toolbar-btn">
+                    <i class="fas fa-link"></i>
+                </button>
+            </div>
+            <div class="toolbar-right">
+                <button class="toolbar-btn ai-assist-btn" id="aiAssistBtn">
+                    <i class="fas fa-robot"></i>
+                </button>
+                <button class="toolbar-btn">
+                    <i class="fas fa-ellipsis-h"></i>
+                </button>
+            </div>
+        </div>
+        <div class="compose-actions">
+            <button class="action-secondary">
+                <i class="fas fa-save"></i> Save Draft
+            </button>
+            <button class="action-primary">
+                Send <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- AI Assist Panel -->
+    <div class="ai-assist-panel" id="aiAssistPanel">
+        <div class="ai-panel-header">
+            <div class="ai-panel-title">AI Assistant</div>
+            <button class="close-btn" id="closeAIPanel">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="ai-options">
+            <div class="ai-option">
+                <div class="ai-option-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <div class="ai-option-title">Improve Writing</div>
+                <div class="ai-option-desc">Enhance clarity and tone</div>
+            </div>
+            <div class="ai-option">
+                <div class="ai-option-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="ai-option-title">Quick Replies</div>
+                <div class="ai-option-desc">Generate response options</div>
+            </div>
+            <div class="ai-option">
+                <div class="ai-option-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <div class="ai-option-title">Find Information</div>
+                <div class="ai-option-desc">Add relevant data</div>
+            </div>
+            <div class="ai-option">
+                <div class="ai-option-icon">
+                    <i class="fas fa-language"></i>
+                </div>
+                <div class="ai-option-title">Translate</div>
+                <div class="ai-option-desc">Convert to other languages</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enhanced Email Detail View -->
+    <div class="email-detail" id="emailDetail">
+        <div class="email-detail-header">
+            <button class="back-btn" id="backBtn">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <div class="email-detail-actions">
+                <button class="action-btn"><i class="fas fa-reply"></i></button>
+                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+            </div>
+        </div>
+        <div class="email-detail-content">
+            <h1 class="email-detail-subject">Project Update & Timeline</h1>
+            <div class="email-detail-sender">
+                <div class="sender-avatar large">JD</div>
+                <div class="sender-details-full">
+                    <div class="sender-name">John Doe</div>
+                    <div class="sender-email">john.doe@example.com</div>
+                </div>
+                <div class="email-detail-time">10:30 AM</div>
+            </div>
+            <div class="email-detail-body">
+                <p>Hi team,</p>
+                <p>I wanted to provide an update on our current project status. We've made significant progress on the frontend implementation and the design system is now fully integrated.</p>
+                <p>The mobile interface is responsive and follows our dark theme with the purple and orange accents as requested. All components are consistent with the Letters City branding.</p>
+                <p>We're on track to complete the testing phase by next Friday. Let me know if you have any questions or need clarification on any of the implementation details.</p>
+                <p>Best regards,<br>John</p>
+            </div>
+            
+            <!-- AI Summary Section -->
+            <div class="ai-features" style="margin: 30px 0;">
+                <div class="ai-features-title">
+                    <i class="fas fa-robot"></i>
+                    AI Summary
+                </div>
+                <p style="color: var(--text-gray); font-size: 14px; line-height: 1.6;">
+                    This email provides a positive project update, noting significant progress on frontend implementation and design system integration. The team is on track to complete testing by next Friday. No immediate action required unless you have questions.
+                </p>
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <button class="action-secondary" style="padding: 10px 15px; font-size: 14px;">
+                        <i class="fas fa-reply"></i> AI Reply
+                    </button>
+                    <button class="action-secondary" style="padding: 10px 15px; font-size: 14px;">
+                        <i class="fas fa-tasks"></i> Create Task
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="email-detail-actions">
+            <div class="detail-action">
+                <i class="fas fa-reply"></i>
+                <span>Reply</span>
+            </div>
+            <div class="detail-action">
+                <i class="fas fa-reply-all"></i>
+                <span>Reply All</span>
+            </div>
+            <div class="detail-action">
+                <i class="fas fa-share"></i>
+                <span>Forward</span>
+            </div>
+            <div class="detail-action">
+                <i class="fas fa-archive"></i>
+                <span>Archive</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Compose Modal Toggle
+        const composeBtn = document.getElementById('composeBtn');
+        const composeModal = document.getElementById('composeModal');
+        const closeCompose = document.getElementById('closeCompose');
+
+        composeBtn.addEventListener('click', () => {
+            composeModal.classList.add('active');
+        });
+
+        closeCompose.addEventListener('click', () => {
+            composeModal.classList.remove('active');
+        });
+
+        // AI Assist Panel Toggle
+        const aiAssistBtn = document.getElementById('aiAssistBtn');
+        const aiAssistPanel = document.getElementById('aiAssistPanel');
+        const closeAIPanel = document.getElementById('closeAIPanel');
+
+        aiAssistBtn.addEventListener('click', () => {
+            aiAssistPanel.classList.add('active');
+        });
+
+        closeAIPanel.addEventListener('click', () => {
+            aiAssistPanel.classList.remove('active');
+        });
+
+        // Email Detail View Toggle
+        const emailItems = document.querySelectorAll('.email-item');
+        const emailDetail = document.getElementById('emailDetail');
+        const backBtn = document.getElementById('backBtn');
+
+        emailItems.forEach(item => {
+            item.addEventListener('click', () => {
+                emailDetail.classList.add('active');
+            });
+        });
+
+        backBtn.addEventListener('click', () => {
+            emailDetail.classList.remove('active');
+        });
+
+        // Folder Navigation
+        const folderBtns = document.querySelectorAll('.folder-btn');
+        
+        folderBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                folderBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+
+        // Bottom Navigation
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                navItems.forEach(i => i.classList.remove('active'));
+                item.classList.add('active');
+            });
+        });
+
+        // Email Actions
+        const actionBtns = document.querySelectorAll('.action-btn');
+        
+        actionBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Toggle star state
+                if (btn.querySelector('.fa-star')) {
+                    const icon = btn.querySelector('.fa-star');
+                    if (icon.classList.contains('far')) {
+                        icon.classList.remove('far');
+                        icon.classList.add('fas');
+                        btn.classList.add('starred');
+                    } else {
+                        icon.classList.remove('fas');
+                        icon.classList.add('far');
+                        btn.classList.remove('starred');
+                    }
+                }
+            });
+        });
+
+        // Search suggestions
+        const searchSuggestions = document.querySelectorAll('.search-suggestion');
+        
+        searchSuggestions.forEach(suggestion => {
+            suggestion.addEventListener('click', () => {
+                const searchInput = document.querySelector('.search-input');
+                searchInput.value = suggestion.textContent;
+                searchInput.focus();
+            });
+        });
+
+        // AI Features interaction
+        const aiFeatures = document.querySelectorAll('.ai-feature, .ai-option');
+        
+        aiFeatures.forEach(feature => {
+            feature.addEventListener('click', () => {
+                // Visual feedback
+                feature.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    feature.style.transform = '';
+                }, 200);
+                
+                // In a real app, this would trigger the AI feature
+                console.log('AI feature activated:', feature.querySelector('.ai-feature-title, .ai-option-title').textContent);
+            });
+        });
+    </script>
+</body>
+</html>

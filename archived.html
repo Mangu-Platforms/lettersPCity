@@ -1,0 +1,1039 @@
+V1 (delivered by copilot btw)
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Letters City — Pricing & Product Pages</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <style>
+    /* =========================
+       Letters City Design System
+       ========================= */
+    :root{
+      --bg-dark:#0a0a0f;
+      --bg-darker:#05050a;
+      --bg-card:#16161f;
+      --bg-card-hover:#1d1d28;
+      --text-light:#ffffff;
+      --text-gray:#8b8b92;
+      --text-dim:#5a5a64;
+      --purple-primary:#a855f7;
+      --purple-dark:#7c3aed;
+      --orange-accent:#ff8c00;
+      --card-radius:20px;
+      --shadow:0 8px 30px rgba(0,0,0,0.6);
+      --glass: linear-gradient(180deg rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      --transition: 180ms cubic-bezier(.2,.9,.3,1);
+      --max-width:1200px;
+      --mobile-gap:16px;
+    }
+
+    /* Mobile-first reset and base */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background:var(--bg-dark);
+      color:var(--text-light);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.4;
+      padding:24px;
+      display:flex;
+      justify-content:center;
+    }
+    .page{
+      width:100%;
+      max-width:var(--max-width);
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* Reusable components */
+    .card{
+      background:var(--bg-card);
+      border-radius:var(--card-radius);
+      border:1px solid rgba(255,255,255,0.05);
+      padding:18px;
+      box-shadow:none;
+      transition:transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+      overflow:hidden;
+    }
+    .card:hover{
+      transform:translateY(-4px);
+      box-shadow:var(--shadow);
+      border-color: rgba(168,85,247,0.18);
+    }
+    /* Orange border hover/active */
+    .card--accent:hover, .card--accent.active{
+      border:2px solid var(--orange-accent);
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      justify-content:center;
+      min-height:44px;
+      padding:10px 16px;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:600;
+      font-size:14px;
+      border:1px solid transparent;
+      transition: all var(--transition);
+      user-select:none;
+    }
+    .btn:active{transform:translateY(1px)}
+    .btn--primary{
+      background:linear-gradient(90deg,var(--purple-primary),var(--purple-dark));
+      color:#fff;
+      border:1px solid rgba(0,0,0,0.08);
+    }
+    .btn--primary:hover{
+      box-shadow:0 10px 30px rgba(168,85,247,0.12);
+      border-color:var(--orange-accent);
+    }
+    .btn--ghost{
+      background:transparent;
+      color:var(--text-light);
+      border:1px solid rgba(255,255,255,0.06);
+    }
+    .muted{color:var(--text-gray);font-size:13px}
+
+    h1,h2,h3{margin:0 0 8px 0}
+    p{margin:0 0 12px 0}
+
+    /* Top bar */
+    .topbar{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      margin-bottom:18px;
+    }
+    .brand{
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .brand-badge{
+      width:44px;height:44px;border-radius:12px;
+      background:linear-gradient(135deg,var(--purple-primary),var(--purple-dark));
+      display:flex;align-items:center;justify-content:center;
+      font-weight:700;color:#fff;font-size:18px;border:2px solid var(--orange-accent);
+    }
+    .brand-title{font-weight:700;letter-spacing:1px}
+
+    /* Layout helpers */
+    .stack{display:flex;flex-direction:column;gap:12px}
+    .row{display:flex;gap:12px;align-items:center}
+    .spacer{flex:1}
+
+    /* ====== Multi-page wrapper styles (tabs) ====== */
+    .tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .tab{
+      padding:8px 12px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.03);
+      color:var(--text-gray);font-weight:600;font-size:13px;cursor:pointer;
+    }
+    .tab.active{
+      background:linear-gradient(90deg, rgba(168,85,247,0.12), rgba(124,58,237,0.08));
+      color:var(--text-light);
+      box-shadow:0 6px 20px rgba(124,58,237,0.06);
+      border:1px solid rgba(255,255,255,0.04);
+    }
+
+    /* ====== Authentication page ====== */
+    .auth{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
+    }
+    .auth-split{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:16px;
+    }
+    .auth-hero{
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02));
+      padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.04);
+    }
+    .auth-form .input{
+      display:flex;flex-direction:column;gap:8px;margin-bottom:8px;
+    }
+    .input input, .input textarea, .select{
+      background:transparent;border-radius:10px;padding:12px 14px;color:var(--text-light);
+      border:1px solid rgba(255,255,255,0.06);outline:none;font-size:14px;
+    }
+    .input input::placeholder{color:rgba(255,255,255,0.2)}
+    .input input:focus{border-color:var(--orange-accent);box-shadow:0 6px 20px rgba(255,140,0,0.06)}
+    .social-row{display:flex;gap:10px}
+    .social-btn{
+      flex:1;padding:10px;border-radius:10px;font-weight:600;border:1px solid transparent;color:#fff;
+      display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;
+      transition:all var(--transition)
+    }
+    .social-btn--purple{background:linear-gradient(90deg,var(--purple-primary),var(--purple-dark));border:1px solid rgba(0,0,0,0.06)}
+    .social-btn--orange{background:linear-gradient(90deg,#ff9a33,#ff6a00);border:1px solid rgba(0,0,0,0.06)}
+
+    /* password strength bar */
+    .pw-strength{height:8px;border-radius:6px;background:rgba(255,255,255,0.04);overflow:hidden}
+    .pw-strength > i{display:block;height:100%;width:0%;background:linear-gradient(90deg,#ff8c00,#a855f7);transition:width 220ms ease}
+
+    /* ====== Inbox / Dashboard ====== */
+    .inbox{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:12px;
+    }
+    .three-col{
+      display:grid;
+      grid-template-columns: 1fr 2fr 3fr;
+      gap:12px;
+    }
+    .pane{
+      min-height:240px;
+    }
+    .folder-list .folder{
+      display:flex;align-items:center;justify-content:space-between;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);margin-bottom:8px;cursor:pointer;
+    }
+    .folder.active{border:2px solid var(--orange-accent);background:linear-gradient(90deg, rgba(168,85,247,0.03), transparent)}
+    .email-row{display:flex;gap:12px;align-items:flex-start;padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);margin-bottom:8px;cursor:pointer}
+    .email-row.unread{border-color:var(--orange-accent);box-shadow:0 6px 18px rgba(255,140,0,0.04)}
+    .email-row.selected{border:2px solid var(--orange-accent);background:linear-gradient(90deg, rgba(168,85,247,0.03), transparent)}
+    .email-subject{font-weight:700}
+    .pill{
+      padding:6px 10px;border-radius:999px;background:linear-gradient(90deg,var(--purple-primary),var(--purple-dark));font-size:12px;color:#fff;
+    }
+    /* quick-action icons */
+    .quick-actions .icon{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+    .quick-actions .icon:hover{border-color:var(--orange-accent);color:var(--orange-accent)}
+
+    /* reading pane */
+    .reading{
+      padding:18px;border-radius:12px;background:var(--bg-card);
+      border:1px solid rgba(255,255,255,0.04);min-height:220px;
+    }
+    .reading h3{margin-bottom:10px}
+    .reading .meta{color:var(--text-gray);font-size:13px;margin-bottom:12px}
+
+    /* Mobile swipe actions (visual) */
+    .swipe-indicator{height:6px;border-radius:6px;background:linear-gradient(90deg,var(--orange-accent),rgba(255,140,0,0.6));width:0%;transition:width 220ms}
+
+    /* ====== Compose ====== */
+    .compose{
+      display:flex;flex-direction:column;gap:12px;
+    }
+    .toolbar{
+      display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+    }
+    .toolbar .tool{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+    .toolbar .tool:hover{border-color:var(--orange-accent);color:var(--orange-accent)}
+    .compose-area textarea, .compose-area input{
+      width:100%;min-height:120px;padding:12px;border-radius:12px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text-light)
+    }
+    .attachment-preview{display:flex;gap:10px;flex-wrap:wrap}
+    .attach-card{background:linear-gradient(135deg, rgba(168,85,247,0.06), rgba(124,58,237,0.04));padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);display:flex;gap:8px;align-items:center}
+
+    /* schedule send */
+    .schedule-row{display:flex;gap:8px;align-items:center}
+
+    /* ====== Settings ====== */
+    .settings{
+      display:grid;grid-template-columns:1fr;gap:12px;
+    }
+    .settings-layout{display:grid;grid-template-columns:220px 1fr;gap:12px}
+    .settings-nav{display:flex;flex-direction:column;gap:10px}
+    .settings-nav .nav-item{padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);cursor:pointer}
+    .settings-nav .nav-item.active{border:2px solid var(--orange-accent);background:linear-gradient(90deg, rgba(168,85,247,0.03), transparent)}
+    .toggle{
+      width:44px;height:26px;border-radius:20px;background:rgba(255,255,255,0.06);position:relative;cursor:pointer;border:1px solid rgba(255,255,255,0.03)
+    }
+    .toggle .knob{position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:left 180ms}
+    .toggle.on{background:linear-gradient(90deg,var(--purple-primary),var(--purple-dark))}
+    .toggle.on .knob{left:21px}
+
+    /* category cards */
+    .category-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .category-card{padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.04)}
+    .category-card.active{border:2px solid var(--orange-accent)}
+
+    /* ====== Calendar ====== */
+    .calendar{
+      display:flex;flex-direction:column;gap:12px;
+    }
+    .calendar-grid{
+      display:grid;grid-template-columns:repeat(7,1fr);gap:8px;
+    }
+    .cal-day{
+      min-height:72px;padding:8px;border-radius:10px;background:var(--bg-card);border:1px solid rgba(255,255,255,0.03);position:relative;
+    }
+    .cal-day.today{border:2px solid var(--orange-accent)}
+    .cal-event{padding:6px 8px;border-radius:8px;background:linear-gradient(90deg,var(--purple-primary),var(--purple-dark));color:#fff;font-size:12px;margin-top:8px}
+
+    /* ====== Pricing detailed comparison ====== */
+    .pricing-compare{
+      display:flex;flex-direction:column;gap:12px;
+    }
+    .compare-table{
+      width:100%;border-collapse:collapse;display:block;overflow:auto;
+    }
+    .compare-row{display:grid;grid-template-columns:220px repeat(3,1fr);gap:12px;align-items:center;padding:12px;border-radius:12px;background:var(--bg-card);border:1px solid rgba(255,255,255,0.03)}
+    .compare-head{font-weight:700}
+    .feature-col{color:var(--text-gray);font-size:14px}
+
+    /* ====== Responsive adjustments ====== */
+    @media (min-width:880px){
+      .auth{grid-template-columns: 1fr}
+      .auth-split{grid-template-columns: 1fr 420px}
+      .inbox{grid-template-columns:1fr}
+    }
+    @media (max-width:879px){
+      .three-col{display:grid;grid-template-columns:1fr;gap:12px}
+      .settings-layout{display:grid;grid-template-columns:1fr;gap:12px}
+      .category-grid{grid-template-columns:1fr}
+      .compare-row{grid-template-columns:1fr;grid-auto-rows:min-content}
+      .calendar-grid{grid-template-columns:repeat(7, minmax(0,1fr))}
+    }
+    @media (max-width:480px){
+      body{padding:16px}
+      .brand-badge{width:40px;height:40px}
+      .topbar{flex-direction:column;align-items:flex-start}
+      .btn{min-height:44px}
+    }
+
+    /* small polish */
+    .label{font-size:12px;color:var(--text-gray);text-transform:uppercase;letter-spacing:1px}
+    .divider{height:1px;background:rgba(255,255,255,0.03);margin:12px 0;border-radius:2px}
+    .note{font-size:13px;color:var(--text-gray)}
+  </style>
+</head>
+<body>
+  <main class="page" id="app">
+    <!-- Topbar with tabs for switching between pages in this single-file demo -->
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-badge">✉</div>
+        <div>
+          <div class="brand-title">Letters City</div>
+          <div class="muted" style="font-size:12px">Urban mail, elegantly reimagined</div>
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+
+      <nav class="tabs" role="tablist" aria-label="Pages">
+        <button class="tab active" data-page="pricing" aria-controls="pricing">Pricing</button>
+        <button class="tab" data-page="auth" aria-controls="auth">Login / Signup</button>
+        <button class="tab" data-page="inbox" aria-controls="inbox">Inbox</button>
+        <button class="tab" data-page="compose" aria-controls="compose">Compose</button>
+        <button class="tab" data-page="settings" aria-controls="settings">Settings</button>
+        <button class="tab" data-page="calendar" aria-controls="calendar">Calendar</button>
+      </nav>
+    </header>
+
+    <!-- PAGE: Pricing (default active) -->
+    <section id="pricing" class="page-section">
+      <div class="stack">
+        <div class="card">
+          <div class="row" style="align-items:center">
+            <div>
+              <h2>Pricing — Detailed plans & comparison</h2>
+              <div class="muted">Clear tiers for individuals, professionals, and organizations. 30-day trial available.</div>
+            </div>
+            <div class="spacer"></div>
+            <div class="row">
+              <button class="btn btn--ghost" onclick="document.querySelector('[data-page=auth]').click();">Sign in</button>
+              <button class="btn btn--primary" style="border:2px solid transparent">Start trial</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pricing cards -->
+        <div class="card" style="padding:12px">
+          <div style="display:grid;grid-template-columns:1fr;gap:12px">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+              <!-- Essentials -->
+              <div class="card card--accent" style="padding:18px">
+                <div class="row">
+                  <div>
+                    <div class="label">Essentials</div>
+                    <h3>$0 <span style="font-size:13px;color:var(--text-gray);font-weight:500">/month</span></h3>
+                    <div class="muted">For the discerning individual</div>
+                  </div>
+                </div>
+                <div class="divider"></div>
+                <ul style="list-style:none;padding:0;margin:0 0 12px 0">
+                  <li class="muted">20 GB refined storage</li>
+                  <li class="muted">Elegant interface</li>
+                  <li class="muted">Standard security</li>
+                </ul>
+                <div class="row">
+                  <button class="btn btn--primary" style="flex:1">Get started</button>
+                </div>
+              </div>
+
+              <!-- Signature (featured) -->
+              <div class="card" style="padding:18px;background:linear-gradient(180deg,var(--purple-primary),var(--purple-dark));border:none;color:#fff;position:relative">
+                <div style="position:absolute;top:-12px;right:18px;background:var(--orange-accent);color:#fff;padding:6px 12px;border-radius:12px;font-weight:700;font-size:12px">POPULAR</div>
+                <div>
+                  <div class="label" style="color:rgba(255,255,255,0.9)">Signature</div>
+                  <h3 style="color:#fff">$14 <span style="font-size:13px;color:rgba(255,255,255,0.85);font-weight:500">/month</span></h3>
+                  <div style="color:rgba(255,255,255,0.9)">For the professional connoisseur</div>
+                </div>
+                <div class="divider" style="background:rgba(255,255,255,0.06)"></div>
+                <ul style="list-style:none;padding:0;margin:0 0 12px 0;color:rgba(255,255,255,0.95)">
+                  <li>100 GB premium storage</li>
+                  <li>Advanced security & custom domain</li>
+                  <li>Full integrations & dedicated support</li>
+                </ul>
+                <div class="row">
+                  <button class="btn" style="flex:1;background:#fff;color:var(--purple-primary);font-weight:800">Upgrade Now</button>
+                </div>
+              </div>
+
+              <!-- Enterprise -->
+              <div class="card card--accent" style="padding:18px">
+                <div>
+                  <div class="label">Enterprise</div>
+                  <h3>$28 <span style="font-size:13px;color:var(--text-gray);font-weight:500">/user/mo</span></h3>
+                  <div class="muted">For organizations of distinction</div>
+                </div>
+                <div class="divider"></div>
+                <ul style="list-style:none;padding:0;margin:0 0 12px 0">
+                  <li class="muted">Unlimited storage</li>
+                  <li class="muted">Admin controls & custom branding</li>
+                  <li class="muted">24/7 premium support</li>
+                </ul>
+                <div class="row">
+                  <button class="btn btn--ghost" style="flex:1;border:2px solid var(--orange-accent);color:var(--orange-accent)">Contact Sales</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detailed comparison -->
+        <div class="card pricing-compare">
+          <div class="row" style="align-items:center">
+            <div>
+              <h3>Compare plans</h3>
+              <div class="muted">Feature-by-feature comparison to find the right fit</div>
+            </div>
+            <div class="spacer"></div>
+            <div class="muted">Includes: Gmail-like search, Outlook calendaring, iCloud simplicity</div>
+          </div>
+
+          <div style="margin-top:12px">
+            <!-- Header row -->
+            <div class="compare-row compare-head" style="background:linear-gradient(90deg, rgba(168,85,247,0.02), transparent);">
+              <div>Feature</div>
+              <div style="text-align:center">Essentials</div>
+              <div style="text-align:center">Signature</div>
+              <div style="text-align:center">Enterprise</div>
+            </div>
+
+            <!-- Rows -->
+            <div style="margin-top:10px;display:flex;flex-direction:column;gap:10px">
+              <div class="compare-row">
+                <div class="feature-col">Storage</div>
+                <div style="text-align:center">20 GB</div>
+                <div style="text-align:center">100 GB</div>
+                <div style="text-align:center">Unlimited</div>
+              </div>
+
+              <div class="compare-row">
+                <div class="feature-col">Search & indexing (Gmail-like)</div>
+                <div style="text-align:center">Basic</div>
+                <div style="text-align:center"><span class="pill">Advanced</span></div>
+                <div style="text-align:center"><span class="pill">Enterprise</span></div>
+              </div>
+
+              <div class="compare-row">
+                <div class="feature-col">Calendar & scheduling (Outlook)</div>
+                <div style="text-align:center">Inline calendar</div>
+                <div style="text-align:center">Full calendar & scheduling</div>
+                <div style="text-align:center">Org-wide calendar + SSO</div>
+              </div>
+
+              <div class="compare-row">
+                <div class="feature-col">Integrations (iCloud / Yahoo style organization)</div>
+                <div style="text-align:center">Selected apps</div>
+                <div style="text-align:center">All integrations</div>
+                <div style="text-align:center">SAML + API access</div>
+              </div>
+
+              <div class="compare-row">
+                <div class="feature-col">Security & encryption</div>
+                <div style="text-align:center">Standard</div>
+                <div style="text-align:center">Advanced</div>
+                <div style="text-align:center">Enterprise grade</div>
+              </div>
+
+              <div class="compare-row">
+                <div class="feature-col">Support</div>
+                <div style="text-align:center">Community</div>
+                <div style="text-align:center">Priority</div>
+                <div style="text-align:center">24/7 Premium</div>
+              </div>
+
+              <div class="compare-row">
+                <div class="feature-col">[SPECIFIC_FEATURE_1]</div>
+                <div style="text-align:center">Included</div>
+                <div style="text-align:center">Included</div>
+                <div style="text-align:center">Included</div>
+              </div>
+
+              <div class="compare-row">
+                <div class="feature-col">[SPECIFIC_FEATURE_2]</div>
+                <div style="text-align:center">Limited</div>
+                <div style="text-align:center">Full</div>
+                <div style="text-align:center">Full + Admin</div>
+              </div>
+            </div>
+
+            <div style="margin-top:14px" class="note">All interactive elements use orange borders and purple accents to match Letters City design system.</div>
+          </div>
+        </div>
+
+        <div class="card row" style="justify-content:space-between;align-items:center">
+          <div class="muted">Need help choosing? Contact sales or start a free trial.</div>
+          <div style="display:flex;gap:10px">
+            <button class="btn btn--ghost" onclick="document.querySelector('[data-page=settings]').click();">Contact Sales</button>
+            <button class="btn btn--primary" onclick="alert('Trial started (demo)')">Start Trial</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: Authentication -->
+    <section id="auth" class="page-section" style="display:none">
+      <div class="stack">
+        <div class="card">
+          <div class="row">
+            <div>
+              <h2>Sign in or create an account</h2>
+              <div class="muted">Secure sign in with social options and password strength feedback</div>
+            </div>
+            <div class="spacer"></div>
+            <div>
+              <button class="btn btn--ghost" onclick="document.querySelector('[data-page=pricing]').click();">Back to pricing</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="auth card">
+          <div class="auth-split">
+            <!-- Brand showcase -->
+            <div class="auth-hero">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div class="brand-badge" style="width:56px;height:56px;border-radius:14px">✉</div>
+                <div>
+                  <div style="font-weight:800">LETTERS CITY</div>
+                  <div class="muted">Private by default. Sophisticated interface.</div>
+                </div>
+              </div>
+
+              <div style="margin-top:12px">
+                <p class="muted">Design references: Gmail search, Outlook productivity, iCloud minimalism, Yahoo organization. Urban, sophisticated "city" aesthetic with lighter black and purple accents.</p>
+              </div>
+
+              <div style="margin-top:16px" class="note">Download apps, get setup tips, and explore integrations once signed in.</div>
+            </div>
+
+            <!-- Form -->
+            <div class="card auth-form" style="padding:18px">
+              <div class="stack">
+                <div>
+                  <div class="label">Sign in</div>
+                </div>
+
+                <div class="input">
+                  <label class="muted">Email</label>
+                  <input type="email" id="email" placeholder="you@letters.city" />
+                </div>
+
+                <div class="input">
+                  <label class="muted">Password</label>
+                  <input type="password" id="password" placeholder="Create a secure password" />
+                  <div class="pw-strength" aria-hidden="true" style="margin-top:8px">
+                    <i id="pwBar"></i>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div style="flex:1">
+                    <button class="btn btn--primary" style="width:100%" id="signinBtn">Sign in</button>
+                  </div>
+                  <div style="width:120px">
+                    <button class="btn btn--ghost" style="width:100%" onclick="alert('Demo: password reset')">Forgot</button>
+                  </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div>
+                  <div class="label">Or continue with</div>
+                  <div style="height:8px"></div>
+                  <div class="social-row">
+                    <button class="social-btn social-btn--purple" onclick="alert('Sign in with Letters ID (demo)')"><i class="fa-brands fa-apple"></i> Apple</button>
+                    <button class="social-btn social-btn--orange" onclick="alert('Sign in with Google (demo)')"><i class="fa-brands fa-google"></i> Google</button>
+                  </div>
+                </div>
+
+                <div style="text-align:center;margin-top:8px">
+                  <div class="muted">New to Letters City? <a href="#" onclick="alert('Demo: signup')">Create account</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- PAGE: Inbox -->
+    <section id="inbox" class="page-section" style="display:none">
+      <div class="stack">
+        <div class="card row" style="align-items:center">
+          <div>
+            <h2>Inbox</h2>
+            <div class="muted">Three-column layout combining Gmail thread ideas, Outlook focused inbox, iCloud reading pane, Yahoo organization</div>
+          </div>
+          <div class="spacer"></div>
+          <div class="row quick-actions">
+            <div class="icon" title="Archive" onclick="alert('Archive')"><i class="fa-solid fa-archive"></i></div>
+            <div class="icon" title="Delete" onclick="alert('Delete')"><i class="fa-solid fa-trash"></i></div>
+            <div class="icon" title="Snooze" onclick="alert('Snooze')"><i class="fa-solid fa-clock"></i></div>
+            <button class="btn btn--primary" onclick="document.querySelector('[data-page=compose]').click();">Compose</button>
+          </div>
+        </div>
+
+        <div class="three-col">
+          <!-- Folders -->
+          <aside class="card pane folder-list">
+            <div class="label">Folders</div>
+            <div style="height:8px"></div>
+            <div class="folder active" onclick="toggleSelectFolder(this)"><div>Focused</div><div class="muted">12</div></div>
+            <div class="folder" onclick="toggleSelectFolder(this)"><div>All Mail</div><div class="muted">128</div></div>
+            <div class="folder" onclick="toggleSelectFolder(this)"><div>Starred</div><div class="muted">3</div></div>
+            <div class="folder" onclick="toggleSelectFolder(this)"><div>Drafts</div><div class="muted">2</div></div>
+            <div style="height:12px"></div>
+            <div class="label">Labels</div>
+            <div style="height:8px"></div>
+            <div class="folder" onclick="toggleSelectFolder(this)"><div>Work</div><div class="muted">45</div></div>
+            <div class="folder" onclick="toggleSelectFolder(this)"><div>Personal</div><div class="muted">21</div></div>
+            <div class="folder" onclick="toggleSelectFolder(this)"><div>Receipts</div><div class="muted">34</div></div>
+          </aside>
+
+          <!-- Email list -->
+          <section class="card pane">
+            <div class="row" style="justify-content:space-between;align-items:center">
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="width:36px;height:36px;border-radius:8px;background:linear-gradient(90deg,var(--purple-primary),var(--purple-dark));display:flex;align-items:center;justify-content:center;font-weight:700">S</div>
+                <div>
+                  <div class="label">Search</div>
+                  <input type="search" placeholder="Search mail, people, files" style="width:240px;background:transparent;border-radius:8px;padding:8px;border:1px solid rgba(255,255,255,0.04);color:var(--text-light)" onfocus="this.style.borderColor='var(--orange-accent)'" onblur="this.style.borderColor='rgba(255,255,255,0.04)'" />
+                </div>
+              </div>
+
+              <div class="muted">Sort: Newest</div>
+            </div>
+
+            <div style="height:12px"></div>
+
+            <!-- Email rows -->
+            <div>
+              <div class="email-row unread" onclick="selectEmail(this)">
+                <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(90deg,var(--purple-primary),var(--purple-dark));display:flex;align-items:center;justify-content:center;font-weight:700">A</div>
+                <div style="flex:1">
+                  <div class="email-subject">Welcome to Letters City</div>
+                  <div class="muted">Short intro, tips & how we compare to Gmail/Outlook</div>
+                </div>
+                <div style="text-align:right">
+                  <div class="muted">2:34 PM</div>
+                  <div style="height:6px"></div>
+                  <div class="pill">Priority</div>
+                </div>
+              </div>
+
+              <div class="email-row" onclick="selectEmail(this)">
+                <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(90deg, #2a2a2a, #333333);display:flex;align-items:center;justify-content:center;font-weight:700">B</div>
+                <div style="flex:1">
+                  <div class="email-subject">Invoice from Service Co.</div>
+                  <div class="muted">Your monthly invoice is attached</div>
+                </div>
+                <div style="text-align:right">
+                  <div class="muted">Yesterday</div>
+                </div>
+              </div>
+
+              <div class="email-row" onclick="selectEmail(this)">
+                <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(90deg,#4c1d95,#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:700">C</div>
+                <div style="flex:1">
+                  <div class="email-subject">Team sync notes</div>
+                  <div class="muted">Minutes & action items</div>
+                </div>
+                <div style="text-align:right">
+                  <div class="muted">Mon</div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Reading pane -->
+          <aside class="card pane reading">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <h3>Welcome to Letters City</h3>
+                <div class="meta">From: support@letters.city • 2:34 PM</div>
+              </div>
+              <div class="row">
+                <div class="muted">Actions</div>
+                <div style="width:8px"></div>
+                <div class="icon" onclick="alert('Reply')"><i class="fa-solid fa-reply"></i></div>
+                <div class="icon" onclick="alert('More')"><i class="fa-solid fa-ellipsis"></i></div>
+              </div>
+            </div>
+
+            <div style="height:12px"></div>
+            <p class="muted">Thanks for joining Letters City. We blend urban design, privacy-forward architecture, and the productivity features you expect. Search works like Gmail, calendar sync like Outlook, and the interface is as clean as iCloud while keeping organization features inspired by Yahoo.</p>
+
+            <div style="height:12px"></div>
+            <div class="label">Attachments</div>
+            <div style="height:8px"></div>
+            <div class="attachment-preview">
+              <div class="attach-card"><i class="fa-solid fa-file-lines"></i><div style="margin-left:8px">Welcome.pdf</div></div>
+              <div class="attach-card"><i class="fa-solid fa-image"></i><div style="margin-left:8px">screenshot.png</div></div>
+            </div>
+          </aside>
+        </div>
+
+        <!-- Mobile swipe indicator visual -->
+        <div class="card">
+          <div class="label">Swipe actions (mobile)</div>
+          <div style="height:8px"></div>
+          <div class="swipe-indicator" id="swipeBar" style="width:0%"></div>
+          <div style="height:6px"></div>
+          <div class="muted">Swipe right to archive, left to snooze. Visual indicators use orange accent.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: Compose -->
+    <section id="compose" class="page-section" style="display:none">
+      <div class="stack">
+        <div class="card row" style="align-items:center;justify-content:space-between">
+          <div>
+            <h2>Compose</h2>
+            <div class="muted">Rich composer with smart suggestions and schedule send</div>
+          </div>
+          <div class="row">
+            <button class="btn btn--ghost" onclick="document.querySelector('[data-page=inbox]').click();">Back</button>
+            <button class="btn btn--primary" onclick="sendDraft()">Send</button>
+          </div>
+        </div>
+
+        <div class="card compose">
+          <div class="toolbar">
+            <div class="tool" title="Bold"><i class="fa-solid fa-bold"></i></div>
+            <div class="tool" title="Italic"><i class="fa-solid fa-italic"></i></div>
+            <div class="tool" title="Attach"><i class="fa-solid fa-paperclip"></i></div>
+            <div class="tool" title="Insert link"><i class="fa-solid fa-link"></i></div>
+            <div class="tool" title="Insert emoji"><i class="fa-solid fa-face-smile"></i></div>
+            <div style="flex:1"></div>
+            <div class="muted">Smart compose suggestions active</div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="compose-area">
+            <input type="text" placeholder="To" style="margin-bottom:10px;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:8px" />
+            <input type="text" placeholder="Subject" style="margin-bottom:10px;border:1px solid rgba(255,255,255,0.04);padding:10px;border-radius:8px" />
+            <textarea placeholder="Write your message..." id="composeBody"></textarea>
+          </div>
+
+          <div class="row" style="justify-content:space-between">
+            <div class="attachment-preview" id="attachPreview">
+              <!-- sample preview -->
+              <div class="attach-card"><i class="fa-solid fa-image"></i><div style="margin-left:8px">photo.jpg</div></div>
+            </div>
+
+            <div class="row">
+              <div class="schedule-row">
+                <div class="muted">Schedule</div>
+                <select style="background:transparent;border-radius:8px;padding:8px;border:1px solid rgba(255,255,255,0.04);color:var(--text-light);margin-left:8px">
+                  <option>Send now</option>
+                  <option>Schedule for later</option>
+                </select>
+              </div>
+              <div style="width:8px"></div>
+              <button class="btn btn--primary" onclick="scheduleSend()">Schedule send</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card note">
+          <div class="label">Attachments preview</div>
+          <div style="height:8px"></div>
+          <div class="muted">Attachments show gradient preview cards with purple/orange accents for quick visual scanning.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: Settings -->
+    <section id="settings" class="page-section" style="display:none">
+      <div class="stack">
+        <div class="card row" style="align-items:center">
+          <div>
+            <h2>Settings</h2>
+            <div class="muted">Account, integrations, privacy, and display preferences</div>
+          </div>
+          <div class="spacer"></div>
+          <div>
+            <button class="btn btn--ghost" onclick="document.querySelector('[data-page=pricing]').click();">Return</button>
+          </div>
+        </div>
+
+        <div class="card settings-layout">
+          <nav class="settings-nav">
+            <div class="nav-item active" onclick="activateNav(this)">Account</div>
+            <div class="nav-item" onclick="activateNav(this)">Security</div>
+            <div class="nav-item" onclick="activateNav(this)">Integrations</div>
+            <div class="nav-item" onclick="activateNav(this)">Display</div>
+            <div class="nav-item" onclick="activateNav(this)">Notifications</div>
+          </nav>
+
+          <div style="padding:6px;display:flex;flex-direction:column;gap:12px">
+            <div class="card">
+              <div class="row" style="justify-content:space-between;align-items:center">
+                <div>
+                  <div class="label">Email</div>
+                  <h3>you@letters.city</h3>
+                </div>
+                <div>
+                  <button class="btn btn--ghost" style="border:1px solid rgba(255,255,255,0.04)" onclick="alert('Edit email')">Edit</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="row" style="justify-content:space-between;align-items:center">
+                <div>
+                  <div class="label">Two-step verification</div>
+                  <div class="muted">Protect your account with 2FA</div>
+                </div>
+                <div>
+                  <div class="toggle on" id="twofa" onclick="toggleTwoFA(this)"><div class="knob"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="label">Integrations</div>
+              <div style="height:10px"></div>
+              <div class="category-grid">
+                <div class="category-card active">Google Drive</div>
+                <div class="category-card">Slack</div>
+                <div class="category-card">Dropbox</div>
+                <div class="category-card">Calendar Sync</div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="row" style="justify-content:space-between;align-items:center">
+                <div>
+                  <div class="label">Theme</div>
+                  <div class="muted">Keep dark with lighter black and purple highlights</div>
+                </div>
+                <div class="row">
+                  <button class="btn btn--ghost" onclick="alert('Toggle theme (demo)')">Toggle</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="card note">
+          <div class="label">Mobile: accordion nav</div>
+          <div style="height:8px"></div>
+          <div class="muted">On mobile the left nav collapses into an accordion with orange active indicators and touch-friendly targets (44px).</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE: Calendar -->
+    <section id="calendar" class="page-section" style="display:none">
+      <div class="stack">
+        <div class="card row" style="align-items:center;justify-content:space-between">
+          <div>
+            <h2>Calendar</h2>
+            <div class="muted">Month / week / day views, event creation modals, and schedule integration</div>
+          </div>
+          <div class="row">
+            <button class="btn btn--ghost" onclick="document.querySelector('[data-page=compose]').click();">New event</button>
+            <button class="btn btn--primary" onclick="alert('Sync calendar (demo)')">Sync</button>
+          </div>
+        </div>
+
+        <div class="card calendar">
+          <div class="row" style="justify-content:space-between;align-items:center">
+            <div class="row">
+              <div class="btn btn--ghost" onclick="prevMonth()">‹</div>
+              <div style="width:12px"></div>
+              <div class="label">October 2025</div>
+            </div>
+
+            <div class="row">
+              <div class="muted">View</div>
+              <div style="width:8px"></div>
+              <select style="background:transparent;border-radius:8px;padding:8px;border:1px solid rgba(255,255,255,0.04);color:var(--text-light)">
+                <option>Month</option>
+                <option>Week</option>
+                <option>Day</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="calendar-grid" id="calGrid" style="margin-top:8px">
+            <!-- 7 x 5 simplified grid demo -->
+            <div class="cal-day">Sun<div class="muted" style="position:absolute;top:6px;right:8px">—</div></div>
+            <div class="cal-day">Mon</div>
+            <div class="cal-day">Tue</div>
+            <div class="cal-day">Wed</div>
+            <div class="cal-day">Thu</div>
+            <div class="cal-day">Fri</div>
+            <div class="cal-day today">Sat<div class="cal-event">Meeting • 11:00</div></div>
+
+            <!-- next row -->
+            <div class="cal-day">1<div class="cal-event">Project Kickoff</div></div>
+            <div class="cal-day">2</div>
+            <div class="cal-day">3</div>
+            <div class="cal-day">4</div>
+            <div class="cal-day">5</div>
+            <div class="cal-day">6</div>
+            <div class="cal-day">7</div>
+
+            <div class="cal-day">8</div>
+            <div class="cal-day">9</div>
+            <div class="cal-day">10</div>
+            <div class="cal-day">11</div>
+            <div class="cal-day">12</div>
+            <div class="cal-day">13</div>
+            <div class="cal-day">14</div>
+
+            <div class="cal-day">15</div>
+            <div class="cal-day">16</div>
+            <div class="cal-day">17</div>
+            <div class="cal-day">18</div>
+            <div class="cal-day">19</div>
+            <div class="cal-day">20</div>
+            <div class="cal-day">21</div>
+
+            <div class="cal-day">22</div>
+            <div class="cal-day">23</div>
+            <div class="cal-day">24</div>
+            <div class="cal-day">25</div>
+            <div class="cal-day">26</div>
+            <div class="cal-day">27</div>
+            <div class="cal-day">28</div>
+          </div>
+        </div>
+
+        <div class="card note">
+          <div class="label">Event creation</div>
+          <div class="muted">Event modals use our card styling, orange border focus, and purple accents for event color coding. Mobile grid uses larger touch indicators highlighted with orange on selection.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="margin-top:18px">
+      <div style="display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap">
+        <div class="muted">© 2025 Letters City — Urban mail, privacy-first</div>
+        <div class="row">
+          <a class="muted" href="#" style="margin-right:12px">Security</a>
+          <a class="muted" href="#" style="margin-right:12px">Docs</a>
+          <a class="muted" href="#">Support</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    /* Single-file page switching for demo */
+    (function(){
+      const tabs = document.querySelectorAll('.tab');
+      tabs.forEach(t => {
+        t.addEventListener('click', () => {
+          tabs.forEach(x => x.classList.remove('active'));
+          t.classList.add('active');
+          const page = t.getAttribute('data-page');
+          document.querySelectorAll('.page-section').forEach(s => s.style.display = 'none');
+          const show = document.getElementById(page);
+          if(show) show.style.display = 'block';
+          window.scrollTo({top:0,behavior:'smooth'});
+        });
+      });
+    })();
+
+    /* tiny helpers for interactions */
+    function toggleSelectFolder(el){
+      document.querySelectorAll('.folder').forEach(f=>f.classList.remove('active'));
+      el.classList.add('active');
+    }
+    function selectEmail(el){
+      document.querySelectorAll('.email-row').forEach(e=>e.classList.remove('selected'));
+      el.classList.add('selected');
+      // small visual feedback for mobile swipe demo
+      document.getElementById('swipeBar').style.width = '70%';
+      setTimeout(()=>document.getElementById('swipeBar').style.width='0%',800);
+    }
+
+    function toggleTwoFA(el){
+      el.classList.toggle('on');
+      alert('Two-step verification toggled (demo)');
+    }
+
+    function activateNav(el){
+      document.querySelectorAll('.settings-nav .nav-item').forEach(n=>n.classList.remove('active'));
+      el.classList.add('active');
+    }
+
+    // password strength demo
+    const pw = document.getElementById('password');
+    if(pw){
+      pw.addEventListener('input', ()=> {
+        const v = pw.value;
+        const bar = document.getElementById('pwBar');
+        let pct = 0;
+        if(v.length>3) pct = 30;
+        if(v.length>7) pct = 60;
+        if(/[A-Z]/.test(v) && /[0-9]/.test(v) && v.length>8) pct = 90;
+        bar.style.width = pct + '%';
+      });
+    }
+
+    // compose / send demo
+    function sendDraft(){
+      const body = document.getElementById('composeBody').value;
+      if(!body.trim()){ alert('Please write a message before sending (demo)'); return; }
+      alert('Message sent (demo)');
+    }
+    function scheduleSend(){ alert('Schedule dialog (demo)') }
+    function prevMonth(){ alert('Navigate to previous month (demo)') }
+
+    // initialize default page to pricing (ensures correct display on reload)
+    document.querySelector('[data-page="pricing"]').click();
+  </script>
+</body>
+</html>

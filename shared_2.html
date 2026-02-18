@@ -1,0 +1,1655 @@
+V2
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Domains | Letters City - Private. Encrypted for you</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --green-accent: #10b981;
+            --blue-accent: #3b82f6;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        .top-nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--orange-accent);
+            transition: var(--transition);
+        }
+
+        .top-nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .top-nav-links a.active {
+            color: var(--orange-accent);
+        }
+
+        .top-nav-links a.active:after {
+            width: 100%;
+        }
+
+        /* Main Header */
+        .main-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .city-logo {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 2px solid var(--orange-accent);
+            border-radius: 50px;
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .city-logo:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: var(--transition);
+        }
+
+        .city-logo:hover:before {
+            left: 100%;
+        }
+
+        .city-logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .tagline {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .btn:hover:before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-orange {
+            background: var(--orange-accent);
+            color: white;
+        }
+
+        .btn-orange:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 140, 0, 0.3);
+        }
+
+        .btn-purple {
+            background: var(--purple-primary);
+            color: var(--text-light);
+        }
+
+        .btn-purple:hover {
+            background: var(--purple-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.3);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-darker));
+            border-radius: 20px;
+            padding: 60px 40px;
+            margin-bottom: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, rgba(168, 85, 247, 0) 70%);
+            border-radius: 50%;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 140, 0, 0.1) 0%, rgba(255, 140, 0, 0) 70%);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .hero-section p {
+            color: var(--text-gray);
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--orange-accent);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        /* Domain Search */
+        .domain-search {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 0 auto 30px;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .domain-search h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .search-container {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: var(--bg-dark);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+            box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.2);
+        }
+
+        .search-btn {
+            padding: 12px 24px;
+            background: var(--orange-accent);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .search-btn:hover {
+            background: #e67e00;
+            transform: translateY(-2px);
+        }
+
+        .domain-suggestions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .domain-suggestion {
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .domain-suggestion:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-3px);
+        }
+
+        .domain-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .domain-price {
+            color: var(--text-gray);
+            font-size: 12px;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(168,85,247,0.03) 0%, rgba(236,72,153,0.03) 100%);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover:before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 30px;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-card p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Domain Setup Process */
+        .setup-process {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .setup-process:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--purple-primary), var(--pink-accent));
+            border-radius: 20px 0 0 20px;
+        }
+
+        .setup-process h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 50px;
+        }
+
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 2px;
+            background: var(--text-dim);
+            z-index: 1;
+        }
+
+        .step {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            flex: 1;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--bg-dark);
+            border: 2px solid var(--orange-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--orange-accent);
+            transition: var(--transition);
+        }
+
+        .step:hover .step-number {
+            background: var(--orange-accent);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .step h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .step p {
+            color: var(--text-gray);
+            font-size: 14px;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        .setup-cta {
+            text-align: center;
+        }
+
+        /* Domain Examples */
+        .examples-section {
+            margin-bottom: 40px;
+        }
+
+        .examples-section h2 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .examples-section h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--orange-accent);
+            border-radius: 3px;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .example-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .example-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(168,85,247,0.03) 0%, rgba(236,72,153,0.03) 100%);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .example-card:hover:before {
+            opacity: 1;
+        }
+
+        .example-card:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .example-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .example-card h3 i {
+            color: var(--orange-accent);
+        }
+
+        .example-card p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .example-domain {
+            display: inline-block;
+            background: var(--bg-dark);
+            padding: 8px 15px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            font-family: monospace;
+            color: var(--text-light);
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Domain Management */
+        .management-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .management-section h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .management-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .management-card {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+
+        .management-card:hover {
+            border-color: var(--purple-primary);
+            transform: translateY(-5px);
+        }
+
+        .management-card h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .management-card h3 i {
+            color: var(--green-accent);
+        }
+
+        .management-card p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* DNS Configuration */
+        .dns-config {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .dns-config h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .dns-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .dns-table th {
+            background: var(--bg-darker);
+            padding: 12px 15px;
+            text-align: left;
+            font-size: 14px;
+            font-weight: 600;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dns-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+            font-family: monospace;
+        }
+
+        .dns-table tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .copy-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-gray);
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 12px;
+        }
+
+        .copy-btn:hover {
+            background: var(--purple-primary);
+            color: white;
+            border-color: var(--purple-primary);
+        }
+
+        /* Testimonials */
+        .testimonials-section {
+            margin-bottom: 40px;
+        }
+
+        .testimonials-section h2 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .testimonial-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+
+        .testimonial-card:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-5px);
+        }
+
+        .testimonial-content {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .author-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--text-gray);
+            font-size: 13px;
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            margin-bottom: 50px;
+        }
+
+        .faq-section h2 {
+            font-size: 28px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .faq-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(168,85,247,0.03) 0%, rgba(236,72,153,0.03) 100%);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .faq-item:hover:before {
+            opacity: 1;
+        }
+
+        .faq-item:hover {
+            border-color: var(--border-color);
+            transform: translateY(-3px);
+        }
+
+        .faq-item h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .faq-item h3 i {
+            color: var(--orange-accent);
+        }
+
+        .faq-item p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-darker));
+            border-radius: 20px;
+            padding: 50px;
+            margin-bottom: 50px;
+            text-align: center;
+            border: 2px solid var(--orange-accent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,140,0,0.05) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-section h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .cta-section p {
+            color: var(--text-gray);
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--text-light);
+        }
+
+        .modal h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid,
+            .testimonials-grid,
+            .management-features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .domain-suggestions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .process-steps {
+                flex-direction: column;
+                gap: 40px;
+            }
+            
+            .process-steps::before {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .features-grid,
+            .testimonials-grid,
+            .management-features,
+            .faq-grid,
+            .examples-grid,
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .domain-suggestions {
+                grid-template-columns: 1fr;
+            }
+
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .top-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .hero-section {
+                padding: 40px 20px;
+            }
+            
+            .cta-section {
+                padding: 30px 20px;
+            }
+            
+            .search-container {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--purple-primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--purple-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="#" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="#">Features</a></li>
+                <li><a href="#" class="active">Custom Domains</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Header -->
+        <header class="main-header">
+            <div class="city-logo">
+                <h1>LETTERS CITY</h1>
+            </div>
+            <p class="tagline">Private. Encrypted for you</p>
+            <a href="#" class="btn btn-primary">SIGN IN</a>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="hero-badge">ADVANCED FEATURES</div>
+                <h2>Custom Domains</h2>
+                <p>Elevate your professional identity with a custom domain. Create personalized email addresses that match your brand and enhance your credibility.</p>
+                <a href="#" class="btn btn-orange">GET STARTED</a>
+            </div>
+        </section>
+
+        <!-- Domain Search -->
+        <div class="domain-search">
+            <h3>Find Your Perfect Domain</h3>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Enter your desired domain name...">
+                <button class="search-btn">Search</button>
+            </div>
+            <div class="domain-suggestions">
+                <div class="domain-suggestion">
+                    <div class="domain-name">yourbrand.com</div>
+                    <div class="domain-price">$12.99/year</div>
+                </div>
+                <div class="domain-suggestion">
+                    <div class="domain-name">yourname.net</div>
+                    <div class="domain-price">$10.99/year</div>
+                </div>
+                <div class="domain-suggestion">
+                    <div class="domain-name">yourcompany.io</div>
+                    <div class="domain-price">$24.99/year</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h3>Brand Identity</h3>
+                <p>Strengthen your brand with email addresses that match your domain name, creating a cohesive professional identity.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Enhanced Security</h3>
+                <p>All custom domains benefit from our end-to-end encryption and advanced security protocols to protect your communications.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-sliders-h"></i>
+                </div>
+                <h3>Easy Management</h3>
+                <p>Intuitive domain management tools make it simple to add, configure, and manage multiple domains from one dashboard.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Instant Setup</h3>
+                <p>Get your custom domain email up and running in minutes with our streamlined setup process and guided configuration.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-infinity"></i>
+                </div>
+                <h3>Unlimited Addresses</h3>
+                <p>Create as many email addresses as you need with your domain - perfect for teams, departments, and campaigns.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Advanced Analytics</h3>
+                <p>Track deliverability, engagement, and performance metrics for all emails sent from your custom domain addresses.</p>
+            </div>
+        </div>
+
+        <!-- Domain Setup Process -->
+        <section class="setup-process">
+            <h2>Simple Setup Process</h2>
+            <div class="process-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Add Domain</h3>
+                    <p>Enter your domain name in the Letters City dashboard</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Verify Ownership</h3>
+                    <p>Follow our simple verification process to confirm domain ownership</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Configure DNS</h3>
+                    <p>Update your DNS records with the provided values</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Create Addresses</h3>
+                    <p>Start creating email addresses with your custom domain</p>
+                </div>
+            </div>
+            <div class="setup-cta">
+                <a href="#" class="btn btn-purple">VIEW SETUP GUIDE</a>
+            </div>
+        </section>
+
+        <!-- Domain Examples -->
+        <section class="examples-section">
+            <h2>How It Works</h2>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <h3><i class="fas fa-user-tie"></i> For Professionals</h3>
+                    <p>Create a professional email address that matches your personal brand or business.</p>
+                    <div class="example-domain">yourname@yourdomain.com</div>
+                </div>
+                
+                <div class="example-card">
+                    <h3><i class="fas fa-users"></i> For Teams</h3>
+                    <p>Set up multiple addresses for different departments or team members.</p>
+                    <div class="example-domain">team@yourcompany.com</div>
+                </div>
+                
+                <div class="example-card">
+                    <h3><i class="fas fa-store"></i> For E-commerce</h3>
+                    <p>Use dedicated addresses for different functions like orders, support, and inquiries.</p>
+                    <div class="example-domain">support@yourstore.com</div>
+                </div>
+                
+                <div class="example-card">
+                    <h3><i class="fas fa-envelope-open-text"></i> For Campaigns</h3>
+                    <p>Create temporary addresses for specific marketing campaigns or events.</p>
+                    <div class="example-domain">event2025@yourbrand.com</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Domain Management -->
+        <section class="management-section">
+            <h2>Advanced Domain Management</h2>
+            <div class="management-features">
+                <div class="management-card">
+                    <h3><i class="fas fa-cogs"></i> DNS Management</h3>
+                    <p>Easily manage all your DNS records from one intuitive interface with our advanced DNS management tools.</p>
+                </div>
+                
+                <div class="management-card">
+                    <h3><i class="fas fa-sync"></i> Auto-Renewal</h3>
+                    <p>Never worry about your domain expiring with our automatic renewal system that keeps your email running smoothly.</p>
+                </div>
+                
+                <div class="management-card">
+                    <h3><i class="fas fa-shield-virus"></i> Security Settings</h3>
+                    <p>Configure advanced security settings like SPF, DKIM, and DMARC to protect your domain from spoofing and phishing.</p>
+                </div>
+                
+                <div class="management-card">
+                    <h3><i class="fas fa-tachometer-alt"></i> Performance Monitoring</h3>
+                    <p>Monitor your domain's email performance with real-time analytics and detailed reporting tools.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- DNS Configuration -->
+        <section class="dns-config">
+            <h2>DNS Configuration Guide</h2>
+            <p style="text-align: center; color: var(--text-gray); margin-bottom: 30px;">Use these DNS records to configure your domain with Letters City</p>
+            
+            <table class="dns-table">
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Name</th>
+                        <th>Value</th>
+                        <th>TTL</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>MX</td>
+                        <td>@</td>
+                        <td>10 mx1.letters.city</td>
+                        <td>3600</td>
+                        <td><button class="copy-btn">Copy</button></td>
+                    </tr>
+                    <tr>
+                        <td>MX</td>
+                        <td>@</td>
+                        <td>20 mx2.letters.city</td>
+                        <td>3600</td>
+                        <td><button class="copy-btn">Copy</button></td>
+                    </tr>
+                    <tr>
+                        <td>TXT</td>
+                        <td>@</td>
+                        <td>v=spf1 include:letters.city ~all</td>
+                        <td>3600</td>
+                        <td><button class="copy-btn">Copy</button></td>
+                    </tr>
+                    <tr>
+                        <td>CNAME</td>
+                        <td>mail</td>
+                        <td>webmail.letters.city</td>
+                        <td>3600</td>
+                        <td><button class="copy-btn">Copy</button></td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div style="text-align: center;">
+                <a href="#" class="btn btn-purple">DOWNLOAD FULL CONFIGURATION GUIDE</a>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section class="testimonials-section">
+            <h2>What Our Customers Say</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "Setting up our custom domain with Letters City was incredibly smooth. Our team now has professional email addresses that perfectly represent our brand."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SM</div>
+                        <div class="author-info">
+                            <h4>Sarah Mitchell</h4>
+                            <p>CEO, TechSolutions Inc.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "The security features give me peace of mind, and the setup process was so straightforward. My clients appreciate the professional email address."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">DJ</div>
+                        <div class="author-info">
+                            <h4>David Johnson</h4>
+                            <p>Freelance Designer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "We migrated our entire team to Letters City with custom domains. The management tools make it easy to handle all our email addresses in one place."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MR</div>
+                        <div class="author-info">
+                            <h4>Maria Rodriguez</h4>
+                            <p>Operations Director</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <h3><i class="fas fa-question-circle"></i> How many domains can I add?</h3>
+                    <p>With our Signature and Enterprise plans, you can add unlimited custom domains. The Essentials plan supports one custom domain.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3><i class="fas fa-question-circle"></i> Do I need to transfer my domain?</h3>
+                    <p>No, you don't need to transfer your domain. We'll guide you through the simple DNS configuration process.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3><i class="fas fa-question-circle"></i> How long does setup take?</h3>
+                    <p>Typically, setup takes less than 15 minutes. DNS propagation may take up to 24-48 hours to complete globally.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3><i class="fas fa-question-circle"></i> Can I use subdomains?</h3>
+                    <p>Yes, you can create email addresses using subdomains of your verified domain.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3><i class="fas fa-question-circle"></i> Is there additional cost?</h3>
+                    <p>There's no additional Letters City fee for custom domains, but you'll need to maintain your domain registration with your registrar.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3><i class="fas fa-question-circle"></i> Can I remove a domain?</h3>
+                    <p>Yes, you can remove domains at any time from your dashboard. All associated email addresses will be deactivated.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="cta-content">
+                <h2>Ready to Elevate Your Email Experience?</h2>
+                <p>Join thousands of professionals who trust Letters City with their custom domain email needs. Experience the perfect blend of security, elegance, and functionality.</p>
+                <a href="#" class="btn btn-primary">GET STARTED NOW</a>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising performance.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <h3>Domain Configuration Started!</h3>
+            <p>We've sent a verification email to the administrative contact for your domain. Once verified, you can complete the DNS configuration.</p>
+            <div style="margin-top: 20px; display: flex; gap: 10px; justify-content: center;">
+                <button class="btn btn-primary" id="modal-ok">OK</button>
+                <button class="btn btn-purple" id="view-guide">View Setup Guide</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced JavaScript for interactions
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.feature-card, .example-card, .faq-item, .testimonial-card, .management-card, .domain-suggestion').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 40px rgba(168, 85, 247, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Domain search functionality
+        const searchInput = document.querySelector('.search-input');
+        const searchBtn = document.querySelector('.search-btn');
+        const domainSuggestions = document.querySelectorAll('.domain-suggestion');
+
+        searchBtn.addEventListener('click', function() {
+            if (searchInput.value.trim() !== '') {
+                // In a real app, this would make an API call
+                // For demo, we'll just show a success message
+                const successModal = document.getElementById('success-modal');
+                successModal.classList.add('active');
+            }
+        });
+
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchBtn.click();
+            }
+        });
+
+        // Domain suggestion selection
+        domainSuggestions.forEach(suggestion => {
+            suggestion.addEventListener('click', function() {
+                const domainName = this.querySelector('.domain-name').textContent;
+                searchInput.value = domainName;
+            });
+        });
+
+        // Copy DNS records
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const row = this.closest('tr');
+                const value = row.querySelector('td:nth-child(3)').textContent;
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(value).then(() => {
+                    // Visual feedback
+                    const originalText = this.textContent;
+                    this.textContent = 'Copied!';
+                    this.style.background = 'var(--green-accent)';
+                    this.style.borderColor = 'var(--green-accent)';
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.style.background = '';
+                        this.style.borderColor = '';
+                    }, 2000);
+                });
+            });
+        });
+
+        // Modal controls
+        const modalClose = document.getElementById('modal-close');
+        const modalOk = document.getElementById('modal-ok');
+        const viewGuide = document.getElementById('view-guide');
+        const successModal = document.getElementById('success-modal');
+
+        modalClose.addEventListener('click', function() {
+            successModal.classList.remove('active');
+        });
+
+        modalOk.addEventListener('click', function() {
+            successModal.classList.remove('active');
+        });
+
+        viewGuide.addEventListener('click', function() {
+            successModal.classList.remove('active');
+            document.querySelector('.setup-process').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Animate steps on scroll
+        function animateSteps() {
+            const steps = document.querySelectorAll('.step');
+            steps.forEach((step, index) => {
+                setTimeout(() => {
+                    step.style.opacity = '1';
+                    step.style.transform = 'translateY(0)';
+                }, index * 300);
+            });
+        }
+
+        // Trigger animation when in view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateSteps();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(document.querySelector('.setup-process'));
+
+        // Initialize step animations
+        document.querySelectorAll('.step').forEach(step => {
+            step.style.opacity = '0';
+            step.style.transform = 'translateY(20px)';
+            step.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        });
+    </script>
+</body>
+</html>

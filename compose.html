@@ -1,0 +1,1404 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar Integration - Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        .top-nav-links a.active {
+            color: var(--purple-primary);
+            border-bottom: 2px solid var(--orange-accent);
+            padding-bottom: 2px;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            color: var(--text-light);
+            border: 1px solid var(--purple-primary);
+        }
+
+        .btn-primary:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.3);
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 20px;
+        }
+
+        .page-header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            color: var(--text-gray);
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Calendar Preview Section */
+        .calendar-preview {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .calendar-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--orange-accent), var(--purple-primary));
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .calendar-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .calendar-title i {
+            font-size: 28px;
+            color: var(--purple-primary);
+        }
+
+        .calendar-title h2 {
+            font-size: 24px;
+        }
+
+        .calendar-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .calendar-controls button {
+            padding: 8px 16px;
+            background: var(--bg-darker);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .calendar-controls button:hover {
+            border-color: var(--orange-accent);
+            background: var(--bg-card-hover);
+        }
+
+        .calendar-controls button.active {
+            border-color: var(--purple-primary);
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--purple-primary);
+        }
+
+        /* Calendar Grid */
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            color: var(--text-gray);
+            font-size: 12px;
+            font-weight: 600;
+            padding: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            background: var(--bg-darker);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .calendar-day:hover {
+            border-color: var(--purple-primary);
+            transform: translateY(-2px);
+            background: var(--bg-card);
+        }
+
+        .calendar-day.today {
+            border-color: var(--orange-accent);
+            background: rgba(255, 140, 0, 0.1);
+        }
+
+        .calendar-day.has-event::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            width: 6px;
+            height: 6px;
+            background: var(--purple-primary);
+            border-radius: 50%;
+        }
+
+        .calendar-day.selected {
+            border-color: var(--orange-accent);
+            background: rgba(168, 85, 247, 0.15);
+        }
+
+        .day-number {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .calendar-day.inactive .day-number {
+            color: var(--text-dim);
+        }
+
+        /* Integration Cards Grid */
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .integration-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .integration-card:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.2);
+        }
+
+        .integration-card.connected {
+            border-color: var(--purple-primary);
+        }
+
+        .integration-card.connected::before {
+            content: '✓';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            background: var(--purple-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .integration-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .integration-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .integration-icon.google {
+            background: linear-gradient(135deg, #4285f4, #34a853);
+        }
+
+        .integration-icon.outlook {
+            background: linear-gradient(135deg, #0078d4, #00bcf2);
+        }
+
+        .integration-icon.icloud {
+            background: linear-gradient(135deg, #3693f3, #1d6fc7);
+        }
+
+        .integration-info h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        .integration-info .status {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .integration-info .status.connected {
+            color: var(--purple-primary);
+        }
+
+        .integration-details {
+            margin-bottom: 25px;
+        }
+
+        .integration-details p {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .integration-features {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .integration-features li {
+            color: var(--text-gray);
+            font-size: 14px;
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .integration-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--purple-primary);
+            font-weight: bold;
+        }
+
+        .integration-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-connect {
+            flex: 1;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            border: 1px solid var(--purple-primary);
+            border-radius: 8px;
+            color: var(--text-light);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .btn-connect:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.3);
+        }
+
+        .btn-connect.connected {
+            background: transparent;
+            border-color: rgba(255, 255, 255, 0.1);
+            color: var(--text-gray);
+        }
+
+        .btn-connect.connected:hover {
+            border-color: var(--orange-accent);
+            color: var(--text-light);
+        }
+
+        .btn-settings {
+            padding: 12px 20px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-settings:hover {
+            border-color: var(--orange-accent);
+            background: var(--bg-card-hover);
+        }
+
+        /* Features Section */
+        .features-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .features-section h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .features-section > p {
+            text-align: center;
+            color: var(--text-gray);
+            margin-bottom: 40px;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-item {
+            text-align: center;
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 2px solid var(--purple-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            color: var(--purple-primary);
+            transition: all 0.3s;
+        }
+
+        .feature-item:hover .feature-icon {
+            border-color: var(--orange-accent);
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.3);
+        }
+
+        .feature-item h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .feature-item p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Sync Settings Section */
+        .sync-settings {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sync-settings h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .sync-settings > p {
+            color: var(--text-gray);
+            margin-bottom: 30px;
+        }
+
+        .sync-options {
+            display: grid;
+            gap: 20px;
+        }
+
+        .sync-option {
+            background: var(--bg-darker);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .sync-option:hover {
+            border-color: var(--purple-primary);
+            background: var(--bg-card);
+        }
+
+        .sync-option-info h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .sync-option-info p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* Toggle Switch */
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bg-dark);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 3px;
+            bottom: 3px;
+            background-color: var(--text-gray);
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            border-color: var(--purple-primary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(30px);
+            background-color: white;
+        }
+
+        .toggle-slider:hover {
+            border-color: var(--orange-accent);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-section h2 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .faq-item {
+            background: var(--bg-darker);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--purple-primary);
+        }
+
+        .faq-item.active {
+            border-color: var(--orange-accent);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .faq-question i {
+            color: var(--purple-primary);
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 60px;
+            padding: 40px 0 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--purple-primary);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-bottom p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .calendar-grid {
+                gap: 8px;
+            }
+
+            .calendar-day {
+                padding: 8px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .top-nav {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .nav-left {
+                flex-direction: column;
+                gap: 20px;
+                width: 100%;
+            }
+
+            .top-nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .page-header h1 {
+                font-size: 32px;
+            }
+
+            .page-header p {
+                font-size: 16px;
+            }
+
+            .calendar-preview {
+                padding: 20px;
+            }
+
+            .calendar-header {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+
+            .calendar-controls {
+                width: 100%;
+                flex-wrap: wrap;
+            }
+
+            .calendar-controls button {
+                flex: 1;
+                min-width: 100px;
+            }
+
+            .calendar-grid {
+                gap: 5px;
+            }
+
+            .calendar-day {
+                padding: 5px;
+            }
+
+            .day-number {
+                font-size: 12px;
+            }
+
+            .integrations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .integration-card {
+                padding: 25px;
+            }
+
+            .features-section,
+            .sync-settings,
+            .faq-section {
+                padding: 25px;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .integration-card,
+        .feature-item,
+        .sync-option,
+        .faq-item {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .integration-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .integration-card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <div class="nav-left">
+                <a href="#" class="logo-link">
+                    <div class="logo-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <span class="logo-text">Letters City</span>
+                </a>
+                <ul class="top-nav-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#" class="active">Integrations</a></li>
+                    <li><a href="#">Settings</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <button class="btn btn-secondary"><i class="fas fa-bell"></i></button>
+                <button class="btn btn-primary">Upgrade</button>
+            </div>
+        </nav>
+
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1>Calendar Integration</h1>
+            <p>Sync your calendars seamlessly with Letters City. Manage all your events, meetings, and appointments in one elegant interface.</p>
+        </header>
+
+        <!-- Calendar Preview -->
+        <section class="calendar-preview">
+            <div class="calendar-header">
+                <div class="calendar-title">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h2>October 2025</h2>
+                </div>
+                <div class="calendar-controls">
+                    <button><i class="fas fa-chevron-left"></i></button>
+                    <button class="active">Month</button>
+                    <button>Week</button>
+                    <button>Day</button>
+                    <button><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+
+            <div class="calendar-grid">
+                <div class="calendar-day-header">Sun</div>
+                <div class="calendar-day-header">Mon</div>
+                <div class="calendar-day-header">Tue</div>
+                <div class="calendar-day-header">Wed</div>
+                <div class="calendar-day-header">Thu</div>
+                <div class="calendar-day-header">Fri</div>
+                <div class="calendar-day-header">Sat</div>
+
+                <div class="calendar-day inactive"><span class="day-number">29</span></div>
+                <div class="calendar-day inactive"><span class="day-number">30</span></div>
+                <div class="calendar-day"><span class="day-number">1</span></div>
+                <div class="calendar-day has-event"><span class="day-number">2</span></div>
+                <div class="calendar-day"><span class="day-number">3</span></div>
+                <div class="calendar-day"><span class="day-number">4</span></div>
+                <div class="calendar-day has-event"><span class="day-number">5</span></div>
+
+                <div class="calendar-day"><span class="day-number">6</span></div>
+                <div class="calendar-day has-event"><span class="day-number">7</span></div>
+                <div class="calendar-day"><span class="day-number">8</span></div>
+                <div class="calendar-day has-event"><span class="day-number">9</span></div>
+                <div class="calendar-day"><span class="day-number">10</span></div>
+                <div class="calendar-day"><span class="day-number">11</span></div>
+                <div class="calendar-day"><span class="day-number">12</span></div>
+
+                <div class="calendar-day"><span class="day-number">13</span></div>
+                <div class="calendar-day"><span class="day-number">14</span></div>
+                <div class="calendar-day has-event"><span class="day-number">15</span></div>
+                <div class="calendar-day"><span class="day-number">16</span></div>
+                <div class="calendar-day"><span class="day-number">17</span></div>
+                <div class="calendar-day has-event"><span class="day-number">18</span></div>
+                <div class="calendar-day"><span class="day-number">19</span></div>
+
+                <div class="calendar-day"><span class="day-number">20</span></div>
+                <div class="calendar-day has-event"><span class="day-number">21</span></div>
+                <div class="calendar-day"><span class="day-number">22</span></div>
+                <div class="calendar-day"><span class="day-number">23</span></div>
+                <div class="calendar-day today selected"><span class="day-number">24</span></div>
+                <div class="calendar-day"><span class="day-number">25</span></div>
+                <div class="calendar-day"><span class="day-number">26</span></div>
+
+                <div class="calendar-day has-event"><span class="day-number">27</span></div>
+                <div class="calendar-day"><span class="day-number">28</span></div>
+                <div class="calendar-day"><span class="day-number">29</span></div>
+                <div class="calendar-day has-event"><span class="day-number">30</span></div>
+                <div class="calendar-day"><span class="day-number">31</span></div>
+                <div class="calendar-day inactive"><span class="day-number">1</span></div>
+                <div class="calendar-day inactive"><span class="day-number">2</span></div>
+            </div>
+        </section>
+
+        <!-- Integration Cards -->
+        <section class="integrations-grid">
+            <!-- Google Calendar -->
+            <div class="integration-card connected">
+                <div class="integration-header">
+                    <div class="integration-icon google">
+                        <i class="fab fa-google"></i>
+                    </div>
+                    <div class="integration-info">
+                        <h3>Google Calendar</h3>
+                        <p class="status connected"><i class="fas fa-circle" style="font-size: 8px; margin-right: 5px;"></i>Connected</p>
+                    </div>
+                </div>
+                <div class="integration-details">
+                    <p>Seamlessly sync all your Google Calendar events, meetings, and reminders with Letters City. Two-way sync ensures all changes are reflected instantly.</p>
+                    <ul class="integration-features">
+                        <li>Real-time two-way synchronization</li>
+                        <li>Event creation and editing</li>
+                        <li>Multiple calendar support</li>
+                        <li>Smart notifications and reminders</li>
+                        <li>Color-coded event categories</li>
+                    </ul>
+                </div>
+                <div class="integration-actions">
+                    <button class="btn-connect connected">Disconnect</button>
+                    <button class="btn-settings"><i class="fas fa-cog"></i></button>
+                </div>
+            </div>
+
+            <!-- Microsoft Outlook Calendar -->
+            <div class="integration-card">
+                <div class="integration-header">
+                    <div class="integration-icon outlook">
+                        <i class="fab fa-microsoft"></i>
+                    </div>
+                    <div class="integration-info">
+                        <h3>Outlook Calendar</h3>
+                        <p class="status">Not connected</p>
+                    </div>
+                </div>
+                <div class="integration-details">
+                    <p>Integrate your Microsoft Outlook Calendar for seamless productivity. Access work meetings, personal appointments, and shared calendars all in one place.</p>
+                    <ul class="integration-features">
+                        <li>Full Outlook calendar sync</li>
+                        <li>Meeting scheduling and invites</li>
+                        <li>Shared calendar access</li>
+                        <li>Room and resource booking</li>
+                        <li>Business hours management</li>
+                    </ul>
+                </div>
+                <div class="integration-actions">
+                    <button class="btn-connect">Connect Now</button>
+                    <button class="btn-settings"><i class="fas fa-cog"></i></button>
+                </div>
+            </div>
+
+            <!-- iCloud Calendar -->
+            <div class="integration-card">
+                <div class="integration-header">
+                    <div class="integration-icon icloud">
+                        <i class="fab fa-apple"></i>
+                    </div>
+                    <div class="integration-info">
+                        <h3>iCloud Calendar</h3>
+                        <p class="status">Not connected</p>
+                    </div>
+                </div>
+                <div class="integration-details">
+                    <p>Sync your iCloud Calendar to bring your Apple ecosystem events into Letters City. Perfect integration for Mac, iPhone, and iPad users.</p>
+                    <ul class="integration-features">
+                        <li>Apple ecosystem integration</li>
+                        <li>Family calendar sharing</li>
+                        <li>Event attachments and locations</li>
+                        <li>Travel time calculations</li>
+                        <li>Siri integration support</li>
+                    </ul>
+                </div>
+                <div class="integration-actions">
+                    <button class="btn-connect">Connect Now</button>
+                    <button class="btn-settings"><i class="fas fa-cog"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section">
+            <h2>Powerful Calendar Features</h2>
+            <p>Everything you need to manage your time effectively</p>
+            
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Real-Time Sync</h3>
+                    <p>All your calendars update instantly across all devices. Never miss an important event or meeting.</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Shared Calendars</h3>
+                    <p>Collaborate with teams and family. Share calendars with custom permission levels.</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Smart Reminders</h3>
+                    <p>Intelligent notifications ensure you're always prepared for upcoming events and deadlines.</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Color Coding</h3>
+                    <p>Organize events with custom colors and categories for instant visual recognition.</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Time Zones</h3>
+                    <p>Automatic time zone detection and conversion for global teams and travel.</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Quick Search</h3>
+                    <p>Find any event instantly with powerful search and filter capabilities.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sync Settings -->
+        <section class="sync-settings">
+            <h2>Synchronization Settings</h2>
+            <p>Customize how your calendars sync with Letters City</p>
+
+            <div class="sync-options">
+                <div class="sync-option">
+                    <div class="sync-option-info">
+                        <h4>Two-Way Sync</h4>
+                        <p>Changes made in Letters City will sync back to your calendar service</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="sync-option">
+                    <div class="sync-option-info">
+                        <h4>Auto-Sync Events</h4>
+                        <p>Automatically synchronize new events in real-time</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="sync-option">
+                    <div class="sync-option-info">
+                        <h4>Sync Event Attachments</h4>
+                        <p>Include files and documents attached to calendar events</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="sync-option">
+                    <div class="sync-option-info">
+                        <h4>Smart Notifications</h4>
+                        <p>Receive intelligent reminders based on your preferences</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="sync-option">
+                    <div class="sync-option-info">
+                        <h4>Sync Past Events</h4>
+                        <p>Include historical events from the last 12 months</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="sync-option">
+                    <div class="sync-option-info">
+                        <h4>Merge Duplicate Events</h4>
+                        <p>Automatically detect and merge duplicate calendar entries</p>
+                    </div>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How secure is calendar synchronization?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Letters City uses industry-standard OAuth 2.0 authentication and end-to-end encryption to keep your calendar data secure. We never store your calendar service passwords, and all data is transmitted over secure HTTPS connections.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I sync multiple calendars from the same service?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Yes! You can connect and sync multiple calendars from Google, Outlook, and iCloud. Each calendar can be individually managed and color-coded for easy identification.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>What happens if I disconnect a calendar?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    When you disconnect a calendar, syncing will stop immediately. Events already synced to Letters City will remain visible in read-only mode. You can reconnect at any time to resume full synchronization.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>How often do calendars sync?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    With real-time sync enabled, changes are pushed instantly. If real-time sync is disabled, calendars automatically sync every 15 minutes. You can also manually trigger a sync at any time.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Can I create events from Letters City?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Absolutely! With two-way sync enabled, you can create, edit, and delete events directly in Letters City, and all changes will be reflected in your connected calendar services.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>Does calendar integration work on mobile devices?</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    Yes! Calendar integration is fully supported on our mobile apps for both iOS and Android. All features work seamlessly across desktop and mobile platforms.
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters City</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising performance.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters City. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Calendar day interaction
+        document.querySelectorAll('.calendar-day').forEach(day => {
+            day.addEventListener('click', function() {
+                document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // FAQ accordion
+        document.querySelectorAll('.faq-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const isActive = this.classList.contains('active');
+                document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+                if (!isActive) {
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Connect/Disconnect button functionality
+        document.querySelectorAll('.btn-connect').forEach(button => {
+            button.addEventListener('click', function() {
+                const card = this.closest('.integration-card');
+                const isConnected = card.classList.contains('connected');
+                
+                if (isConnected) {
+                    if (confirm('Are you sure you want to disconnect this calendar?')) {
+                        card.classList.remove('connected');
+                        this.classList.remove('connected');
+                        this.textContent = 'Connect Now';
+                        card.querySelector('.status').classList.remove('connected');
+                        card.querySelector('.status').innerHTML = 'Not connected';
+                    }
+                } else {
+                    // Simulate connection
+                    card.classList.add('connected');
+                    this.classList.add('connected');
+                    this.textContent = 'Disconnect';
+                    card.querySelector('.status').classList.add('connected');
+                    card.querySelector('.status').innerHTML = '<i class="fas fa-circle" style="font-size: 8px; margin-right: 5px;"></i>Connected';
+                }
+            });
+        });
+
+        // Calendar view switcher
+        document.querySelectorAll('.calendar-controls button').forEach(button => {
+            if (!button.querySelector('i')) {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.calendar-controls button').forEach(b => {
+                        if (!b.querySelector('i')) {
+                            b.classList.remove('active');
+                        }
+                    });
+                    this.classList.add('active');
+                });
+            }
+        });
+
+        // Add hover effects to cards
+        document.querySelectorAll('.integration-card, .feature-item, .sync-option, .faq-item').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('faq-item')) {
+                    this.style.boxShadow = '0 10px 40px rgba(168, 85, 247, 0.2)';
+                }
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('faq-item')) {
+                    this.style.boxShadow = 'none';
+                }
+            });
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

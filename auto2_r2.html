@@ -1,0 +1,768 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard Shortcuts - Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        .top-nav-links a.active {
+            color: var(--orange-accent);
+        }
+
+        /* Main Header */
+        .main-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .city-logo {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 2px solid var(--orange-accent);
+            border-radius: 50px;
+            margin-bottom: 12px;
+        }
+
+        .city-logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .tagline {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Search Bar */
+        .search-section {
+            margin-bottom: 30px;
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+            box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            font-size: 18px;
+        }
+
+        /* Shortcuts Categories */
+        .shortcuts-categories {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+
+        .category-btn {
+            padding: 10px 20px;
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 50px;
+            color: var(--text-gray);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .category-btn:hover {
+            border-color: var(--border-color);
+        }
+
+        .category-btn.active {
+            background: var(--purple-primary);
+            color: white;
+            border-color: var(--purple-primary);
+        }
+
+        /* Shortcuts Grid */
+        .shortcuts-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .shortcut-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .shortcut-card:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-3px);
+        }
+
+        .shortcut-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .shortcut-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: white;
+        }
+
+        .shortcut-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .shortcut-keys {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .key {
+            padding: 8px 12px;
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-light);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .key.combo {
+            background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+        }
+
+        .key i {
+            font-size: 12px;
+        }
+
+        .shortcut-description {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-top: 15px;
+            line-height: 1.6;
+        }
+
+        /* Quick Reference */
+        .quick-reference {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .quick-reference h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .reference-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .reference-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-radius: 12px;
+            transition: background 0.3s;
+        }
+
+        .reference-item:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .reference-key {
+            min-width: 80px;
+            padding: 8px 12px;
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .reference-action {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .shortcuts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .reference-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .top-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .reference-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="#" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#" class="active">Shortcuts</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Header -->
+        <header class="main-header">
+            <div class="city-logo">
+                <h1>LETTERS CITY</h1>
+            </div>
+            <p class="tagline">Keyboard Shortcuts - Work faster with hotkeys</p>
+            <a href="#" class="btn btn-primary">SIGN IN</a>
+        </header>
+
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search for shortcuts...">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <div class="shortcuts-categories">
+            <button class="category-btn active">All Shortcuts</button>
+            <button class="category-btn">Navigation</button>
+            <button class="category-btn">Composing</button>
+            <button class="category-btn">Organization</button>
+            <button class="category-btn">Search & Filters</button>
+            <button class="category-btn">Formatting</button>
+        </div>
+
+        <!-- Shortcuts Grid -->
+        <div class="shortcuts-grid">
+            <!-- Navigation Shortcuts -->
+            <div class="shortcut-card" data-category="navigation">
+                <div class="shortcut-header">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-inbox"></i>
+                    </div>
+                    <h3 class="shortcut-title">Go to Inbox</h3>
+                </div>
+                <div class="shortcut-keys">
+                    <div class="key combo">G</div>
+                    <div class="key">I</div>
+                </div>
+                <p class="shortcut-description">Quickly navigate to your main inbox from anywhere in the app.</p>
+            </div>
+
+            <div class="shortcut-card" data-category="navigation">
+                <div class="shortcut-header">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3 class="shortcut-title">Go to Starred</h3>
+                </div>
+                <div class="shortcut-keys">
+                    <div class="key combo">G</div>
+                    <div class="key">S</div>
+                </div>
+                <p class="shortcut-description">Jump directly to your starred messages for quick access to important emails.</p>
+            </div>
+
+            <!-- Composing Shortcuts -->
+            <div class="shortcut-card" data-category="composing">
+                <div class="shortcut-header">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-pen"></i>
+                    </div>
+                    <h3 class="shortcut-title">Compose New Email</h3>
+                </div>
+                <div class="shortcut-keys">
+                    <div class="key">C</div>
+                </div>
+                <p class="shortcut-description">Open a new compose window to start writing an email immediately.</p>
+            </div>
+
+            <div class="shortcut-card" data-category="composing">
+                <div class="shortcut-header">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-paper-plane"></i>
+                    </div>
+                    <h3 class="shortcut-title">Send Email</h3>
+                </div>
+                <div class="shortcut-keys">
+                    <div class="key combo">
+                        <i class="fas fa-command"></i>
+                        <span>Enter</span>
+                    </div>
+                </div>
+                <p class="shortcut-description">Quickly send your composed email without reaching for the mouse.</p>
+            </div>
+
+            <!-- Organization Shortcuts -->
+            <div class="shortcut-card" data-category="organization">
+                <div class="shortcut-header">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-archive"></i>
+                    </div>
+                    <h3 class="shortcut-title">Archive Email</h3>
+                </div>
+                <div class="shortcut-keys">
+                    <div class="key">E</div>
+                </div>
+                <p class="shortcut-description">Archive the selected email to keep your inbox clean and organized.</p>
+            </div>
+
+            <div class="shortcut-card" data-category="organization">
+                <div class="shortcut-header">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-trash"></i>
+                    </div>
+                    <h3 class="shortcut-title">Delete Email</h3>
+                </div>
+                <div class="shortcut-keys">
+                    <div class="key">#</div>
+                </div>
+                <p class="shortcut-description">Move selected email to trash. Use with caution as emails will be permanently deleted after 30 days.</p>
+            </div>
+
+            <!-- Search & Filter Shortcuts -->
+            <div class="shortcut-card" data-category="search">
+                <div class="shortcut-header">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="shortcut-title">Search Emails</h3>
+                </div>
+                <div class="shortcut-keys">
+                    <div class="key">/</div>
+                </div>
+                <p class="shortcut-description">Focus on the search bar to quickly find emails by content, sender, or subject.</p>
+            </div>
+
+            <div class="shortcut-card" data-category="search">
+                <div class="shortcut-header">
+                    <div class="shortcut-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h3 class="shortcut-title">Filter by Unread</h3>
+                </div>
+                <div class="shortcut-keys">
+                    <div class="key combo">
+                        <i class="fas fa-command"></i>
+                        <span>Shift</span>
+                        <span>U</span>
+                    </div>
+                </div>
+                <p class="shortcut-description">Filter your inbox to show only unread messages for quick triaging.</p>
+            </div>
+        </div>
+
+        <!-- Quick Reference -->
+        <section class="quick-reference">
+            <h2>Quick Reference</h2>
+            <div class="reference-grid">
+                <div class="reference-item">
+                    <div class="reference-key">C</div>
+                    <div class="reference-action">Compose New Email</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-key">R</div>
+                    <div class="reference-action">Reply to Email</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-key">A</div>
+                    <div class="reference-action">Reply All</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-key">F</div>
+                    <div class="reference-action">Forward Email</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-key">E</div>
+                    <div class="reference-action">Archive Email</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-key">#</div>
+                    <div class="reference-action">Delete Email</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-key">J</div>
+                    <div class="reference-action">Next Email</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-key">K</div>
+                    <div class="reference-action">Previous Email</div>
+                </div>
+                <div class="reference-item">
+                    <div class="reference-key">/</div>
+                    <div class="reference-action">Search Emails</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising performance.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.shortcut-card, .reference-item').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 40px rgba(168, 85, 247, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Category filtering
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const shortcutCards = document.querySelectorAll('.shortcut-card');
+        
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const category = this.textContent.toLowerCase().trim();
+                
+                // Show/hide cards based on category
+                shortcutCards.forEach(card => {
+                    if (category === 'all shortcuts') {
+                        card.style.display = 'block';
+                    } else {
+                        const cardCategory = card.getAttribute('data-category');
+                        if (cardCategory === category) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    }
+                });
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.querySelector('.search-input');
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            shortcutCards.forEach(card => {
+                const title = card.querySelector('.shortcut-title').textContent.toLowerCase();
+                const description = card.querySelector('.shortcut-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

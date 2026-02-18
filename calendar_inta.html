@@ -1,0 +1,877 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security & Privacy — Connected Devices | Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        /* Main Header */
+        .main-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .city-logo {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 2px solid var(--orange-accent);
+            border-radius: 50px;
+            margin-bottom: 12px;
+        }
+
+        .city-logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .tagline {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--orange-accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 140, 0, 0.1);
+        }
+
+        .btn-danger {
+            background: transparent;
+            color: var(--pink-accent);
+            border: 1px solid var(--pink-accent);
+        }
+
+        .btn-danger:hover {
+            background: rgba(236, 72, 153, 0.1);
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .welcome-section h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-section p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* Security Status Card */
+        .security-status {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .security-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            color: white;
+        }
+
+        .security-content {
+            flex: 1;
+        }
+
+        .security-content h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .security-content p {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .security-status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(10, 200, 100, 0.2);
+            color: #0ac864;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Active Sessions Section */
+        .sessions-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sessions-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .sessions-header h2 {
+            font-size: 22px;
+        }
+
+        .sessions-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .session-card {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 25px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .session-card:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-3px);
+        }
+
+        .session-card.current {
+            border-color: var(--orange-accent);
+            box-shadow: 0 0 0 1px var(--orange-accent);
+        }
+
+        .session-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--purple-primary);
+        }
+
+        .session-info {
+            flex: 1;
+        }
+
+        .session-info h3 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .session-badge {
+            font-size: 11px;
+            padding: 3px 10px;
+            background: var(--orange-accent);
+            color: white;
+            border-radius: 10px;
+        }
+
+        .session-details {
+            color: var(--text-gray);
+            font-size: 13px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .session-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        /* Privacy Settings Section */
+        .privacy-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .privacy-section h2 {
+            font-size: 22px;
+            margin-bottom: 25px;
+        }
+
+        .privacy-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .privacy-card {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .privacy-card:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .privacy-card h3 {
+            font-size: 16px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .privacy-card p {
+            color: var(--text-gray);
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--text-dim);
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--purple-primary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Security Tips */
+        .security-tips {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .security-tips h2 {
+            font-size: 22px;
+            margin-bottom: 25px;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .tip-card {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .tip-card:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .tip-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            color: white;
+        }
+
+        .tip-card h3 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .tip-card p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .privacy-grid,
+            .tips-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .security-status {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .session-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .session-actions {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .top-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="#" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Security</a></li>
+                <li><a href="#">Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Header -->
+        <header class="main-header">
+            <div class="city-logo">
+                <h1>LETTERS CITY</h1>
+            </div>
+            <p class="tagline">Security & Privacy — Connected Devices</p>
+        </header>
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <h2>Manage Your Account Security</h2>
+            <p>Review and control your active sessions and privacy settings</p>
+        </section>
+
+        <!-- Security Status Card -->
+        <section class="security-status">
+            <div class="security-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="security-content">
+                <h3>Your account security is strong</h3>
+                <p>We haven't detected any suspicious activity on your account. Continue to monitor your active sessions and privacy settings to keep your account secure.</p>
+                <span class="security-status-badge">All Systems Secure</span>
+            </div>
+        </section>
+
+        <!-- Active Sessions Section -->
+        <section class="sessions-section">
+            <div class="sessions-header">
+                <h2>Active Sessions</h2>
+                <button class="btn btn-danger">Sign Out All Other Sessions</button>
+            </div>
+            <div class="sessions-grid">
+                <div class="session-card current">
+                    <div class="session-icon">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <div class="session-info">
+                        <h3>MacBook Pro <span class="session-badge">Current Session</span></h3>
+                        <p>San Francisco, CA • Letters City for Web</p>
+                        <div class="session-details">
+                            <span><i class="fas fa-wifi"></i> Secure Connection</span>
+                            <span><i class="far fa-clock"></i> Active now</span>
+                            <span><i class="fas fa-microchip"></i> macOS 14.1</span>
+                        </div>
+                    </div>
+                    <div class="session-actions">
+                        <button class="btn-small btn-secondary">Details</button>
+                    </div>
+                </div>
+
+                <div class="session-card">
+                    <div class="session-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <div class="session-info">
+                        <h3>iPhone 14 Pro</h3>
+                        <p>San Francisco, CA • Letters City Mobile</p>
+                        <div class="session-details">
+                            <span><i class="fas fa-wifi"></i> Cellular Network</span>
+                            <span><i class="far fa-clock"></i> 2 hours ago</span>
+                            <span><i class="fas fa-microchip"></i> iOS 17.1</span>
+                        </div>
+                    </div>
+                    <div class="session-actions">
+                        <button class="btn-small btn-danger">Sign Out</button>
+                    </div>
+                </div>
+
+                <div class="session-card">
+                    <div class="session-icon">
+                        <i class="fas fa-tablet-alt"></i>
+                    </div>
+                    <div class="session-info">
+                        <h3>iPad Air</h3>
+                        <p>San Francisco, CA • Letters City Mobile</p>
+                        <div class="session-details">
+                            <span><i class="fas fa-wifi"></i> Home Network</span>
+                            <span><i class="far fa-clock"></i> 1 day ago</span>
+                            <span><i class="fas fa-microchip"></i> iPadOS 17.1</span>
+                        </div>
+                    </div>
+                    <div class="session-actions">
+                        <button class="btn-small btn-danger">Sign Out</button>
+                    </div>
+                </div>
+
+                <div class="session-card">
+                    <div class="session-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <div class="session-info">
+                        <h3>Windows Desktop</h3>
+                        <p>New York, NY • Letters City for Web</p>
+                        <div class="session-details">
+                            <span><i class="fas fa-wifi"></i> Office Network</span>
+                            <span><i class="far fa-clock"></i> 3 days ago</span>
+                            <span><i class="fas fa-microchip"></i> Windows 11</span>
+                        </div>
+                    </div>
+                    <div class="session-actions">
+                        <button class="btn-small btn-danger">Sign Out</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Privacy Settings Section -->
+        <section class="privacy-section">
+            <h2>Privacy & Security Settings</h2>
+            <div class="privacy-grid">
+                <div class="privacy-card">
+                    <h3><i class="fas fa-lock"></i> Two-Factor Authentication</h3>
+                    <p>Add an extra layer of security to your account</p>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="privacy-card">
+                    <h3><i class="fas fa-bell"></i> Login Notifications</h3>
+                    <p>Get alerts when your account is accessed from a new device</p>
+                    <label class="toggle-switch">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="privacy-card">
+                    <h3><i class="fas fa-history"></i> Session Timeout</h3>
+                    <p>Automatically sign out after 30 days of inactivity</p>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+
+                <div class="privacy-card">
+                    <h3><i class="fas fa-shield-alt"></i> Advanced Protection</h3>
+                    <p>Enhanced security for high-risk users</p>
+                    <label class="toggle-switch">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security Tips -->
+        <section class="security-tips">
+            <h2>Security Tips</h2>
+            <div class="tips-grid">
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <h3>Use Strong Passwords</h3>
+                    <p>Create unique, complex passwords for your accounts and change them regularly.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <h3>Enable 2FA</h3>
+                    <p>Two-factor authentication adds an extra layer of security to your account.</p>
+                </div>
+
+                <div class="tip-card">
+                    <div class="tip-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <h3>Monitor Activity</h3>
+                    <p>Regularly check your active sessions and sign out of unfamiliar devices.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising security.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Security</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Security Overview</a></li>
+                        <li><a href="#">Data Protection</a></li>
+                        <li><a href="#">Report an Issue</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Help</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Security Tips</a></li>
+                        <li><a href="#">Account Recovery</a></li>
+                        <li><a href="#">Contact Support</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved. Your privacy is our priority.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.session-card, .privacy-card, .tip-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 40px rgba(168, 85, 247, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Sign out functionality
+        document.querySelectorAll('.btn-danger').forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.textContent === 'Sign Out All Other Sessions') {
+                    if (confirm('Are you sure you want to sign out all other sessions? You will remain signed in on this device.')) {
+                        const sessions = document.querySelectorAll('.session-card:not(.current)');
+                        sessions.forEach(session => {
+                            session.style.opacity = '0.5';
+                            const signOutBtn = session.querySelector('.btn-danger');
+                            if (signOutBtn) signOutBtn.textContent = 'Signed Out';
+                        });
+                        this.textContent = 'All Other Sessions Signed Out';
+                        this.disabled = true;
+                    }
+                } else {
+                    if (confirm('Are you sure you want to sign out this device?')) {
+                        this.textContent = 'Signed Out';
+                        this.disabled = true;
+                        this.closest('.session-card').style.opacity = '0.5';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

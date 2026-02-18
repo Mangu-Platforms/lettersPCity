@@ -1,0 +1,1869 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Auto Responses | Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --green-accent: #10b981;
+            --blue-accent: #3b82f6;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            position: relative;
+            z-index: 10;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        .top-nav-links a:after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--orange-accent);
+            transition: var(--transition);
+        }
+
+        .top-nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .top-nav-links a.active {
+            color: var(--orange-accent);
+        }
+
+        .top-nav-links a.active:after {
+            width: 100%;
+        }
+
+        /* Main Header */
+        .main-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .city-logo {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 2px solid var(--orange-accent);
+            border-radius: 50px;
+            margin-bottom: 12px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .city-logo:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: var(--transition);
+        }
+
+        .city-logo:hover:before {
+            left: 100%;
+        }
+
+        .city-logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .tagline {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: var(--transition);
+        }
+
+        .btn:hover:before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--orange-accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 140, 0, 0.1);
+        }
+
+        .btn-purple {
+            background: var(--purple-primary);
+            color: var(--text-light);
+        }
+
+        .btn-purple:hover {
+            background: var(--purple-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.3);
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h2 {
+            font-size: 28px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .page-header h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--orange-accent);
+            border-radius: 3px;
+        }
+
+        .page-header p {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background: linear-gradient(135deg, var(--bg-card), var(--bg-darker));
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-section:before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,140,0,0.05) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .welcome-section h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-section p {
+            color: var(--text-gray);
+            font-size: 14px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Stats Section */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--purple-primary);
+            box-shadow: 0 10px 25px rgba(168, 85, 247, 0.2);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 20px;
+        }
+
+        .stat-icon.blue {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--blue-accent);
+        }
+
+        .stat-icon.green {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--green-accent);
+        }
+
+        .stat-icon.purple {
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--purple-primary);
+        }
+
+        .stat-icon.orange {
+            background: rgba(255, 140, 0, 0.1);
+            color: var(--orange-accent);
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--text-gray);
+            font-size: 13px;
+        }
+
+        /* AI Assistant Section */
+        .ai-assistant {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ai-assistant:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(168,85,247,0.05) 0%, rgba(59,130,246,0.05) 100%);
+            z-index: 0;
+        }
+
+        .ai-assistant h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ai-assistant h3 i {
+            color: var(--blue-accent);
+        }
+
+        .ai-prompt-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .ai-prompt-input {
+            flex: 1;
+            padding: 15px;
+            background: var(--bg-darker);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .ai-prompt-input:focus {
+            outline: none;
+            border-color: var(--blue-accent);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+
+        .ai-tone-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+            flex-wrap: wrap;
+        }
+
+        .tone-option {
+            padding: 8px 16px;
+            background: var(--bg-darker);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            color: var(--text-gray);
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tone-option:hover {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--blue-accent);
+        }
+
+        .tone-option.active {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--blue-accent);
+            border-color: var(--blue-accent);
+        }
+
+        .ai-generated-response {
+            background: var(--bg-darker);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 1px dashed rgba(59, 130, 246, 0.3);
+            position: relative;
+            z-index: 1;
+            display: none;
+        }
+
+        .ai-generated-response.active {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .ai-response-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .ai-response-header h4 {
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .ai-response-header h4 i {
+            color: var(--blue-accent);
+        }
+
+        .ai-response-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .ai-response-body {
+            color: var(--text-light);
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        /* AI Badge */
+        .ai-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--blue-accent));
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        /* Feature Cards Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(168,85,247,0.03) 0%, rgba(236,72,153,0.03) 100%);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover:before {
+            opacity: 1;
+        }
+
+        .feature-card:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card.with-image {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .feature-image {
+            flex: 1;
+            background: linear-gradient(135deg, #1e3a5f, #2d5a8f);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-image:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(30,58,95,0.8) 0%, rgba(45,90,143,0.8) 100%);
+        }
+
+        .feature-image i {
+            font-size: 50px;
+            color: #64b5f6;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-image h3 {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-image p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-content {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+        }
+
+        .feature-content h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .feature-content p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .feature-content ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .feature-content li {
+            color: var(--text-gray);
+            font-size: 13px;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .feature-content li:before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--purple-primary);
+        }
+
+        /* Auto Response Builder */
+        .response-builder {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+        }
+
+        .response-builder:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--purple-primary), var(--pink-accent));
+            border-radius: 20px 0 0 20px;
+        }
+
+        .response-builder h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .response-builder h3 i {
+            color: var(--orange-accent);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-darker);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+            box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .toggle-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bg-darker);
+            transition: .4s;
+            border-radius: 34px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 3px;
+            background-color: var(--text-gray);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--purple-primary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+            background-color: white;
+        }
+
+        /* Advanced Options */
+        .advanced-options {
+            background: var(--bg-darker);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .advanced-options.active {
+            display: block;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .advanced-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            color: var(--text-gray);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .advanced-toggle:hover {
+            color: var(--text-light);
+        }
+
+        .advanced-toggle i {
+            transition: var(--transition);
+        }
+
+        .advanced-toggle.active i {
+            transform: rotate(180deg);
+        }
+
+        /* Auto Responses List */
+        .responses-list {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .responses-list h3 {
+            font-size: 22px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .responses-list h3 i {
+            color: var(--green-accent);
+        }
+
+        .response-item {
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .response-item:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--purple-primary);
+            border-radius: 15px 0 0 15px;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .response-item:hover:before {
+            opacity: 1;
+        }
+
+        .response-item:hover {
+            border-color: var(--orange-accent);
+            transform: translateX(5px);
+        }
+
+        .response-item.active {
+            border-color: var(--orange-accent);
+            background: rgba(255, 140, 0, 0.05);
+        }
+
+        .response-item.active:before {
+            opacity: 1;
+            background: var(--orange-accent);
+        }
+
+        .response-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .response-info h4 i {
+            color: var(--green-accent);
+            font-size: 14px;
+        }
+
+        .response-info p {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .response-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--green-accent);
+        }
+
+        .status-inactive {
+            background: rgba(107, 114, 128, 0.2);
+            color: var(--text-gray);
+        }
+
+        .response-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            background: transparent;
+            color: var(--text-gray);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+        }
+
+        .action-btn.edit:hover {
+            color: var(--purple-primary);
+        }
+
+        .action-btn.delete:hover {
+            color: var(--pink-accent);
+        }
+
+        /* Templates Section */
+        .templates-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .templates-section h3 {
+            font-size: 22px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .templates-section h3 i {
+            color: var(--blue-accent);
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .template-card {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .template-card:hover {
+            border-color: var(--purple-primary);
+            transform: translateY(-5px);
+        }
+
+        .template-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .template-icon.blue {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--blue-accent);
+        }
+
+        .template-icon.green {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--green-accent);
+        }
+
+        .template-icon.purple {
+            background: rgba(168, 85, 247, 0.1);
+            color: var(--purple-primary);
+        }
+
+        .template-card h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .template-card p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 600px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            font-size: 20px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--text-light);
+        }
+
+        .modal h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .templates-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .features-grid,
+            .footer-content,
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
+
+            .templates-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card.with-image {
+                flex-direction: column;
+            }
+
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .top-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .response-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .response-actions {
+                align-self: flex-end;
+            }
+
+            .ai-prompt-container {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-darker);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--purple-primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--purple-dark);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="v11.html" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="v11.html">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#" class="active">Auto Responses</a></li>
+            </ul>
+        </nav>
+
+        <!-- Page Header -->
+        <header class="page-header">
+            <div>
+                <h2>AI Auto Responses <span class="ai-badge">AI POWERED</span></h2>
+                <p>Set up intelligent automatic replies powered by cutting-edge AI</p>
+            </div>
+            <a href="#" class="btn btn-secondary" id="create-response-btn">Create New Response</a>
+        </header>
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <h2>AI-Powered Smart Responses</h2>
+            <p>Automate your email replies with intelligent responses that understand context and save time</p>
+        </section>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stat-card">
+                <div class="stat-icon blue">
+                    <i class="fas fa-reply"></i>
+                </div>
+                <div class="stat-number">3,247</div>
+                <div class="stat-label">Auto Responses Sent</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-number">42.5</div>
+                <div class="stat-label">Hours Saved</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="stat-number">68%</div>
+                <div class="stat-label">AI-Generated</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon orange">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <div class="stat-number">0.2s</div>
+                <div class="stat-label">Avg. Response Time</div>
+            </div>
+        </div>
+
+        <!-- AI Assistant Section -->
+        <section class="ai-assistant">
+            <h3><i class="fas fa-robot"></i> AI Response Assistant</h3>
+            <p style="margin-bottom: 20px; color: var(--text-gray); position: relative; z-index: 1;">Describe what kind of response you need, and our AI will generate it for you</p>
+            
+            <div class="ai-prompt-container">
+                <input type="text" class="ai-prompt-input" placeholder="E.g., 'A professional out-of-office message for a 2-week vacation'">
+                <button class="btn btn-purple" id="generate-ai-response"><i class="fas fa-magic"></i> Generate</button>
+            </div>
+            
+            <div class="ai-tone-selector">
+                <div class="tone-option active" data-tone="professional">Professional</div>
+                <div class="tone-option" data-tone="friendly">Friendly</div>
+                <div class="tone-option" data-tone="formal">Formal</div>
+                <div class="tone-option" data-tone="casual">Casual</div>
+                <div class="tone-option" data-tone="empathetic">Empathetic</div>
+            </div>
+            
+            <div class="ai-generated-response" id="ai-generated-response">
+                <div class="ai-response-header">
+                    <h4><i class="fas fa-sparkles"></i> AI-Generated Response</h4>
+                    <div class="ai-response-actions">
+                        <button class="action-btn" id="regenerate-ai-response"><i class="fas fa-sync-alt"></i> Regenerate</button>
+                        <button class="action-btn" id="use-ai-response"><i class="fas fa-check"></i> Use This</button>
+                    </div>
+                </div>
+                <div class="ai-response-body" id="ai-response-body">
+                    <!-- AI-generated content will appear here -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Grid -->
+        <div class="features-grid">
+            <!-- Out of Office Card -->
+            <div class="feature-card with-image">
+                <div class="feature-image">
+                    <i class="fas fa-plane-departure"></i>
+                    <h3>Smart OOO</h3>
+                    <p>AI-enhanced vacation replies</p>
+                </div>
+                <div class="feature-content">
+                    <h3>Smart Out of Office <span class="ai-badge">AI</span></h3>
+                    <p>AI-powered responses that understand context and urgency when you're away.</p>
+                    <ul>
+                        <li>Smart calendar integration</li>
+                        <li>Urgency detection and routing</li>
+                        <li>Context-aware response variations</li>
+                        <li>Sentiment-appropriate replies</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Quick Replies Card -->
+            <div class="feature-card with-image">
+                <div class="feature-image" style="background: linear-gradient(135deg, #2d3748, #1a202c);">
+                    <i class="fas fa-reply-all" style="color: #f6ad55;"></i>
+                    <h3>Smart Replies</h3>
+                    <p>AI-powered responses</p>
+                </div>
+                <div class="feature-content">
+                    <h3>Intelligent Quick Replies <span class="ai-badge">AI</span></h3>
+                    <p>AI-generated responses that adapt to email content and context.</p>
+                    <ul>
+                        <li>Natural language understanding</li>
+                        <li>Context-aware personalization</li>
+                        <li>Sentiment matching</li>
+                        <li>Continuous learning from your style</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Auto Response Builder -->
+        <section class="response-builder">
+            <h3><i class="fas fa-plus-circle"></i> Create Smart Auto Response <span class="ai-badge">AI ENHANCED</span></h3>
+            <div class="form-group">
+                <label for="response-name">Response Name</label>
+                <input type="text" id="response-name" class="form-control" placeholder="e.g., Vacation Reply">
+            </div>
+            
+            <div class="form-group">
+                <label for="response-subject">Subject</label>
+                <input type="text" id="response-subject" class="form-control" placeholder="Auto: Re: {{Original Subject}}">
+            </div>
+            
+            <div class="form-group">
+                <label for="response-body">Response Body</label>
+                <textarea id="response-body" class="form-control" placeholder="Type your automatic response here..."></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="response-trigger">AI Trigger Conditions</label>
+                <select id="response-trigger" class="form-control">
+                    <option value="all">All incoming emails</option>
+                    <option value="keywords">Contains specific keywords</option>
+                    <option value="senders">From specific senders</option>
+                    <option value="time">During specific time periods</option>
+                    <option value="sentiment">Based on email sentiment</option>
+                </select>
+            </div>
+            
+            <div class="toggle-group">
+                <span class="toggle-label">Enable AI Optimization</span>
+                <label class="toggle">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            
+            <div class="toggle-group">
+                <span class="toggle-label">Send only once per sender</span>
+                <label class="toggle">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+
+            <div class="advanced-toggle" id="advanced-toggle">
+                <i class="fas fa-chevron-down"></i>
+                <span>Advanced AI Options</span>
+            </div>
+
+            <div class="advanced-options" id="advanced-options">
+                <div class="form-group">
+                    <label for="response-delay">Smart Response Delay (hours)</label>
+                    <input type="number" id="response-delay" class="form-control" value="0" min="0" max="72">
+                </div>
+
+                <div class="form-group">
+                    <label for="response-expiry">Expiry Date</label>
+                    <input type="date" id="response-expiry" class="form-control">
+                </div>
+
+                <div class="toggle-group">
+                    <span class="toggle-label">Include original message</span>
+                    <label class="toggle">
+                        <input type="checkbox">
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+                
+                <div class="toggle-group">
+                    <span class="toggle-label">Adapt tone based on sender</span>
+                    <label class="toggle">
+                        <input type="checkbox" checked>
+                        <span class="toggle-slider"></span>
+                    </label>
+                </div>
+            </div>
+            
+            <button class="btn btn-primary" id="save-response-btn"><i class="fas fa-robot"></i> Save Smart Response</button>
+        </section>
+
+        <!-- Templates Section -->
+        <section class="templates-section">
+            <h3><i class="fas fa-magic"></i> AI Response Templates</h3>
+            <div class="templates-grid">
+                <div class="template-card" data-template="vacation">
+                    <div class="template-icon blue">
+                        <i class="fas fa-umbrella-beach"></i>
+                    </div>
+                    <h4>Smart Vacation Response</h4>
+                    <p>AI-enhanced out-of-office reply that adapts based on sender and content.</p>
+                </div>
+                <div class="template-card" data-template="thankyou">
+                    <div class="template-icon green">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4>Intelligent Thank You</h4>
+                    <p>Context-aware acknowledgment that varies based on email content.</p>
+                </div>
+                <div class="template-card" data-template="meeting">
+                    <div class="template-icon purple">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h4>Smart Meeting Confirmation</h4>
+                    <p>AI-powered confirmation that suggests alternatives based on your calendar.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Auto Responses List -->
+        <section class="responses-list">
+            <h3><i class="fas fa-list"></i> Your Smart Responses</h3>
+            
+            <div class="response-item active">
+                <div class="response-info">
+                    <h4>
+                        AI Vacation Response
+                        <span class="response-status status-active">Active</span>
+                    </h4>
+                    <p>Smart replies based on sender importance • Activated on July 15, 2025</p>
+                </div>
+                <div class="response-actions">
+                    <button class="action-btn edit"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="action-btn toggle"><i class="fas fa-toggle-on"></i> Disable</button>
+                    <button class="action-btn delete"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+            
+            <div class="response-item">
+                <div class="response-info">
+                    <h4>
+                        Smart Thank You Response
+                        <span class="response-status status-inactive">Inactive</span>
+                    </h4>
+                    <p>Context-aware acknowledgments • Last used: July 10, 2025</p>
+                </div>
+                <div class="response-actions">
+                    <button class="action-btn edit"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="action-btn toggle"><i class="fas fa-toggle-off"></i> Enable</button>
+                    <button class="action-btn delete"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+            
+            <div class="response-item">
+                <div class="response-info">
+                    <h4>
+                        AI Meeting Confirmation
+                        <span class="response-status status-active">Active</span>
+                    </h4>
+                    <p>Sends when keywords detected • 42 uses this month</p>
+                </div>
+                <div class="response-actions">
+                    <button class="action-btn edit"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="action-btn toggle"><i class="fas fa-toggle-on"></i> Disable</button>
+                    <button class="action-btn delete"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising performance.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="modal-close">&times;</button>
+            <h3>Smart Response Created Successfully!</h3>
+            <p>Your AI-powered auto response has been saved and is now active. The AI will continuously optimize it based on usage patterns.</p>
+            <div style="margin-top: 20px; display: flex; gap: 10px;">
+                <button class="btn btn-primary" id="modal-ok">OK</button>
+                <button class="btn btn-secondary" id="create-another">Create Another</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced JavaScript for interactions
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.feature-card, .response-item, .stat-card, .template-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 40px rgba(168, 85, 247, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Toggle response activation
+        document.querySelectorAll('.response-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (!e.target.closest('.response-actions')) {
+                    document.querySelectorAll('.response-item').forEach(i => {
+                        i.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Toggle advanced options
+        const advancedToggle = document.getElementById('advanced-toggle');
+        const advancedOptions = document.getElementById('advanced-options');
+
+        advancedToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            advancedOptions.classList.toggle('active');
+        });
+
+        // Template selection
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const template = this.getAttribute('data-template');
+                let name, subject, body;
+
+                switch(template) {
+                    case 'vacation':
+                        name = "AI Vacation Response";
+                        subject = "Out of Office: {{Original Subject}}";
+                        body = "Thank you for your email. I am currently out of the office with limited access to email. I will respond to your message upon my return on [Return Date].\n\nFor urgent matters, please contact [Contact Person] at [Contact Email].\n\nBest regards,\n[Your Name]";
+                        break;
+                    case 'thankyou':
+                        name = "AI Thank You Response";
+                        subject = "Thank you for your email";
+                        body = "Thank you for reaching out. I have received your email and will get back to you as soon as possible.\n\nBest regards,\n[Your Name]";
+                        break;
+                    case 'meeting':
+                        name = "AI Meeting Confirmation";
+                        subject = "Meeting Confirmation: {{Original Subject}}";
+                        body = "Thank you for your meeting request. I have received it and will review my availability.\n\nI will get back to you shortly to confirm or suggest an alternative time if needed.\n\nBest regards,\n[Your Name]";
+                        break;
+                }
+
+                document.getElementById('response-name').value = name;
+                document.getElementById('response-subject').value = subject;
+                document.getElementById('response-body').value = body;
+
+                // Scroll to the form
+                document.querySelector('.response-builder').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Save response button
+        const saveResponseBtn = document.getElementById('save-response-btn');
+        const successModal = document.getElementById('success-modal');
+        const modalClose = document.getElementById('modal-close');
+        const modalOk = document.getElementById('modal-ok');
+        const createAnother = document.getElementById('create-another');
+
+        saveResponseBtn.addEventListener('click', function() {
+            const name = document.getElementById('response-name').value;
+            const subject = document.getElementById('response-subject').value;
+            const body = document.getElementById('response-body').value;
+
+            if (!name || !subject || !body) {
+                alert('Please fill in all required fields');
+                return;
+            }
+
+            successModal.classList.add('active');
+        });
+
+        // Modal controls
+        modalClose.addEventListener('click', function() {
+            successModal.classList.remove('active');
+        });
+
+        modalOk.addEventListener('click', function() {
+            successModal.classList.remove('active');
+        });
+
+        createAnother.addEventListener('click', function() {
+            successModal.classList.remove('active');
+            document.getElementById('response-name').value = '';
+            document.getElementById('response-subject').value = '';
+            document.getElementById('response-body').value = '';
+            document.getElementById('response-name').focus();
+        });
+
+        // Toggle response status
+        document.querySelectorAll('.action-btn.toggle').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const responseItem = this.closest('.response-item');
+                const status = responseItem.querySelector('.response-status');
+                
+                if (this.innerHTML.includes('Enable')) {
+                    this.innerHTML = '<i class="fas fa-toggle-on"></i> Disable';
+                    responseItem.classList.add('active');
+                    status.textContent = 'Active';
+                    status.className = 'response-status status-active';
+                } else {
+                    this.innerHTML = '<i class="fas fa-toggle-off"></i> Enable';
+                    responseItem.classList.remove('active');
+                    status.textContent = 'Inactive';
+                    status.className = 'response-status status-inactive';
+                }
+            });
+        });
+
+        // Create response button
+        document.getElementById('create-response-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector('.response-builder').scrollIntoView({
+                behavior: 'smooth'
+            });
+            document.getElementById('response-name').focus();
+        });
+
+        // Add some dynamic stats animation
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            
+            statNumbers.forEach(stat => {
+                const target = parseInt(stat.textContent);
+                let current = 0;
+                const increment = target / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        stat.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        stat.textContent = Math.floor(current);
+                    }
+                }, 30);
+            });
+        }
+
+        // Trigger stats animation when in view
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateStats();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(document.querySelector('.stats-section'));
+
+        // NEW AI FEATURES
+
+        // AI Response Generator
+        const generateAIResponseBtn = document.getElementById('generate-ai-response');
+        const aiPromptInput = document.querySelector('.ai-prompt-input');
+        const aiGeneratedResponse = document.getElementById('ai-generated-response');
+        const aiResponseBody = document.getElementById('ai-response-body');
+        const useAIResponseBtn = document.getElementById('use-ai-response');
+        const regenerateAIResponseBtn = document.getElementById('regenerate-ai-response');
+        const toneOptions = document.querySelectorAll('.tone-option');
+
+        // Sample AI responses for demonstration
+        const aiResponseExamples = {
+            professional: {
+                vacation: "Thank you for your email. I am currently out of the office with limited access to email until [Return Date]. During this period, responses may be delayed. For urgent matters requiring immediate attention, please contact [Contact Person] at [Contact Email] or [Contact Phone]. Otherwise, I will respond to your message as soon as possible upon my return.\n\nBest regards,\n[Your Name]",
+                thankyou: "Thank you for your email. I have received your message and will review it carefully. I appreciate you taking the time to reach out and will respond as soon as I have had an opportunity to consider your inquiry thoroughly.\n\nBest regards,\n[Your Name]",
+                meeting: "Thank you for your meeting request. I have received it and will review my availability. You can expect a confirmation or alternative suggestion within 24 hours. If your matter is time-sensitive, please don't hesitate to follow up.\n\nBest regards,\n[Your Name]"
+            },
+            friendly: {
+                vacation: "Hi there! Thanks for your email. I'm currently enjoying some time away from the office until [Return Date] and will have limited access to email during this period. If your matter is urgent, please reach out to [Contact Person] at [Contact Email]. Otherwise, I'll get back to you as soon as I'm back!\n\nAll the best,\n[Your Name]",
+                thankyou: "Thanks for getting in touch! I've received your email and will look into it. I appreciate you reaching out and will get back to you soon.\n\nCheers,\n[Your Name]",
+                meeting: "Thanks for the meeting request! I've received it and will check my calendar. I'll get back to you shortly to confirm or suggest another time if needed.\n\nTalk soon,\n[Your Name]"
+            },
+            formal: {
+                vacation: "Please be advised that I am presently out of the office and shall return on [Return Date]. During my absence, I will have limited access to electronic correspondence. For matters requiring immediate attention, kindly direct your inquiry to [Contact Person] at [Contact Email]. All other communications will be addressed upon my return.\n\nRespectfully,\n[Your Name]",
+                thankyou: "Your correspondence has been received. Please accept my gratitude for your communication. I shall review the contents and respond in due course.\n\nSincerely,\n[Your Name]",
+                meeting: "Your meeting proposal has been duly noted. I shall review the particulars and respond with confirmation or alternative arrangements at the earliest opportunity.\n\nRespectfully,\n[Your Name]"
+            },
+            casual: {
+                vacation: "Hey! I'm out of the office until [Return Date] with limited email access. If it's urgent, hit up [Contact Person] at [Contact Email]. Otherwise, I'll circle back when I'm back!\n\nThanks,\n[Your Name]",
+                thankyou: "Got your email - thanks! I'll check it out and get back to you soon.\n\nBest,\n[Your Name]",
+                meeting: "Got your meeting request! I'll check my schedule and get back to you ASAP to lock in a time.\n\nThanks,\n[Your Name]"
+            },
+            empathetic: {
+                vacation: "Thank you for reaching out. I'm currently taking some time away from the office until [Return Date] to recharge, so my response may be delayed. I understand your time is valuable, so for urgent matters, please contact [Contact Person] at [Contact Email]. I look forward to connecting with you when I return.\n\nWarm regards,\n[Your Name]",
+                thankyou: "Thank you so much for your message. I truly appreciate you taking the time to write and will give it the attention it deserves. I'll be in touch soon with a thoughtful response.\n\nWith gratitude,\n[Your Name]",
+                meeting: "I appreciate you taking the time to suggest a meeting. I've received your request and will carefully consider the best time for us to connect. I'll follow up shortly with confirmation or an alternative that works for both of us.\n\nLooking forward to our conversation,\n[Your Name]"
+            }
+        };
+
+        // Get currently selected tone
+        function getSelectedTone() {
+            const activeTone = document.querySelector('.tone-option.active');
+            return activeTone ? activeTone.getAttribute('data-tone') : 'professional';
+        }
+
+        // Generate AI response based on prompt
+        function generateAIResponse() {
+            const prompt = aiPromptInput.value.toLowerCase();
+            const tone = getSelectedTone();
+            let responseType = 'thankyou';
+            
+            // Simple keyword detection for demonstration
+            if (prompt.includes('vacation') || prompt.includes('holiday') || prompt.includes('away') || prompt.includes('out of office')) {
+                responseType = 'vacation';
+            } else if (prompt.includes('meeting') || prompt.includes('appointment') || prompt.includes('schedule')) {
+                responseType = 'meeting';
+            }
+            
+            // Get the appropriate response
+            const response = aiResponseExamples[tone][responseType];
+            aiResponseBody.textContent = response;
+            aiGeneratedResponse.classList.add('active');
+            
+            // Scroll to the generated response
+            aiGeneratedResponse.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        // Use AI response in the form
+        function useAIResponse() {
+            document.getElementById('response-body').value = aiResponseBody.textContent;
+            
+            // Set an appropriate name based on content
+            const prompt = aiPromptInput.value.toLowerCase();
+            if (prompt.includes('vacation') || prompt.includes('holiday') || prompt.includes('away')) {
+                document.getElementById('response-name').value = 'AI Vacation Response';
+            } else if (prompt.includes('meeting') || prompt.includes('appointment')) {
+                document.getElementById('response-name').value = 'AI Meeting Response';
+            } else {
+                document.getElementById('response-name').value = 'AI Auto Response';
+            }
+            
+            // Scroll to the form
+            document.querySelector('.response-builder').scrollIntoView({ behavior: 'smooth' });
+            
+            // Show a subtle confirmation
+            const saveBtn = document.getElementById('save-response-btn');
+            const originalText = saveBtn.innerHTML;
+            saveBtn.innerHTML = '<i class="fas fa-check"></i> AI Response Applied';
+            setTimeout(() => {
+                saveBtn.innerHTML = originalText;
+            }, 2000);
+        }
+
+        // Event listeners for AI features
+        generateAIResponseBtn.addEventListener('click', generateAIResponse);
+        useAIResponseBtn.addEventListener('click', useAIResponse);
+        regenerateAIResponseBtn.addEventListener('click', generateAIResponse);
+
+        // Tone selector
+        toneOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                toneOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Regenerate response with new tone if there's already one
+                if (aiGeneratedResponse.classList.contains('active')) {
+                    generateAIResponse();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

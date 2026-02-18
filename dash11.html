@@ -1,0 +1,626 @@
+V1
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Archive | Your Blog Name</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --gray-color: #6c757d;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+            background-color: #f5f7fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: var(--primary-color);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav ul li {
+            margin-left: 30px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .archive-hero {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .archive-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .archive-hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .archive-content {
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .archive-sidebar {
+            background: white;
+            padding: 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            height: fit-content;
+        }
+
+        .archive-sidebar h3 {
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-color);
+            color: var(--secondary-color);
+        }
+
+        .filter-section {
+            margin-bottom: 25px;
+        }
+
+        .filter-section h4 {
+            margin-bottom: 15px;
+            color: var(--gray-color);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .filter-list {
+            list-style: none;
+        }
+
+        .filter-list li {
+            margin-bottom: 10px;
+        }
+
+        .filter-list a {
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .filter-list a:hover {
+            color: var(--primary-color);
+        }
+
+        .filter-list .count {
+            background: var(--light-color);
+            color: var(--gray-color);
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .archive-main {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .archive-year {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+
+        .year-header {
+            background: var(--secondary-color);
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .year-header .toggle {
+            transition: var(--transition);
+        }
+
+        .year-header.active .toggle {
+            transform: rotate(180deg);
+        }
+
+        .year-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .year-content.active {
+            padding: 20px;
+            max-height: 1000px;
+        }
+
+        .month-section {
+            margin-bottom: 25px;
+        }
+
+        .month-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .month-header {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--light-color);
+            color: var(--primary-color);
+        }
+
+        .post-list {
+            list-style: none;
+        }
+
+        .post-item {
+            padding: 15px;
+            border-bottom: 1px solid var(--light-color);
+            transition: var(--transition);
+        }
+
+        .post-item:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+        }
+
+        .post-item:last-child {
+            border-bottom: none;
+        }
+
+        .post-date {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .post-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .post-title a {
+            color: var(--dark-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .post-title a:hover {
+            color: var(--primary-color);
+        }
+
+        .post-excerpt {
+            color: var(--gray-color);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .archive-pagination {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+
+        .pagination-list {
+            display: flex;
+            list-style: none;
+        }
+
+        .pagination-list li {
+            margin: 0 5px;
+        }
+
+        .pagination-list a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .pagination-list a:hover {
+            background-color: var(--light-color);
+        }
+
+        .pagination-list .active a {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 50px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .archive-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .archive-sidebar {
+                order: 2;
+            }
+            
+            .archive-main {
+                order: 1;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 20px;
+                justify-content: center;
+            }
+            
+            nav ul li {
+                margin: 0 10px;
+            }
+            
+            .archive-hero {
+                padding: 60px 0;
+            }
+            
+            .archive-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 576px) {
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav ul li {
+                margin: 5px 0;
+            }
+            
+            .year-header {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="index.html" class="logo">Blog<span>Archive</span></a>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="archive.html" class="active">Archive</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <section class="archive-hero">
+        <div class="container">
+            <h1>Blog Archive</h1>
+            <p>Browse all our articles organized by date, category, and tags</p>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="archive-content">
+            <aside class="archive-sidebar">
+                <h3>Filter Archive</h3>
+                
+                <div class="filter-section">
+                    <h4>Categories</h4>
+                    <ul class="filter-list">
+                        <li><a href="#">Technology <span class="count">24</span></a></li>
+                        <li><a href="#">Design <span class="count">18</span></a></li>
+                        <li><a href="#">Business <span class="count">15</span></a></li>
+                        <li><a href="#">Marketing <span class="count">12</span></a></li>
+                        <li><a href="#">Lifestyle <span class="count">9</span></a></li>
+                    </ul>
+                </div>
+                
+                <div class="filter-section">
+                    <h4>Tags</h4>
+                    <ul class="filter-list">
+                        <li><a href="#">Web Development <span class="count">14</span></a></li>
+                        <li><a href="#">UX Design <span class="count">11</span></a></li>
+                        <li><a href="#">SEO <span class="count">8</span></a></li>
+                        <li><a href="#">Productivity <span class="count">7</span></a></li>
+                        <li><a href="#">JavaScript <span class="count">6</span></a></li>
+                    </ul>
+                </div>
+                
+                <div class="filter-section">
+                    <h4>Years</h4>
+                    <ul class="filter-list">
+                        <li><a href="#">2023 <span class="count">42</span></a></li>
+                        <li><a href="#">2022 <span class="count">38</span></a></li>
+                        <li><a href="#">2021 <span class="count">35</span></a></li>
+                        <li><a href="#">2020 <span class="count">28</span></a></li>
+                    </ul>
+                </div>
+            </aside>
+            
+            <main class="archive-main">
+                <div class="archive-year">
+                    <div class="year-header active">
+                        <span>2023</span>
+                        <span class="toggle">▼</span>
+                    </div>
+                    <div class="year-content active">
+                        <div class="month-section">
+                            <h3 class="month-header">December 2023</h3>
+                            <ul class="post-list">
+                                <li class="post-item">
+                                    <div class="post-date">December 15, 2023</div>
+                                    <h4 class="post-title"><a href="post.html">The Future of Web Development in 2024</a></h4>
+                                    <p class="post-excerpt">Exploring the latest trends and technologies that will shape web development in the coming year.</p>
+                                </li>
+                                <li class="post-item">
+                                    <div class="post-date">December 8, 2023</div>
+                                    <h4 class="post-title"><a href="post.html">10 Productivity Tips for Remote Developers</a></h4>
+                                    <p class="post-excerpt">Practical strategies to stay focused and efficient while working from home.</p>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="month-section">
+                            <h3 class="month-header">November 2023</h3>
+                            <ul class="post-list">
+                                <li class="post-item">
+                                    <div class="post-date">November 22, 2023</div>
+                                    <h4 class="post-title"><a href="post.html">Understanding CSS Grid Layout</a></h4>
+                                    <p class="post-excerpt">A comprehensive guide to mastering CSS Grid for modern web layouts.</p>
+                                </li>
+                                <li class="post-item">
+                                    <div class="post-date">November 15, 2023</div>
+                                    <h4 class="post-title"><a href="post.html">The Psychology of Color in Web Design</a></h4>
+                                    <p class="post-excerpt">How color choices impact user behavior and perception on websites.</p>
+                                </li>
+                                <li class="post-item">
+                                    <div class="post-date">November 3, 2023</div>
+                                    <h4 class="post-title"><a href="post.html">Building Accessible Web Applications</a></h4>
+                                    <p class="post-excerpt">Best practices for creating websites that everyone can use regardless of abilities.</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="archive-year">
+                    <div class="year-header">
+                        <span>2022</span>
+                        <span class="toggle">▼</span>
+                    </div>
+                    <div class="year-content">
+                        <!-- Content for 2022 would go here -->
+                    </div>
+                </div>
+                
+                <div class="archive-year">
+                    <div class="year-header">
+                        <span>2021</span>
+                        <span class="toggle">▼</span>
+                    </div>
+                    <div class="year-content">
+                        <!-- Content for 2021 would go here -->
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <div class="archive-pagination">
+            <ul class="pagination-list">
+                <li><a href="#">«</a></li>
+                <li><a href="#">1</a></li>
+                <li class="active"><a href="#">2</a></li>
+                <li><a href="#">3</a></li>
+                <li><a href="#">4</a></li>
+                <li><a href="#">»</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>We are passionate about sharing knowledge and insights on technology, design, and business.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="blog.html">Blog</a></li>
+                        <li><a href="archive.html">Archive</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Subscribe</h3>
+                    <p>Stay updated with our latest articles and news.</p>
+                    <!-- Newsletter signup form would go here -->
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 BlogArchive. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle year sections
+        document.querySelectorAll('.year-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.nextElementSibling;
+                header.classList.toggle('active');
+                content.classList.toggle('active');
+            });
+        });
+
+        // Simple filter functionality (would be more complex in a real implementation)
+        document.querySelectorAll('.filter-list a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                // In a real implementation, this would filter the archive content
+                alert('Filter functionality would be implemented here!');
+            });
+        });
+    </script>
+</body>
+</html>

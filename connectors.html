@@ -1,0 +1,1617 @@
+V2
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spam Protection - Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            margin-bottom: 20px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        .user-nav {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .page-title-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .page-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content Layout */
+        .content-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 30px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            height: fit-content;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 12px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: var(--text-gray);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s;
+        }
+
+        .sidebar-menu a:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-light);
+        }
+
+        .sidebar-menu a.active {
+            background: var(--bg-card-hover);
+            color: var(--text-light);
+            border-left: 3px solid var(--orange-accent);
+        }
+
+        .sidebar-menu i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* Enhanced Stats Section */
+        .spam-stats {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stats-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .stats-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .stats-period {
+            display: flex;
+            gap: 10px;
+        }
+
+        .period-btn {
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            color: var(--text-gray);
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+
+        .period-btn.active {
+            background: var(--purple-primary);
+            color: white;
+            border-color: var(--purple-primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr) 2fr;
+            gap: 20px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            background: var(--bg-darker);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--purple-primary), var(--pink-accent));
+        }
+
+        .stat-card:hover {
+            border: 1px solid var(--orange-accent);
+            transform: translateY(-3px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 15px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .stat-icon.spam {
+            background: linear-gradient(135deg, #f87171, #ef4444);
+        }
+
+        .stat-icon.blocked {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+        }
+
+        .stat-icon.filtered {
+            background: linear-gradient(135deg, #10b981, #059669);
+        }
+
+        .stat-icon.reported {
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .trend-up {
+            color: var(--success);
+        }
+
+        .trend-down {
+            color: var(--danger);
+        }
+
+        .chart-container {
+            grid-column: span 1;
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .legend-color {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .legend-spam {
+            background: var(--danger);
+        }
+
+        .legend-blocked {
+            background: var(--warning);
+        }
+
+        .chart-placeholder {
+            flex: 1;
+            background: linear-gradient(180deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.05));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+
+        /* Advanced Filter Bar */
+        .filter-bar {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-input {
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px 15px 12px 45px;
+            color: var(--text-light);
+            font-size: 14px;
+            width: 100%;
+            transition: all 0.3s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+            box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+        }
+
+        .filter-select {
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: var(--text-light);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            min-width: 150px;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+        }
+
+        .date-filter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: var(--text-light);
+            font-size: 14px;
+            min-width: 200px;
+        }
+
+        .date-input {
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            font-size: 14px;
+            width: 100px;
+        }
+
+        .date-input:focus {
+            outline: none;
+        }
+
+        .filter-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .filter-btn {
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px 15px;
+            color: var(--text-light);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--orange-accent);
+        }
+
+        .filter-btn.active {
+            background: var(--purple-primary);
+            border-color: var(--purple-primary);
+            color: white;
+        }
+
+        /* Bulk Actions */
+        .bulk-actions {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .bulk-actions.active {
+            display: flex;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bulk-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bulk-count {
+            font-weight: 600;
+            color: var(--orange-accent);
+        }
+
+        .bulk-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Spam Messages List */
+        .spam-list {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .list-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .list-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .list-controls {
+            display: flex;
+            gap: 15px;
+        }
+
+        .view-toggle {
+            display: flex;
+            background: var(--bg-darker);
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .view-btn {
+            padding: 8px 12px;
+            border-radius: 8px;
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .view-btn.active {
+            background: var(--purple-primary);
+            color: white;
+        }
+
+        .sort-select {
+            background: var(--bg-darker);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 8px 15px;
+            color: var(--text-light);
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Message Items */
+        .message-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .message-item:hover {
+            background: var(--bg-card-hover);
+        }
+
+        .message-item.selected {
+            border-left: 3px solid var(--orange-accent);
+            background: var(--bg-card-hover);
+        }
+
+        .message-item.priority-high {
+            border-left: 3px solid var(--danger);
+        }
+
+        .message-item.priority-medium {
+            border-left: 3px solid var(--warning);
+        }
+
+        .message-checkbox {
+            margin-right: 15px;
+        }
+
+        .message-sender {
+            width: 200px;
+            font-weight: 600;
+            font-size: 14px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .sender-domain {
+            color: var(--text-dim);
+            font-size: 12px;
+            margin-top: 3px;
+        }
+
+        .message-content {
+            flex: 1;
+            padding: 0 20px;
+        }
+
+        .message-subject {
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .priority-badge {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .priority-high .priority-badge {
+            background: var(--danger);
+        }
+
+        .priority-medium .priority-badge {
+            background: var(--warning);
+        }
+
+        .message-preview {
+            color: var(--text-gray);
+            font-size: 13px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .message-tags {
+            display: flex;
+            gap: 5px;
+            margin-top: 8px;
+        }
+
+        .message-tag {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(168, 85, 247, 0.2);
+            color: var(--purple-primary);
+        }
+
+        .message-date {
+            width: 100px;
+            text-align: right;
+            color: var(--text-gray);
+            font-size: 13px;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 10px;
+            margin-left: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .message-item:hover .message-actions {
+            opacity: 1;
+        }
+
+        .action-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: var(--bg-darker);
+            color: var(--text-light);
+        }
+
+        .action-btn.delete:hover {
+            color: var(--danger);
+        }
+
+        .action-btn.report:hover {
+            color: var(--success);
+        }
+
+        .action-btn.block:hover {
+            color: var(--warning);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-gray);
+        }
+
+        .empty-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+            color: var(--text-dim);
+        }
+
+        .empty-title {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--text-light);
+        }
+
+        .empty-description {
+            max-width: 400px;
+            margin: 0 auto 25px;
+            line-height: 1.6;
+        }
+
+        /* Quick Actions Panel */
+        .quick-actions {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .action-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .action-button:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.6);
+        }
+
+        .action-button.secondary {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .chart-container {
+                grid-column: span 2;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-container {
+                grid-column: span 1;
+            }
+            
+            .list-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .list-controls {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .message-item {
+                flex-wrap: wrap;
+            }
+            
+            .message-sender {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .message-content {
+                padding: 0;
+                width: 100%;
+            }
+            
+            .message-date {
+                width: auto;
+                text-align: left;
+                margin-top: 10px;
+            }
+            
+            .message-actions {
+                margin-left: auto;
+                opacity: 1;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .quick-actions {
+                bottom: 20px;
+                right: 20px;
+            }
+            
+            .action-button {
+                width: 50px;
+                height: 50px;
+                font-size: 18px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Custom checkbox */
+        input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            background: var(--bg-darker);
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+        }
+
+        input[type="checkbox"]:checked {
+            background: var(--purple-primary);
+            border-color: var(--purple-primary);
+        }
+
+        input[type="checkbox"]:checked::after {
+            content: '✓';
+            position: absolute;
+            color: white;
+            font-size: 12px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="v11.html" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="v11.html">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+            </ul>
+            <div class="user-nav">
+                <div class="user-avatar">JD</div>
+            </div>
+        </nav>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <div class="page-title">
+                <div class="page-title-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                    <h1>Advanced Spam Protection</h1>
+                    <p class="tagline">AI-powered filtering with granular controls</p>
+                </div>
+            </div>
+            <div class="page-actions">
+                <button class="btn btn-secondary">
+                    <i class="fas fa-cog"></i> Filter Settings
+                </button>
+                <button class="btn btn-primary">
+                    <i class="fas fa-sync"></i> Update AI Models
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <ul class="sidebar-menu">
+                    <li><a href="#"><i class="fas fa-inbox"></i> Inbox</a></li>
+                    <li><a href="#"><i class="fas fa-star"></i> Important</a></li>
+                    <li><a href="#"><i class="fas fa-paper-plane"></i> Sent</a></li>
+                    <li><a href="#"><i class="fas fa-file-alt"></i> Drafts</a></li>
+                    <li><a href="#"><i class="fas fa-trash"></i> Trash</a></li>
+                    <li><a href="#" class="active"><i class="fas fa-shield-alt"></i> Spam</a></li>
+                    <li><a href="#"><i class="fas fa-folder"></i> Archive</a></li>
+                    <li><a href="#"><i class="fas fa-ban"></i> Blocked Senders</a></li>
+                    <li><a href="#"><i class="fas fa-filter"></i> Custom Filters</a></li>
+                    <li><a href="#"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+                </ul>
+            </aside>
+
+            <!-- Main Content Area -->
+            <main class="main-content">
+                <!-- Enhanced Spam Stats -->
+                <section class="spam-stats">
+                    <div class="stats-header">
+                        <h2 class="stats-title">Spam Analytics</h2>
+                        <div class="stats-period">
+                            <button class="period-btn active">24H</button>
+                            <button class="period-btn">7D</button>
+                            <button class="period-btn">30D</button>
+                            <button class="period-btn">90D</button>
+                        </div>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon spam">
+                                <i class="fas fa-ban"></i>
+                            </div>
+                            <div class="stat-value">247</div>
+                            <div class="stat-label">Spam Blocked</div>
+                            <div class="stat-trend trend-down">
+                                <i class="fas fa-arrow-down"></i> 12%
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon blocked">
+                                <i class="fas fa-user-slash"></i>
+                            </div>
+                            <div class="stat-value">42</div>
+                            <div class="stat-label">Blocked Senders</div>
+                            <div class="stat-trend trend-up">
+                                <i class="fas fa-arrow-up"></i> 5%
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon filtered">
+                                <i class="fas fa-filter"></i>
+                            </div>
+                            <div class="stat-value">89%</div>
+                            <div class="stat-label">Accuracy Rate</div>
+                            <div class="stat-trend trend-up">
+                                <i class="fas fa-arrow-up"></i> 2%
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon reported">
+                                <i class="fas fa-flag"></i>
+                            </div>
+                            <div class="stat-value">15</div>
+                            <div class="stat-label">Reported Today</div>
+                            <div class="stat-trend trend-down">
+                                <i class="fas fa-arrow-down"></i> 8%
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <div class="chart-title">Spam Activity</div>
+                                <div class="chart-legend">
+                                    <div class="legend-item">
+                                        <div class="legend-color legend-spam"></div>
+                                        <span>Spam</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color legend-blocked"></div>
+                                        <span>Blocked</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chart-placeholder">
+                                <i class="fas fa-chart-line"></i> Interactive Chart Would Appear Here
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Advanced Filter Bar -->
+                <section class="filter-bar">
+                    <div class="search-box">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="Search spam messages, senders, or content...">
+                    </div>
+                    <select class="filter-select">
+                        <option>All Senders</option>
+                        <option>Blocked Senders</option>
+                        <option>New Today</option>
+                        <option>High Priority</option>
+                    </select>
+                    <div class="date-filter">
+                        <i class="fas fa-calendar"></i>
+                        <input type="text" class="date-input" placeholder="Start date">
+                        <span>-</span>
+                        <input type="text" class="date-input" placeholder="End date">
+                    </div>
+                    <div class="filter-actions">
+                        <button class="filter-btn active">
+                            <i class="fas fa-list"></i> All
+                        </button>
+                        <button class="filter-btn">
+                            <i class="fas fa-envelope"></i> Unread
+                        </button>
+                        <button class="filter-btn">
+                            <i class="fas fa-flag"></i> Flagged
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Bulk Actions -->
+                <section class="bulk-actions" id="bulkActions">
+                    <div class="bulk-info">
+                        <span class="bulk-count">3 messages selected</span>
+                        <span>Apply action to all selected messages</span>
+                    </div>
+                    <div class="bulk-buttons">
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-undo"></i> Not Spam
+                        </button>
+                        <button class="btn btn-secondary">
+                            <i class="fas fa-ban"></i> Block Sender
+                        </button>
+                        <button class="btn btn-danger">
+                            <i class="fas fa-trash"></i> Delete
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Spam Messages List -->
+                <section class="spam-list">
+                    <div class="list-header">
+                        <h2 class="list-title">Spam Messages</h2>
+                        <div class="list-controls">
+                            <div class="view-toggle">
+                                <button class="view-btn active">
+                                    <i class="fas fa-list"></i>
+                                </button>
+                                <button class="view-btn">
+                                    <i class="fas fa-grip-vertical"></i>
+                                </button>
+                            </div>
+                            <select class="sort-select">
+                                <option>Newest First</option>
+                                <option>Oldest First</option>
+                                <option>Sender A-Z</option>
+                                <option>Priority</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Message List -->
+                    <div class="messages-container">
+                        <!-- Message Item 1 -->
+                        <div class="message-item selected priority-high">
+                            <div class="message-checkbox">
+                                <input type="checkbox" checked>
+                            </div>
+                            <div class="message-sender">
+                                Global Lottery Inc.
+                                <div class="sender-domain">@globallottery.scam</div>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-subject">
+                                    Congratulations! You've Won $2,500,000
+                                    <span class="priority-badge">HIGH</span>
+                                </div>
+                                <div class="message-preview">You are the lucky winner of our international lottery. Claim your prize now by providing your bank details...</div>
+                                <div class="message-tags">
+                                    <span class="message-tag">Financial Scam</span>
+                                    <span class="message-tag">Phishing</span>
+                                </div>
+                            </div>
+                            <div class="message-date">10:24 AM</div>
+                            <div class="message-actions">
+                                <button class="action-btn block" title="Block sender">
+                                    <i class="fas fa-ban"></i>
+                                </button>
+                                <button class="action-btn report" title="Report as not spam">
+                                    <i class="fas fa-undo"></i>
+                                </button>
+                                <button class="action-btn delete" title="Delete permanently">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Message Item 2 -->
+                        <div class="message-item priority-medium">
+                            <div class="message-checkbox">
+                                <input type="checkbox">
+                            </div>
+                            <div class="message-sender">
+                                Pharma Solutions
+                                <div class="sender-domain">@meds4cheap.net</div>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-subject">
+                                    Special Offer: Medications at 80% Discount
+                                    <span class="priority-badge">MEDIUM</span>
+                                </div>
+                                <div class="message-preview">Get premium medications without prescription. Our special offer ends soon. Order now to get...</div>
+                                <div class="message-tags">
+                                    <span class="message-tag">Health Scam</span>
+                                </div>
+                            </div>
+                            <div class="message-date">9:15 AM</div>
+                            <div class="message-actions">
+                                <button class="action-btn block" title="Block sender">
+                                    <i class="fas fa-ban"></i>
+                                </button>
+                                <button class="action-btn report" title="Report as not spam">
+                                    <i class="fas fa-undo"></i>
+                                </button>
+                                <button class="action-btn delete" title="Delete permanently">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Message Item 3 -->
+                        <div class="message-item">
+                            <div class="message-checkbox">
+                                <input type="checkbox">
+                            </div>
+                            <div class="message-sender">
+                                Investment Advisor
+                                <div class="sender-domain">@wealthbuilder.org</div>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-subject">Double Your Money in 30 Days Guaranteed</div>
+                                <div class="message-preview">Our exclusive investment opportunity guarantees high returns with zero risk. Limited spots available...</div>
+                                <div class="message-tags">
+                                    <span class="message-tag">Investment Scam</span>
+                                </div>
+                            </div>
+                            <div class="message-date">Yesterday</div>
+                            <div class="message-actions">
+                                <button class="action-btn block" title="Block sender">
+                                    <i class="fas fa-ban"></i>
+                                </button>
+                                <button class="action-btn report" title="Report as not spam">
+                                    <i class="fas fa-undo"></i>
+                                </button>
+                                <button class="action-btn delete" title="Delete permanently">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Message Item 4 -->
+                        <div class="message-item priority-high">
+                            <div class="message-checkbox">
+                                <input type="checkbox">
+                            </div>
+                            <div class="message-sender">
+                                Tech Support Scam
+                                <div class="sender-domain">@microsoft-support.help</div>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-subject">
+                                    URGENT: Your Computer Has a Virus
+                                    <span class="priority-badge">HIGH</span>
+                                </div>
+                                <div class="message-preview">Our system detected a critical virus on your device. Call our support team immediately to prevent data loss...</div>
+                                <div class="message-tags">
+                                    <span class="message-tag">Tech Support Scam</span>
+                                    <span class="message-tag">Phishing</span>
+                                </div>
+                            </div>
+                            <div class="message-date">2 days ago</div>
+                            <div class="message-actions">
+                                <button class="action-btn block" title="Block sender">
+                                    <i class="fas fa-ban"></i>
+                                </button>
+                                <button class="action-btn report" title="Report as not spam">
+                                    <i class="fas fa-undo"></i>
+                                </button>
+                                <button class="action-btn delete" title="Delete permanently">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Message Item 5 -->
+                        <div class="message-item">
+                            <div class="message-checkbox">
+                                <input type="checkbox">
+                            </div>
+                            <div class="message-sender">
+                                Fake Bank Alert
+                                <div class="sender-domain">@security-bank-alert.com</div>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-subject">Security Alert: Unusual Activity Detected</div>
+                                <div class="message-preview">We've detected suspicious activity on your account. Please verify your identity by clicking the link below...</div>
+                                <div class="message-tags">
+                                    <span class="message-tag">Bank Scam</span>
+                                    <span class="message-tag">Phishing</span>
+                                </div>
+                            </div>
+                            <div class="message-date">3 days ago</div>
+                            <div class="message-actions">
+                                <button class="action-btn block" title="Block sender">
+                                    <i class="fas fa-ban"></i>
+                                </button>
+                                <button class="action-btn report" title="Report as not spam">
+                                    <i class="fas fa-undo"></i>
+                                </button>
+                                <button class="action-btn delete" title="Delete permanently">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <button class="action-button secondary" title="Settings">
+                <i class="fas fa-cog"></i>
+            </button>
+            <button class="action-button" title="Add Filter">
+                <i class="fas fa-filter"></i>
+            </button>
+            <button class="action-button" title="Empty Spam">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising performance.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.stat-card, .message-item').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 40px rgba(168, 85, 247, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Message selection
+        document.querySelectorAll('.message-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (!e.target.matches('input') && !e.target.matches('.action-btn')) {
+                    this.classList.toggle('selected');
+                    updateBulkActions();
+                }
+            });
+        });
+
+        // Checkbox selection
+        document.querySelectorAll('.message-checkbox input').forEach(checkbox => {
+            checkbox.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const messageItem = this.closest('.message-item');
+                messageItem.classList.toggle('selected', this.checked);
+                updateBulkActions();
+            });
+        });
+
+        // Bulk actions
+        function updateBulkActions() {
+            const selectedCount = document.querySelectorAll('.message-item.selected').length;
+            const bulkActions = document.getElementById('bulkActions');
+            
+            if (selectedCount > 0) {
+                bulkActions.classList.add('active');
+                document.querySelector('.bulk-count').textContent = `${selectedCount} messages selected`;
+            } else {
+                bulkActions.classList.remove('active');
+            }
+        }
+
+        // Action buttons
+        document.querySelectorAll('.action-btn.delete').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const messageItem = this.closest('.message-item');
+                messageItem.style.opacity = '0';
+                setTimeout(() => {
+                    messageItem.remove();
+                    updateBulkActions();
+                }, 300);
+            });
+        });
+
+        document.querySelectorAll('.action-btn.report').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const messageItem = this.closest('.message-item');
+                messageItem.style.borderLeft = '3px solid #10b981';
+                this.innerHTML = '<i class="fas fa-check"></i>';
+                this.style.color = '#10b981';
+                
+                setTimeout(() => {
+                    messageItem.style.opacity = '0';
+                    setTimeout(() => {
+                        messageItem.remove();
+                        updateBulkActions();
+                    }, 300);
+                }, 1500);
+            });
+        });
+
+        document.querySelectorAll('.action-btn.block').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const messageItem = this.closest('.message-item');
+                const sender = messageItem.querySelector('.message-sender').textContent.trim();
+                
+                this.innerHTML = '<i class="fas fa-check"></i>';
+                this.style.color = '#f59e0b';
+                
+                // Show a subtle notification
+                const notification = document.createElement('div');
+                notification.textContent = `Blocked ${sender}`;
+                notification.style.position = 'fixed';
+                notification.style.bottom = '100px';
+                notification.style.right = '30px';
+                notification.style.background = 'var(--bg-card)';
+                notification.style.color = 'var(--text-light)';
+                notification.style.padding = '12px 20px';
+                notification.style.borderRadius = '10px';
+                notification.style.border = '1px solid var(--orange-accent)';
+                notification.style.zIndex = '1000';
+                notification.style.boxShadow = '0 4px 20px rgba(0,0,0,0.3)';
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.remove();
+                }, 3000);
+            });
+        });
+
+        // Period buttons
+        document.querySelectorAll('.period-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // View toggle
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

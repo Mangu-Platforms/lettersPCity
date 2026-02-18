@@ -1,0 +1,1316 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mangu Mail - AI-Powered Email Revolution</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Material Icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            },
+            secondary: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    
+    .email-row:hover {
+      background-color: rgba(241, 245, 249, 0.8);
+      backdrop-filter: blur(4px);
+    }
+    
+    .dark .email-row:hover {
+      background-color: rgba(30, 41, 59, 0.5);
+    }
+    
+    .selected-email {
+      border-left: 4px solid #7c3aed;
+      background-color: #f5f3ff;
+    }
+    
+    .dark .selected-email {
+      background-color: rgba(55, 48, 163, 0.2);
+    }
+    
+    .workflow-card {
+      transition: all 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+    }
+    
+    .dark .workflow-card {
+      background-color: rgba(30, 41, 59, 0.8);
+      border-color: rgba(51, 65, 85, 0.5);
+    }
+    
+    .workflow-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.3s ease-in;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .gradient-button {
+      background-image: linear-gradient(to right, #7c3aed, #6366f1);
+      transition: all 0.3s ease;
+    }
+    
+    .gradient-button:hover {
+      background-image: linear-gradient(to right, #6d28d9, #4446e5);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+    }
+    
+    .sidebar-gradient {
+      background-image: linear-gradient(to bottom, #7c3aed, #6366f1);
+    }
+    
+    .dark .sidebar-gradient {
+      background-image: linear-gradient(to bottom, #4c1d95, #3730a3);
+    }
+    
+    .channel-pill:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .nav-item {
+      transition: all 0.2s ease;
+    }
+    
+    .nav-item:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .nav-item.active {
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .email-preview {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    /* Swipeable email rows */
+    .email-row-container {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .email-actions {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+      display: flex;
+      transition: transform 0.3s ease;
+    }
+    
+    /* Smart Labels */
+    .smart-label {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      margin-right: 6px;
+    }
+    
+    .label-work {
+      background-color: #e0f2fe;
+      color: #0369a1;
+    }
+    
+    .label-personal {
+      background-color: #ede9fe;
+      color: #5b21b6;
+    }
+    
+    .label-update {
+      background-color: #dcfce7;
+      color: #166534;
+    }
+    
+    .label-urgent {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+    
+    .label-social {
+      background-color: #ffedd5;
+      color: #c2410c;
+    }
+    
+    .dark .label-work {
+      background-color: #0c4a6e;
+      color: #bae6fd;
+    }
+    
+    .dark .label-personal {
+      background-color: #4c1d95;
+      color: #ddd6fe;
+    }
+    
+    .dark .label-update {
+      background-color: #14532d;
+      color: #bbf7d0;
+    }
+    
+    .dark .label-urgent {
+      background-color: #7f1d1d;
+      color: #fecaca;
+    }
+    
+    .dark .label-social {
+      background-color: #7c2d12;
+      color: #fed7aa;
+    }
+    
+    /* Focused Inbox */
+    .focused-tab.active {
+      border-bottom: 3px solid #7c3aed;
+      font-weight: 600;
+      color: #7c3aed;
+    }
+    
+    .dark .focused-tab.active {
+      border-bottom-color: #8b5cf6;
+      color: #a78bfa;
+    }
+    
+    /* Thread Morph Animation */
+    @keyframes morphToDoc {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(0.95); opacity: 0.7; }
+      100% { transform: scale(1) translateY(-20px); opacity: 0; }
+    }
+    
+    .morphing {
+      animation: morphToDoc 0.6s forwards;
+    }
+    
+    /* AI Assist Floating */
+    .ai-assist-bubble {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 100;
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    /* Kanban Board */
+    .kanban-lane {
+      min-height: 500px;
+      background-color: rgba(241, 245, 249, 0.5);
+      border-radius: 0.75rem;
+      padding: 1rem;
+      transition: all 0.3s ease;
+    }
+    
+    .dark .kanban-lane {
+      background-color: rgba(30, 41, 59, 0.5);
+    }
+    
+    .kanban-card {
+      background-color: white;
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      margin-bottom: 0.75rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+      cursor: move;
+      transition: all 0.3s ease;
+    }
+    
+    .dark .kanban-card {
+      background-color: rgba(30, 41, 59, 0.8);
+    }
+    
+    .kanban-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    /* Social Feed */
+    .social-post {
+      border-radius: 0.75rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1);
+    }
+    
+    .dark .social-post {
+      background-color: rgba(30, 41, 59, 0.8);
+    }
+    
+    .social-post:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05), 0 4px 6px rgba(0,0,0,0.1);
+    }
+    
+    /* Settings Tabs */
+    .settings-tab.active {
+      border-left: 3px solid #7c3aed;
+      background-color: #f5f3ff;
+      font-weight: 600;
+    }
+    
+    .dark .settings-tab.active {
+      background-color: rgba(55, 48, 163, 0.2);
+      border-left-color: #8b5cf6;
+    }
+    
+    /* NFT Signature Badge */
+    .nft-badge {
+      display: inline-flex;
+      align-items: center;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      padding: 2px 8px 2px 4px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    
+    /* Voice Note Player */
+    .voice-player {
+      background-color: #f0f9ff;
+      border-radius: 0.75rem;
+      padding: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .dark .voice-player {
+      background-color: rgba(30, 41, 59, 0.8);
+    }
+  </style>
+</head>
+<body class="h-screen flex flex-col bg-slate-50 font-sans text-slate-800 dark:bg-slate-900 dark:text-slate-200">
+  <!-- AI Assist Bubble -->
+  <div class="ai-assist-bubble hidden md:block">
+    <div class="bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full p-4 shadow-lg cursor-pointer hover:shadow-xl transition-all" onclick="toggleAIAssist()">
+      <span class="material-icons text-white">auto_awesome</span>
+    </div>
+  </div>
+
+  <!-- Top Bar -->
+  <header class="h-16 bg-white border-b flex items-center px-6 justify-between shadow-sm dark:bg-slate-800 dark:border-slate-700">
+    <div class="flex items-center space-x-3">
+      <span class="material-icons text-3xl text-indigo-600 dark:text-indigo-400">mail_outline</span>
+      <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Mangu Mail</h1>
+      <span class="text-xs bg-indigo-100 text-indigo-800 rounded-full px-2 py-1 ml-2 dark:bg-indigo-900 dark:text-indigo-100">AI Powered</span>
+    </div>
+    
+    <!-- Search Bar -->
+    <div class="relative flex-1 max-w-xl mx-6">
+      <span class="material-icons absolute left-3 top-2.5 text-slate-400 dark:text-slate-500">search</span>
+      <input type="text" placeholder="Search mail, contacts, docs..." 
+             class="w-full pl-10 pr-4 py-2 rounded-full bg-slate-100 border border-slate-200 focus:ring-2 focus:ring-indigo-300 focus:bg-white transition-all dark:bg-slate-700 dark:border-slate-600 dark:text-white dark:focus:bg-slate-600" />
+    </div>
+    
+    <div class="flex items-center space-x-4">
+      <button id="theme-toggle" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700">
+        <span id="theme-icon" class="material-icons">dark_mode</span>
+      </button>
+      <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700">
+        <span class="material-icons text-slate-600 dark:text-slate-300">notifications_none</span>
+      </button>
+      <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700" onclick="showView('settings')">
+        <span class="material-icons text-slate-600 dark:text-slate-300">settings</span>
+      </button>
+      <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white cursor-pointer" onclick="showView('profile')">
+        <span class="material-icons">person</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-60 sidebar-gradient text-white flex flex-col shadow-lg z-20 dark:bg-gradient-to-b dark:from-indigo-900 dark:to-purple-900">
+      <header class="h-16 flex items-center px-6 text-xl font-bold tracking-tight">
+        <span class="material-icons mr-2">mail</span> Mangu
+      </header>
+      
+      <nav class="flex-1 overflow-y-auto px-2 space-y-1 text-sm font-medium mt-4">
+        <a href="#" class="nav-item active flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('inbox')">
+          <span class="material-icons">inbox</span> Inbox
+          <span class="ml-auto text-xs bg-white/20 rounded-full px-2">24</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('starred')">
+          <span class="material-icons">star</span> Starred
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('sent')">
+          <span class="material-icons">send</span> Sent
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('drafts')">
+          <span class="material-icons">drafts</span> Drafts
+          <span class="ml-auto text-xs bg-white/20 rounded-full px-2">3</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('archive')">
+          <span class="material-icons">archive</span> Archive
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('spam')">
+          <span class="material-icons">spam</span> Spam
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('trash')">
+          <span class="material-icons">delete</span> Trash
+        </a>
+        
+        <section class="mt-6 px-2">
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="uppercase text-xs opacity-80">Channels</h3>
+            <button class="text-xs opacity-80 hover:opacity-100">+ Add</button>
+          </div>
+          <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer" onclick="showView('project-phoenix')">
+            <span class="material-icons">groups</span>
+            <span>Project Phoenix</span>
+          </div>
+          <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer" onclick="showView('design-guild')">
+            <span class="material-icons">palette</span>
+            <span>Design Guild</span>
+          </div>
+          <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer" onclick="showView('marketing-team')">
+            <span class="material-icons">campaign</span>
+            <span>Marketing Team</span>
+          </div>
+        </section>
+
+        <section class="mt-6 px-2">
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="uppercase text-xs opacity-80">Smart Labels</h3>
+          </div>
+          <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer" onclick="showView('work')">
+            <span class="material-icons">work</span>
+            <span>Work</span>
+          </div>
+          <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer" onclick="showView('personal')">
+            <span class="material-icons">person</span>
+            <span>Personal</span>
+          </div>
+          <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer" onclick="showView('updates')">
+            <span class="material-icons">notifications</span>
+            <span>Updates</span>
+          </div>
+          <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer" onclick="showView('social')">
+            <span class="material-icons">people</span>
+            <span>Social</span>
+          </div>
+        </section>
+        
+        <section class="mt-6 px-2">
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="uppercase text-xs opacity-80">Tools</h3>
+          </div>
+          <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('calendar')">
+            <span class="material-icons">calendar_today</span> Calendar
+          </a>
+          <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('contacts')">
+            <span class="material-icons">contacts</span> Contacts
+          </a>
+          <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('tasks')">
+            <span class="material-icons">task</span> Tasks
+          </a>
+          <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3" onclick="showView('kanban')">
+            <span class="material-icons">view_kanban</span> Kanban Board
+          </a>
+        </section>
+      </nav>
+      
+      <button onclick="toggleCompose()" class="m-4 flex items-center justify-center bg-white text-slate-900 font-semibold rounded-xl h-12 gap-2 hover:shadow-lg transition-shadow dark:bg-slate-800 dark:text-white">
+        <span class="material-icons">add</span> Compose
+      </button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 grid grid-cols-12 overflow-hidden">
+      <!-- Inbox View -->
+      <section id="inbox-view" class="col-span-12 flex flex-col">
+        <!-- Focused Inbox Tabs -->
+        <div class="flex border-b dark:border-slate-700">
+          <button class="flex-1 py-3 text-center focused-tab active" onclick="switchInboxTab('all')">All</button>
+          <button class="flex-1 py-3 text-center focused-tab" onclick="switchInboxTab('focused')">Focused</button>
+          <button class="flex-1 py-3 text-center focused-tab" onclick="switchInboxTab('other')">Other</button>
+          <button class="flex-1 py-3 text-center focused-tab" onclick="switchInboxTab('social')">Social</button>
+        </div>
+
+        <!-- Workflow Cards -->
+        <div class="p-4 space-y-3 border-b bg-slate-50/80 backdrop-blur-sm dark:bg-slate-800/80 dark:border-slate-700">
+          <div class="workflow-card rounded-xl border border-slate-200 px-4 py-3 bg-white shadow-sm slide-up dark:bg-slate-800 dark:border-slate-700">
+            <div class="flex items-center justify-between">
+              <h4 class="font-semibold text-slate-900 dark:text-white mb-1">Review Quarterly Report</h4>
+              <span class="material-icons text-indigo-500">auto_awesome</span>
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">The Q3 financial report is ready for your review before sending to stakeholders.</p>
+            <div class="flex gap-2">
+              <button class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs hover:bg-indigo-700">Review</button>
+              <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">Schedule</button>
+              <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">Share</button>
+            </div>
+          </div>
+
+          <div class="workflow-card rounded-xl border border-slate-200 px-4 py-3 bg-white shadow-sm slide-up dark:bg-slate-800 dark:border-slate-700">
+            <h4 class="font-semibold text-slate-900 dark:text-white mb-1">Team Meeting Follow-up</h4>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">Action items from yesterday's leadership meeting need assignment.</p>
+            <div class="flex gap-2">
+              <button class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs hover:bg-indigo-700">Assign</button>
+              <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">Postpone</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email List -->
+        <div class="flex-1 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-700">
+          <!-- Email 1 -->
+          <div class="email-row-container">
+            <div class="email-row flex flex-col gap-0.5 px-4 py-3 cursor-pointer selected-email dark:bg-slate-800/50" onclick="selectEmail(1)" data-sender="Alex Johnson" data-category="work">
+              <div class="flex justify-between items-center">
+                <p class="font-medium text-slate-900 dark:text-white">Alex Johnson</p>
+                <span class="text-xs text-slate-500 dark:text-slate-400">10:24 AM</span>
+              </div>
+              <p class="truncate text-slate-800 font-semibold dark:text-white">Project Update: Q3 Deliverables</p>
+              <div class="flex items-center mt-1">
+                <span class="smart-label label-work">Work</span>
+                <span class="smart-label label-update">Update</span>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 email-preview">Hey--just wanted to follow up on the Q3 deliverables. We're on track to complete by Friday. Let me know if you need anything else.</p>
+            </div>
+            <div class="email-actions">
+              <button class="w-16 bg-indigo-500 flex items-center justify-center" title="Archive">
+                <span class="material-icons text-white">archive</span>
+              </button>
+              <button class="w-16 bg-red-500 flex items-center justify-center" title="Delete">
+                <span class="material-icons text-white">delete</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Email 2 -->
+          <div class="email-row-container">
+            <div class="email-row flex flex-col gap-0.5 px-4 py-3 cursor-pointer dark:hover:bg-slate-800/50" onclick="selectEmail(2)" data-sender="Sarah Williams" data-category="work">
+              <div class="flex justify-between items-center">
+                <p class="font-medium text-slate-900 dark:text-white">Sarah Williams</p>
+                <span class="text-xs text-slate-500 dark:text-slate-400">9:45 AM</span>
+              </div>
+              <p class="truncate text-slate-800 font-semibold dark:text-white">Design System Feedback</p>
+              <div class="flex items-center mt-1">
+                <span class="smart-label label-work">Work</span>
+                <span class="smart-label label-urgent">Urgent</span>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 email-preview">I've completed the initial design system proposal. Could you take a look when you have a moment? I'd appreciate your feedback.</p>
+            </div>
+            <div class="email-actions">
+              <button class="w-16 bg-indigo-500 flex items-center justify-center" title="Archive">
+                <span class="material-icons text-white">archive</span>
+              </button>
+              <button class="w-16 bg-red-500 flex items-center justify-center" title="Delete">
+                <span class="material-icons text-white">delete</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Email 3 -->
+          <div class="email-row-container">
+            <div class="email-row flex flex-col gap-0.5 px-4 py-3 cursor-pointer dark:hover:bg-slate-800/50" onclick="selectEmail(3)" data-sender="Tech Newsletter" data-category="update">
+              <div class="flex justify-between items-center">
+                <p class="font-medium text-slate-500 dark:text-slate-400">Tech Newsletter</p>
+                <span class="text-xs text-slate-500 dark:text-slate-400">8:30 AM</span>
+              </div>
+              <p class="truncate text-slate-500 font-medium dark:text-slate-400">Weekly Tech Digest: AI Breakthroughs</p>
+              <div class="flex items-center mt-1">
+                <span class="smart-label label-update">Update</span>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 email-preview">This week in tech: New AI models, framework updates, and security best practices. Plus, our interview with the creator of...</p>
+            </div>
+            <div class="email-actions">
+              <button class="w-16 bg-indigo-500 flex items-center justify-center" title="Archive">
+                <span class="material-icons text-white">archive</span>
+              </button>
+              <button class="w-16 bg-red-500 flex items-center justify-center" title="Delete">
+                <span class="material-icons text-white">delete</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Email 4 -->
+          <div class="email-row-container">
+            <div class="email-row flex flex-col gap-0.5 px-4 py-3 cursor-pointer dark:hover:bg-slate-800/50" onclick="selectEmail(4)" data-sender="Michael Chen" data-category="work">
+              <div class="flex justify-between items-center">
+                <p class="font-medium text-slate-900 dark:text-white">Michael Chen</p>
+                <span class="text-xs text-slate-500 dark:text-slate-400">Yesterday</span>
+              </div>
+              <p class="truncate text-slate-800 font-semibold dark:text-white">Budget Approval Needed</p>
+              <div class="flex items-center mt-1">
+                <span class="smart-label label-work">Work</span>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 email-preview">Attached is the budget proposal for the new marketing campaign. Please review and let me know if you approve the allocation.</p>
+            </div>
+            <div class="email-actions">
+              <button class="w-16 bg-indigo-500 flex items-center justify-center" title="Archive">
+                <span class="material-icons text-white">archive</span>
+              </button>
+              <button class="w-16 bg-red-500 flex items-center justify-center" title="Delete">
+                <span class="material-icons text-white">delete</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Email 5 -->
+          <div class="email-row-container">
+            <div class="email-row flex flex-col gap-0.5 px-4 py-3 cursor-pointer dark:hover:bg-slate-800/50" onclick="selectEmail(5)" data-sender="Design Guild" data-category="work">
+              <div class="flex justify-between items-center">
+                <p class="font-medium text-slate-900 dark:text-white">Design Guild</p>
+                <span class="text-xs text-slate-500 dark:text-slate-400">Yesterday</span>
+              </div>
+              <p class="truncate text-slate-800 font-semibold dark:text-white">Weekly Design Critique Reminder</p>
+              <div class="flex items-center mt-1">
+                <span class="smart-label label-work">Work</span>
+                <span class="smart-label label-update">Reminder</span>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 email-preview">Just a reminder that we're having our weekly design critique tomorrow at 11 AM in Conference Room B. Please bring your...</p>
+            </div>
+            <div class="email-actions">
+              <button class="w-16 bg-indigo-500 flex items-center justify-center" title="Archive">
+                <span class="material-icons text-white">archive</span>
+              </button>
+              <button class="w-16 bg-red-500 flex items-center justify-center" title="Delete">
+                <span class="material-icons text-white">delete</span>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Email 6 (Social Media) -->
+          <div class="email-row-container">
+            <div class="email-row flex flex-col gap-0.5 px-4 py-3 cursor-pointer dark:hover:bg-slate-800/50" onclick="selectEmail(6)" data-sender="Social Feed" data-category="social">
+              <div class="flex justify-between items-center">
+                <p class="font-medium text-slate-900 dark:text-white">Social Feed</p>
+                <span class="text-xs text-slate-500 dark:text-slate-400">2 hrs ago</span>
+              </div>
+              <p class="truncate text-slate-800 font-semibold dark:text-white">New updates from your network</p>
+              <div class="flex items-center mt-1">
+                <span class="smart-label label-social">Social</span>
+              </div>
+              <p class="text-xs text-slate-500 dark:text-slate-400 email-preview">Jamie liked your post • Alex commented on your photo • 3 new connection requests</p>
+            </div>
+            <div class="email-actions">
+              <button class="w-16 bg-indigo-500 flex items-center justify-center" title="Archive">
+                <span class="material-icons text-white">archive</span>
+              </button>
+              <button class="w-16 bg-red-500 flex items-center justify-center" title="Delete">
+                <span class="material-icons text-white">delete</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Email Detail View -->
+      <section id="email-detail" class="col-span-8 flex flex-col bg-white dark:bg-slate-800">
+        <div id="empty-state" class="flex items-center justify-center h-full text-slate-400 dark:text-slate-500">
+          <div class="text-center">
+            <span class="material-icons text-5xl mb-4">drafts</span>
+            <p class="text-xl font-light">Select an email to view</p>
+            <p class="text-slate-500 dark:text-slate-500 mt-2">Your messages will appear here</p>
+          </div>
+        </div>
+
+        <div id="email-content" class="hidden flex-col h-full fade-in">
+          <header class="h-16 flex items-center justify-between border-b px-6 dark:border-slate-700">
+            <h2 class="font-semibold text-lg text-slate-900 dark:text-white">Project Update: Q3 Deliverables</h2>
+            <div class="flex gap-1">
+              <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+                <span class="material-icons text-slate-600 dark:text-slate-300">archive</span>
+              </button>
+              <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+                <span class="material-icons text-slate-600 dark:text-slate-300">delete</span>
+              </button>
+              <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+                <span class="material-icons text-slate-600 dark:text-slate-300">send</span>
+              </button>
+              <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700" title="Burner Thread">
+                <span class="material-icons text-slate-600 dark:text-slate-300">shield</span>
+              </button>
+            </div>
+          </header>
+
+          <article class="flex-1 overflow-y-auto p-8 space-y-6 dark:text-slate-300">
+            <section class="space-y-1">
+              <p class="font-medium text-slate-900 dark:text-white">From: Alex Johnson &lt;alex.johnson@company.com&gt;</p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">To: You • Today at 10:24 AM</p>
+              <div class="flex gap-2 mt-2">
+                <span class="smart-label label-work">Work</span>
+                <span class="smart-label label-update">Update</span>
+                <span class="nft-badge">
+                  <span class="material-icons text-xs">verified</span>
+                  <span>NFT Verified</span>
+                </span>
+              </div>
+            </section>
+
+            <div class="py-6">
+              <div class="ai-summary bg-slate-50 rounded-xl p-4 mb-6 dark:bg-slate-700/50">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class="material-icons text-indigo-500">auto_awesome</span>
+                  <h3 class="font-semibold text-slate-900 dark:text-white">AI Summary</h3>
+                </div>
+                <ul class="list-disc pl-5 text-slate-700 dark:text-slate-300 space-y-1 text-sm">
+                  <li>Project is on track for Friday completion</li>
+                  <li>API integration completed successfully</li>
+                  <li>Dashboard UI finalized with design team</li>
+                  <li>Minor setback with reporting module but solution identified</li>
+                  <li>Action required: Review attached progress report</li>
+                </ul>
+              </div>
+              
+              <p class="leading-relaxed text-slate-700 dark:text-slate-300 mb-4">Hi there,</p>
+
+              <p class="leading-relaxed text-slate-700 dark:text-slate-300 mb-4">
+                I wanted to provide an update on the Q3 deliverables for Project Phoenix.
+                The team has made excellent progress this week, and we're currently on track
+                to complete all milestones by Friday as planned.
+              </p>
+
+              <p class="leading-relaxed text-slate-700 dark:text-slate-300 mb-4">
+                Key accomplishments this week:
+              </p>
+
+              <ul class="list-disc pl-5 text-slate-700 dark:text-slate-300 mb-4 space-y-1">
+                <li>Completed the API integration for the new authentication system</li>
+                <li>Finalized the dashboard UI with the design team</li>
+                <li>Implemented the first round of performance optimizations</li>
+                <li>Completed 85% of the automated test coverage</li>
+              </ul>
+
+              <p class="leading-relaxed text-slate-700 dark:text-slate-300 mb-4">
+                We did encounter a minor setback with the reporting module, but the team has already identified a solution and is implementing it now. This shouldn't impact our final delivery date.
+              </p>
+
+              <p class="leading-relaxed text-slate-700 dark:text-slate-300 mb-4">
+                Attached you'll find the detailed progress report with metrics and screenshots.
+                Please let me know if you have any questions or need additional information.
+              </p>
+
+              <p class="leading-relaxed text-slate-700 dark:text-slate-300">
+                Best regards,<br>
+                Alex
+              </p>
+            </div>
+
+            <div class="flex gap-2">
+              <div class="flex items-center gap-2 px-4 py-2 border border-slate-200 rounded-lg dark:border-slate-700">
+                <span class="material-icons text-slate-600 dark:text-slate-400">attach_file</span>
+                <span class="text-sm text-slate-700 dark:text-slate-300">Q3_Progress_Report.pdf</span>
+                <span class="text-xs text-slate-500 dark:text-slate-500">2.4 MB</span>
+              </div>
+            </div>
+
+            <div class="mt-8 flex gap-3">
+              <button class="gradient-button px-4 py-2 rounded-lg text-white shadow">
+                Reply
+              </button>
+              <button class="px-4 py-2 border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700">
+                Forward
+              </button>
+              <button class="gradient-button px-4 py-2 rounded-lg text-white shadow flex items-center gap-1" onclick="morphToDoc()">
+                Morph Thread → Doc
+                <span class="material-icons text-sm">auto_awesome_motion</span>
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+      
+      <!-- Kanban Board View -->
+      <section id="kanban-view" class="col-span-12 hidden p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Project Kanban Board</h2>
+          <div class="flex gap-2">
+            <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700">New Task</button>
+            <button class="px-4 py-2 border border-slate-200 rounded-lg text-sm hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">Filter</button>
+          </div>
+        </div>
+        
+        <div class="grid grid-cols-4 gap-4">
+          <div class="kanban-lane">
+            <h3 class="font-semibold text-slate-900 dark:text-white mb-4">To Do</h3>
+            <div class="kanban-card">
+              <div class="flex justify-between items-start mb-2">
+                <h4 class="font-medium text-slate-900 dark:text-white">Review design mockups</h4>
+                <span class="material-icons text-indigo-500">auto_awesome</span>
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">UI designs for new dashboard need feedback</p>
+              <div class="flex items-center justify-between">
+                <div class="flex gap-1">
+                  <span class="w-6 h-6 bg-indigo-100 rounded-full flex items-center justify-center text-xs text-indigo-800">JD</span>
+                  <span class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-xs text-purple-800">SM</span>
+                </div>
+                <span class="text-xs text-slate-500 dark:text-slate-400">Due: Tomorrow</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="kanban-lane">
+            <h3 class="font-semibold text-slate-900 dark:text-white mb-4">In Progress</h3>
+            <div class="kanban-card">
+              <div class="flex justify-between items-start mb-2">
+                <h4 class="font-medium text-slate-900 dark:text-white">API integration</h4>
+                <span class="material-icons text-orange-500">pending_actions</span>
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">Connect authentication service to backend</p>
+              <div class="flex items-center justify-between">
+                <div class="flex gap-1">
+                  <span class="w-6 h-6 bg-indigo-100 rounded-full flex items-center justify-center text-xs text-indigo-800">MC</span>
+                </div>
+                <span class="text-xs text-slate-500 dark:text-slate-400">Due: Fri</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="kanban-lane">
+            <h3 class="font-semibold text-slate-900 dark:text-white mb-4">Review</h3>
+            <div class="kanban-card">
+              <div class="flex justify-between items-start mb-2">
+                <h4 class="font-medium text-slate-900 dark:text-white">User testing results</h4>
+                <span class="material-icons text-green-500">check_circle</span>
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">Analyze feedback from beta testers</p>
+              <div class="flex items-center justify-between">
+                <div class="flex gap-1">
+                  <span class="w-6 h-6 bg-indigo-100 rounded-full flex items-center justify-center text-xs text-indigo-800">AJ</span>
+                  <span class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center text-xs text-purple-800">SW</span>
+                </div>
+                <span class="text-xs text-slate-500 dark:text-slate-400">Due: Today</span>
+              </div>
+            </div>
+          </div>
+          
+          <div class="kanban-lane">
+            <h3 class="font-semibold text-slate-900 dark:text-white mb-4">Done</h3>
+            <div class="kanban-card">
+              <div class="flex justify-between items-start mb-2">
+                <h4 class="font-medium text-slate-900 dark:text-white">Onboarding flow</h4>
+                <span class="material-icons text-green-500">check_circle</span>
+              </div>
+              <p class="text-sm text-slate-600 dark:text-slate-300 mb-3">New user onboarding sequence completed</p>
+              <div class="flex items-center justify-between">
+                <div class="flex gap-1">
+                  <span class="w-6 h-6 bg-indigo-100 rounded-full flex items-center justify-center text-xs text-indigo-800">DG</span>
+                </div>
+                <span class="text-xs text-slate-500 dark:text-slate-400">Completed</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Social Feed View -->
+      <section id="social-view" class="col-span-12 hidden p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Social Feed</h2>
+          <div class="flex gap-2">
+            <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700">New Post</button>
+            <button class="px-4 py-2 border border-slate-200 rounded-lg text-sm hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">Filter</button>
+          </div>
+        </div>
+        
+        <div class="max-w-2xl mx-auto">
+          <div class="social-post bg-white dark:bg-slate-800">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center text-white">
+                <span class="material-icons">person</span>
+              </div>
+              <div>
+                <h4 class="font-semibold text-slate-900 dark:text-white">Alex Johnson</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Project Lead • 2 hrs ago</p>
+              </div>
+            </div>
+            
+            <p class="text-slate-700 dark:text-slate-300 mb-4">
+              Just wrapped up the Q3 planning session with the team! So many exciting features coming your way. 
+              The new dashboard designs are 🔥. Can't wait to share more next week!
+            </p>
+            
+            <div class="flex gap-4 mb-4">
+              <div class="w-32 h-32 bg-indigo-100 rounded-lg flex items-center justify-center dark:bg-slate-700">
+                <span class="material-icons text-indigo-500 dark:text-indigo-400">image</span>
+              </div>
+              <div class="w-32 h-32 bg-indigo-100 rounded-lg flex items-center justify-center dark:bg-slate-700">
+                <span class="material-icons text-indigo-500 dark:text-indigo-400">image</span>
+              </div>
+            </div>
+            
+            <div class="flex justify-between text-slate-500 dark:text-slate-400">
+              <div class="flex gap-4">
+                <button class="flex items-center gap-1">
+                  <span class="material-icons text-lg">favorite_border</span>
+                  <span>24</span>
+                </button>
+                <button class="flex items-center gap-1">
+                  <span class="material-icons text-lg">chat_bubble_outline</span>
+                  <span>7</span>
+                </button>
+              </div>
+              <button>
+                <span class="material-icons text-lg">share</span>
+              </button>
+            </div>
+          </div>
+          
+          <div class="social-post bg-white dark:bg-slate-800">
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-10 h-10 bg-gradient-to-br from-green-500 to-teal-500 rounded-full flex items-center justify-center text-white">
+                <span class="material-icons">person</span>
+              </div>
+              <div>
+                <h4 class="font-semibold text-slate-900 dark:text-white">Sarah Williams</h4>
+                <p class="text-xs text-slate-500 dark:text-slate-400">Design Lead • 4 hrs ago</p>
+              </div>
+            </div>
+            
+            <p class="text-slate-700 dark:text-slate-300 mb-4">
+              Our design team just won the internal hackathon with our accessibility improvements! 
+              Big thanks to everyone who participated and provided feedback. 
+              Accessibility isn't a feature - it's fundamental to good design.
+            </p>
+            
+            <div class="flex gap-4 mb-4">
+              <div class="w-48 h-32 bg-green-100 rounded-lg flex items-center justify-center dark:bg-slate-700">
+                <span class="material-icons text-green-500 dark:text-green-400">image</span>
+              </div>
+            </div>
+            
+            <div class="flex justify-between text-slate-500 dark:text-slate-400">
+              <div class="flex gap-4">
+                <button class="flex items-center gap-1">
+                  <span class="material-icons text-lg text-red-500">favorite</span>
+                  <span>42</span>
+                </button>
+                <button class="flex items-center gap-1">
+                  <span class="material-icons text-lg">chat_bubble_outline</span>
+                  <span>15</span>
+                </button>
+              </div>
+              <button>
+                <span class="material-icons text-lg">share</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Settings View -->
+      <section id="settings-view" class="col-span-12 hidden flex">
+        <div class="w-64 border-r dark:border-slate-700">
+          <div class="p-6">
+            <h2 class="text-xl font-bold text-slate-900 dark:text-white mb-6">Settings</h2>
+            <nav class="space-y-1">
+              <a href="#" class="settings-tab active flex items-center px-4 py-3 rounded-lg gap-3" onclick="showSettingsTab('general')">
+                <span class="material-icons">settings</span>
+                <span>General</span>
+              </a>
+              <a href="#" class="settings-tab flex items-center px-4 py-3 rounded-lg gap-3" onclick="showSettingsTab('account')">
+                <span class="material-icons">person</span>
+                <span>Account</span>
+              </a>
+              <a href="#" class="settings-tab flex items-center px-4 py-3 rounded-lg gap-3" onclick="showSettingsTab('security')">
+                <span class="material-icons">lock</span>
+                <span>Security</span>
+              </a>
+              <a href="#" class="settings-tab flex items-center px-4 py-3 rounded-lg gap-3" onclick="showSettingsTab('aliases')">
+                <span class="material-icons">alternate_email</span>
+                <span>Aliases</span>
+              </a>
+              <a href="#" class="settings-tab flex items-center px-4 py-3 rounded-lg gap-3" onclick="showSettingsTab('encryption')">
+                <span class="material-icons">enhanced_encryption</span>
+                <span>Encryption</span>
+              </a>
+              <a href="#" class="settings-tab flex items-center px-4 py-3 rounded-lg gap-3" onclick="showSettingsTab('calendar')">
+                <span class="material-icons">calendar_today</span>
+                <span>Calendar</span>
+              </a>
+              <a href="#" class="settings-tab flex items-center px-4 py-3 rounded-lg gap-3" onclick="showSettingsTab('ai')">
+                <span class="material-icons">auto_awesome</span>
+                <span>AI Features</span>
+              </a>
+            </nav>
+          </div>
+        </div>
+        
+        <div class="flex-1 p-6 overflow-y-auto">
+          <div id="general-settings" class="settings-content">
+            <h3 class="text-xl font-semibold text-slate-900 dark:text-white mb-6">General Settings</h3>
+            <div class="space-y-6">
+              <div>
+                <h4 class="font-medium text-slate-900 dark:text-white mb-2">Theme</h4>
+                <div class="flex gap-4">
+                  <div class="w-32 h-40 border-2 border-indigo-500 rounded-xl overflow-hidden cursor-pointer">
+                    <div class="h-3/4 bg-white"></div>
+                    <div class="h-1/4 bg-slate-100"></div>
+                    <p class="text-center py-2">Light</p>
+                  </div>
+                  <div class="w-32 h-40 border border-slate-200 rounded-xl overflow-hidden cursor-pointer dark:border-slate-700">
+                    <div class="h-3/4 bg-slate-900"></div>
+                    <div class="h-1/4 bg-slate-800"></div>
+                    <p class="text-center py-2">Dark</p>
+                  </div>
+                  <div class="w-32 h-40 border border-slate-200 rounded-xl overflow-hidden cursor-pointer dark:border-slate-700">
+                    <div class="h-3/4 bg-indigo-900"></div>
+                    <div class="h-1/4 bg-indigo-800"></div>
+                    <p class="text-center py-2">Purple</p>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <h4 class="font-medium text-slate-900 dark:text-white mb-2">Language</h4>
+                <select class="w-64 px-4 py-2 bg-slate-100 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-300 focus:bg-white dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+                  <option>English (United States)</option>
+                  <option>Español (Spanish)</option>
+                  <option>Français (French)</option>
+                  <option>Deutsch (German)</option>
+                  <option>日本語 (Japanese)</option>
+                </select>
+              </div>
+              
+              <div>
+                <h4 class="font-medium text-slate-900 dark:text-white mb-2">Default View</h4>
+                <div class="flex gap-4">
+                  <div class="flex items-center">
+                    <input type="radio" id="split-view" name="default-view" class="mr-2" checked>
+                    <label for="split-view">Split View</label>
+                  </div>
+                  <div class="flex items-center">
+                    <input type="radio" id="list-view" name="default-view" class="mr-2">
+                    <label for="list-view">List View</label>
+                  </div>
+                  <div class="flex items-center">
+                    <input type="radio" id="card-view" name="default-view" class="mr-2">
+                    <label for="card-view">Card View</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div id="alias-settings" class="settings-content hidden">
+            <h3 class="text-xl font-semibold text-slate-900 dark:text-white mb-6">Alias Management</h3>
+            <div class="bg-slate-50 rounded-xl p-6 dark:bg-slate-700/50">
+              <div class="flex justify-between items-center mb-4">
+                <h4 class="font-medium text-slate-900 dark:text-white">Your Aliases</h4>
+                <button class="px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm hover:bg-indigo-700">+ New Alias</button>
+              </div>
+              
+              <div class="space-y-3">
+                <div class="flex items-center justify-between p-4 bg-white rounded-lg dark:bg-slate-800">
+                  <div>
+                    <p class="font-medium text-slate-900 dark:text-white">jsmith+shopping@mangu.com</p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Created: 2023-10-15 • Expires: 2023-12-15</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+                      <span class="material-icons text-slate-600 dark:text-slate-300">edit</span>
+                    </button>
+                    <button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+                      <span class="material-icons text-red-500">delete</span>
+                    </button>
+                  </div>
+                </div>
+                
+                <div class="flex items-center justify-between p-4 bg-white rounded-lg dark:bg-slate-800">
+                  <div>
+                    <p class="font-medium text-slate-900 dark:text-white">jsmith+travel@mangu.com</p>
+                    <p class="text-sm text-slate-500 dark:text-slate-400">Created: 2023-09-20 • Expires: 2024-09-20</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+                      <span class="material-icons text-slate-600 dark:text-slate-300">edit</span>
+                    </button>
+                    <button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+                      <span class="material-icons text-red-500">delete</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Compose Modal -->
+  <div id="composeModal" class="hidden fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+    <div class="bg-white rounded-2xl w-3/5 max-w-2xl shadow-xl overflow-hidden slide-up dark:bg-slate-800">
+      <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-4 text-white flex justify-between items-center">
+        <h3 class="text-lg font-semibold">New Message</h3>
+        <button onclick="toggleCompose()" class="material-icons hover:text-slate-200">close</button>
+      </div>
+      <div class="p-6 space-y-4">
+        <div class="flex gap-2">
+          <input
+            type="email"
+            placeholder="To"
+            class="flex-1 px-4 py-2 bg-slate-100 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-300 focus:bg-white dark:bg-slate-700 dark:border-slate-600 dark:text-white"
+          />
+          <button class="px-3 py-2 bg-slate-100 rounded-xl hover:bg-slate-200 text-sm dark:bg-slate-700 dark:hover:bg-slate-600 dark:text-white">AI Assist</button>
+        </div>
+        <input
+          type="text"
+          placeholder="Subject"
+          class="w-full px-4 py-2 bg-slate-100 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-300 focus:bg-white dark:bg-slate-700 dark:border-slate-600 dark:text-white"
+        />
+        <textarea
+          rows="8"
+          placeholder="Write your message..."
+          class="w-full px-4 py-2 bg-slate-100 rounded-xl border border-slate-200 focus:ring-2 focus:ring-indigo-300 focus:bg-white resize-none dark:bg-slate-700 dark:border-slate-600 dark:text-white"
+        ></textarea>
+        <!-- AI Assist Suggestions -->
+        <div id="ai-assist-suggestions" class="hidden p-4 bg-slate-50 rounded-xl border border-slate-200 dark:bg-slate-700 dark:border-slate-600">
+          <h4 class="font-medium mb-2 dark:text-white">AI Suggestions</h4>
+          <div class="space-y-2">
+            <button class="w-full text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-600">
+              <p class="text-sm">"I'd be happy to schedule a meeting to discuss this further. What time works for you?"</p>
+            </button>
+            <button class="w-full text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-600">
+              <p class="text-sm">"Thanks for reaching out! Could you provide more details about your requirements?"</p>
+            </button>
+            <button class="w-full text-left p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-600">
+              <p class="text-sm">"I've reviewed your proposal and have a few suggestions. When would be a good time to connect?"</p>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="p-4 flex justify-between border-t dark:border-slate-700">
+        <div class="flex gap-2">
+          <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+            <span class="material-icons text-slate-600 dark:text-slate-300">attach_file</span>
+          </button>
+          <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+            <span class="material-icons text-slate-600 dark:text-slate-300">insert_photo</span>
+          </button>
+          <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+            <span class="material-icons text-slate-600 dark:text-slate-300">mood</span>
+          </button>
+          <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700" onclick="toggleAISuggestions()">
+            <span class="material-icons text-slate-600 dark:text-slate-300">auto_awesome</span>
+          </button>
+        </div>
+        <div class="flex gap-2">
+          <button class="px-6 py-2 bg-slate-100 rounded-xl text-slate-700 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600">
+            Schedule
+          </button>
+          <button class="px-6 py-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-xl hover:from-indigo-700 hover:to-purple-700 transition-all">
+            Send
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Theme Toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    
+    themeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      
+      if (document.documentElement.classList.contains('dark')) {
+        themeIcon.textContent = 'light_mode';
+        localStorage.theme = 'dark';
+      } else {
+        themeIcon.textContent = 'dark_mode';
+        localStorage.theme = 'light';
+      }
+    });
+    
+    // Set initial theme
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+      themeIcon.textContent = 'light_mode';
+    } else {
+      document.documentElement.classList.remove('dark');
+      themeIcon.textContent = 'dark_mode';
+    }
+    
+    // View Management
+    function showView(viewName) {
+      // Hide all views
+      document.querySelectorAll('[id$="-view"]').forEach(view => {
+        view.classList.add('hidden');
+      });
+      
+      // Show requested view
+      document.getElementById(`${viewName}-view`).classList.remove('hidden');
+      
+      // Update active nav item
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // Special case for settings
+      if(viewName === 'settings') {
+        document.getElementById('empty-state').classList.add('hidden');
+        document.getElementById('email-content').classList.add('hidden');
+      }
+    }
+    
+    // Settings Tabs
+    function showSettingsTab(tabName) {
+      // Hide all settings content
+      document.querySelectorAll('.settings-content').forEach(tab => {
+        tab.classList.add('hidden');
+      });
+      
+      // Show requested tab
+      document.getElementById(`${tabName}-settings`).classList.remove('hidden');
+      
+      // Update active tab
+      document.querySelectorAll('.settings-tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      event.currentTarget.classList.add('active');
+    }
+    
+    // Email selection
+    function selectEmail(emailId) {
+      // Hide empty state
+      document.getElementById('empty-state').classList.add('hidden');
+      
+      // Show email detail
+      document.getElementById('email-content').classList.remove('hidden');
+      
+      // Update selected state in email list
+      document.querySelectorAll('.email-row').forEach(row => {
+        row.classList.remove('selected-email');
+      });
+      event.currentTarget.classList.add('selected-email');
+    }
+    
+    // Compose modal
+    function toggleCompose() {
+      document.getElementById('composeModal').classList.toggle('hidden');
+    }
+    
+    // AI Assist toggle
+    function toggleAISuggestions() {
+      document.getElementById('ai-assist-suggestions').classList.toggle('hidden');
+    }
+    
+    function toggleAIAssist() {
+      alert('AI Assist activated! I can help you:\n\n• Draft responses\n• Schedule meetings\n• Summarize threads\n• Prioritize emails\n• Translate messages');
+    }
+    
+    // Focused Inbox Tabs
+    function switchInboxTab(tab) {
+      document.querySelectorAll('.focused-tab').forEach(t => t.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+    }
+    
+    // Thread Morph Animation
+    function morphToDoc() {
+      const emailDetail = document.getElementById('email-content');
+      emailDetail.classList.add('morphing');
+      
+      setTimeout(() => {
+        alert('Thread converted to document! Your email conversation has been transformed into an editable document.');
+        emailDetail.classList.remove('morphing');
+      }, 600);
+    }
+    
+    // Initialize with first email selected
+    setTimeout(() => {
+      document.querySelector('.email-row').click();
+    }, 100);
+    
+    // Swipe functionality for email rows
+    document.querySelectorAll('.email-row-container').forEach(container => {
+      const row = container.querySelector('.email-row');
+      const actions = container.querySelector('.email-actions');
+      let startX, currentX;
+      
+      row.addEventListener('touchstart', e => {
+        startX = e.touches[0].clientX;
+      });
+      
+      row.addEventListener('touchmove', e => {
+        currentX = e.touches[0].clientX;
+        const diff = startX - currentX;
+        
+        if (diff > 0) {
+          actions.style.transform = `translateX(-${Math.min(diff, 128)}px)`;
+        }
+      });
+      
+      row.addEventListener('touchend', () => {
+        if (startX - currentX > 50) {
+          actions.style.transform = 'translateX(-128px)';
+        } else {
+          actions.style.transform = 'translateX(0)';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

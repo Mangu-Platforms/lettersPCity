@@ -1,0 +1,728 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        /* Main Header */
+        .main-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .city-logo {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 2px solid var(--orange-accent);
+            border-radius: 50px;
+            margin-bottom: 12px;
+        }
+
+        .city-logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .tagline {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .page-header h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, var(--purple-primary), var(--pink-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            color: var(--text-gray);
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Feature Showcase */
+        .feature-showcase {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .feature-showcase-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-showcase-card:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+            font-size: 30px;
+            color: white;
+        }
+
+        .feature-showcase-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .feature-showcase-card p {
+            color: var(--text-gray);
+            font-size: 16px;
+            margin-bottom: 25px;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 8px 0;
+            font-size: 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: var(--text-gray);
+        }
+
+        .feature-list i {
+            font-size: 14px;
+            margin-top: 3px;
+            color: var(--purple-primary);
+        }
+
+        /* Detailed Features */
+        .detailed-features {
+            margin-bottom: 50px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-header h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .section-header p {
+            color: var(--text-gray);
+            font-size: 16px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .feature-item {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .feature-item:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-3px);
+        }
+
+        .feature-item-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 26px;
+            color: white;
+        }
+
+        .feature-item h4 {
+            font-size: 18px;
+            margin-bottom: 12px;
+        }
+
+        .feature-item p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            margin-bottom: 50px;
+        }
+
+        .comparison-table {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .comparison-header {
+            display: grid;
+            grid-template-columns: 1fr repeat(3, 1fr);
+            background: var(--bg-darker);
+            padding: 25px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .comparison-header h3 {
+            font-size: 18px;
+        }
+
+        .comparison-row {
+            display: grid;
+            grid-template-columns: 1fr repeat(3, 1fr);
+            padding: 20px 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            align-items: center;
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .feature-name {
+            font-weight: 500;
+        }
+
+        .feature-status {
+            text-align: center;
+        }
+
+        .feature-status i {
+            font-size: 18px;
+        }
+
+        .fa-check {
+            color: var(--purple-primary);
+        }
+
+        .fa-times {
+            color: var(--text-dim);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 50px;
+            text-align: center;
+            margin-bottom: 50px;
+            border: 2px solid var(--border-color);
+        }
+
+        .cta-section h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+
+        .cta-section p {
+            color: var(--text-gray);
+            font-size: 16px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .feature-showcase,
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-header,
+            .comparison-row {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .top-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .page-header h1 {
+                font-size: 32px;
+            }
+
+            .section-header h2 {
+                font-size: 26px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="v11.html" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="v11.html">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="v11.html#pricing">Pricing</a></li>
+            </ul>
+        </nav>
+
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1>Advanced Features</h1>
+            <p>Discover the powerful capabilities that make Letters City the most sophisticated email platform available today</p>
+        </header>
+
+        <!-- Feature Showcase -->
+        <section class="feature-showcase">
+            <div class="feature-showcase-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Advanced Security</h3>
+                <p>Military-grade encryption and privacy features to keep your communications secure.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> End-to-end encryption for all messages</li>
+                    <li><i class="fas fa-check"></i> Zero-access architecture</li>
+                    <li><i class="fas fa-check"></i> Two-factor authentication</li>
+                    <li><i class="fas fa-check"></i> Self-destructing messages</li>
+                    <li><i class="fas fa-check"></i> Advanced threat protection</li>
+                </ul>
+            </div>
+
+            <div class="feature-showcase-card">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>Smart Organization</h3>
+                <p>AI-powered tools that help you manage your inbox with unprecedented efficiency.</p>
+                <ul class="feature-list">
+                    <li><i class="fas fa-check"></i> Smart categorization and filtering</li>
+                    <li><i class="fas fa-check"></i> Priority inbox with intelligent sorting</li>
+                    <li><i class="fas fa-check"></i> Automated response suggestions</li>
+                    <li><i class="fas fa-check"></i> Smart search with natural language</li>
+                    <li><i class="fas fa-check"></i> Conversation threading</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Detailed Features -->
+        <section class="detailed-features">
+            <div class="section-header">
+                <h2>Comprehensive Feature Set</h2>
+                <p>Every tool you need for modern email communication</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <div class="feature-item-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h4>Advanced Search</h4>
+                    <p>Find anything in seconds with our powerful search capabilities inspired by Gmail.</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-item-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h4>Integrated Calendar</h4>
+                    <p>Seamless calendar integration with smart scheduling, inspired by Outlook.</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-item-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h4>Task Management</h4>
+                    <p>Turn emails into tasks and manage your workflow without leaving your inbox.</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-item-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h4>Custom Themes</h4>
+                    <p>Personalize your experience with dark and light themes, plus custom colors.</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-item-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h4>Cross-Platform Sync</h4>
+                    <p>Access your emails, contacts, and calendar from any device, anywhere.</p>
+                </div>
+
+                <div class="feature-item">
+                    <div class="feature-item-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h4>AI Assistant</h4>
+                    <p>Get smart suggestions for replies, scheduling, and organization.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Comparison Section -->
+        <section class="comparison-section">
+            <div class="section-header">
+                <h2>Feature Comparison</h2>
+                <p>See how Letters City compares to other email platforms</p>
+            </div>
+
+            <div class="comparison-table">
+                <div class="comparison-header">
+                    <h3>Feature</h3>
+                    <h3>Letters City</h3>
+                    <h3>Gmail</h3>
+                    <h3>Outlook</h3>
+                </div>
+
+                <div class="comparison-row">
+                    <div class="feature-name">End-to-End Encryption</div>
+                    <div class="feature-status"><i class="fas fa-check"></i></div>
+                    <div class="feature-status"><i class="fas fa-times"></i></div>
+                    <div class="feature-status"><i class="fas fa-times"></i></div>
+                </div>
+
+                <div class="comparison-row">
+                    <div class="feature-name">Custom Domain</div>
+                    <div class="feature-status"><i class="fas fa-check"></i></div>
+                    <div class="feature-status"><i class="fas fa-check"></i></div>
+                    <div class="feature-status"><i class="fas fa-check"></i></div>
+                </div>
+
+                <div class="comparison-row">
+                    <div class="feature-name">AI-Powered Organization</div>
+                    <div class="feature-status"><i class="fas fa-check"></i></div>
+                    <div class="feature-status"><i class="fas fa-check"></i></div>
+                    <div class="feature-status"><i class="fas fa-times"></i></div>
+                </div>
+
+                <div class="comparison-row">
+                    <div class="feature-name">Self-Destructing Messages</div>
+                    <div class="feature-status"><i class="fas fa-check"></i></div>
+                    <div class="feature-status"><i class="fas fa-times"></i></div>
+                    <div class="feature-status"><i class="fas fa-times"></i></div>
+                </div>
+
+                <div class="comparison-row">
+                    <div class="feature-name">Unlimited Storage</div>
+                    <div class="feature-status"><i class="fas fa-check"></i></div>
+                    <div class="feature-status"><i class="fas fa-times"></i></div>
+                    <div class="feature-status"><i class="fas fa-times"></i></div>
+                </div>
+
+                <div class="comparison-row">
+                    <div class="feature-name">Priority Customer Support</div>
+                    <div class="feature-status"><i class="fas fa-check"></i></div>
+                    <div class="feature-status"><i class="fas fa-times"></i></div>
+                    <div class="feature-status"><i class="fas fa-check"></i></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <h2>Ready to Experience Advanced Email?</h2>
+            <p>Join thousands of professionals who have upgraded their email experience with Letters City.</p>
+            <a href="v11.html#pricing" class="btn btn-primary">View Pricing Plans</a>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising performance.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="v11.html#pricing">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.feature-showcase-card, .feature-item').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 40px rgba(168, 85, 247, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

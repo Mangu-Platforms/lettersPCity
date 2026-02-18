@@ -1,0 +1,985 @@
+V1
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Aliases | Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        .top-nav-links a.active {
+            color: var(--orange-accent);
+            border-bottom: 2px solid var(--orange-accent);
+        }
+
+        /* Main Header */
+        .main-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .city-logo {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 2px solid var(--orange-accent);
+            border-radius: 50px;
+            margin-bottom: 12px;
+        }
+
+        .city-logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .tagline {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--orange-accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 140, 0, 0.1);
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-header h2 {
+            font-size: 28px;
+        }
+
+        .page-header p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* Welcome Section */
+        .welcome-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .welcome-section h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .welcome-section p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* Feature Cards Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-3px);
+        }
+
+        .feature-card.with-image {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .feature-image {
+            flex: 1;
+            background: linear-gradient(135deg, #1e3a5f, #2d5a8f);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .feature-image i {
+            font-size: 50px;
+            color: #64b5f6;
+            margin-bottom: 15px;
+        }
+
+        .feature-image h3 {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 8px;
+        }
+
+        .feature-image p {
+            font-size: 13px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .feature-content {
+            flex: 1;
+        }
+
+        .feature-content h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .feature-content p {
+            color: var(--text-gray);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .feature-content ul {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .feature-content li {
+            color: var(--text-gray);
+            font-size: 13px;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .feature-content li:before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--purple-primary);
+        }
+
+        /* Alias Builder */
+        .alias-builder {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .alias-builder h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-darker);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+            box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.2);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+
+        .input-group .form-control {
+            flex: 1;
+        }
+
+        .domain-select {
+            background: var(--bg-darker);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: var(--text-light);
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .domain-select:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+        }
+
+        .toggle-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .toggle-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bg-darker);
+            transition: .4s;
+            border-radius: 34px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 3px;
+            background-color: var(--text-gray);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--purple-primary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+            background-color: white;
+        }
+
+        /* Aliases List */
+        .aliases-list {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .aliases-list h3 {
+            font-size: 22px;
+            margin-bottom: 25px;
+        }
+
+        .alias-item {
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .alias-item:hover {
+            border-color: var(--orange-accent);
+        }
+
+        .alias-item.active {
+            border-color: var(--orange-accent);
+            background: rgba(255, 140, 0, 0.05);
+        }
+
+        .alias-info h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .alias-info p {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        .alias-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            background: transparent;
+            color: var(--text-gray);
+        }
+
+        .action-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+        }
+
+        .action-btn.edit:hover {
+            color: var(--purple-primary);
+        }
+
+        .action-btn.delete:hover {
+            color: var(--pink-accent);
+        }
+
+        .alias-stats {
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            text-align: center;
+        }
+
+        .quick-actions h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .quick-actions p {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .action-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .action-card {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+
+        .action-card:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-5px);
+        }
+
+        .action-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 22px;
+            color: white;
+        }
+
+        .action-card h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .action-card p {
+            font-size: 13px;
+            color: var(--text-gray);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .features-grid,
+            .footer-content,
+            .action-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-card.with-image {
+                flex-direction: column;
+            }
+
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .top-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .alias-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .alias-actions {
+                align-self: flex-end;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="v11.html" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="v11.html">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#" class="active">Email Aliases</a></li>
+            </ul>
+        </nav>
+
+        <!-- Page Header -->
+        <header class="page-header">
+            <div>
+                <h2>Email Aliases</h2>
+                <p>Create and manage multiple email addresses that forward to your main inbox</p>
+            </div>
+            <a href="#" class="btn btn-secondary">Create New Alias</a>
+        </header>
+
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <h2>Smart Email Aliases</h2>
+            <p>Protect your primary email address and organize incoming messages with custom aliases</p>
+        </section>
+
+        <!-- Features Grid -->
+        <div class="features-grid">
+            <!-- Privacy Protection Card -->
+            <div class="feature-card with-image">
+                <div class="feature-image">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>Privacy Protection</h3>
+                    <p>Keep your real email safe</p>
+                </div>
+                <div class="feature-content">
+                    <h3>Protect Your Identity</h3>
+                    <p>Use aliases for online sign-ups and services to keep your primary email address private and secure.</p>
+                    <ul>
+                        <li>Prevent spam and unwanted emails</li>
+                        <li>Reduce risk of data breaches</li>
+                        <li>Easy to disable if needed</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Organization Card -->
+            <div class="feature-card with-image">
+                <div class="feature-image" style="background: linear-gradient(135deg, #2d3748, #1a202c);">
+                    <i class="fas fa-tags" style="color: #f6ad55;"></i>
+                    <h3>Organization</h3>
+                    <p>Categorize your emails</p>
+                </div>
+                <div class="feature-content">
+                    <h3>Organize Your Inbox</h3>
+                    <p>Create aliases for different purposes to automatically categorize and filter incoming messages.</p>
+                    <ul>
+                        <li>Work vs personal emails</li>
+                        <li>Newsletters and subscriptions</li>
+                        <li>Online shopping and services</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <section class="quick-actions">
+            <h3>Quick Actions</h3>
+            <p>Common tasks for managing your email aliases</p>
+            <div class="action-cards">
+                <div class="action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <h4>Create Alias</h4>
+                    <p>Generate a new email alias instantly</p>
+                </div>
+                <div class="action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-random"></i>
+                    </div>
+                    <h4>Random Alias</h4>
+                    <p>Create a randomized alias for maximum privacy</p>
+                </div>
+                <div class="action-card">
+                    <div class="action-icon">
+                        <i class="fas fa-filter"></i>
+                    </div>
+                    <h4>Filter Rules</h4>
+                    <p>Set up rules for incoming alias emails</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Alias Builder -->
+        <section class="alias-builder">
+            <h3>Create New Email Alias</h3>
+            <div class="form-group">
+                <label for="alias-name">Alias Name</label>
+                <div class="input-group">
+                    <input type="text" id="alias-name" class="form-control" placeholder="e.g., newsletter">
+                    <select class="domain-select">
+                        <option>@letters.city</option>
+                        <option>@secure.letters</option>
+                        <option>@mymail.ltrs</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="alias-description">Description (Optional)</label>
+                <input type="text" id="alias-description" class="form-control" placeholder="e.g., For newsletter subscriptions">
+            </div>
+            
+            <div class="toggle-group">
+                <span class="toggle-label">Forward to primary email</span>
+                <label class="toggle">
+                    <input type="checkbox" checked>
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            
+            <div class="toggle-group">
+                <span class="toggle-label">Enable auto-reply</span>
+                <label class="toggle">
+                    <input type="checkbox">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+            
+            <button class="btn btn-primary">Create Alias</button>
+        </section>
+
+        <!-- Aliases List -->
+        <section class="aliases-list">
+            <h3>Your Email Aliases</h3>
+            
+            <div class="alias-item active">
+                <div class="alias-info">
+                    <h4>newsletter@letters.city</h4>
+                    <p>For newsletter subscriptions • Created: 2 months ago</p>
+                    <div class="alias-stats">
+                        <div class="stat"><i class="fas fa-envelope"></i> 42 emails received</div>
+                        <div class="stat"><i class="fas fa-filter"></i> Auto-tagged: Newsletters</div>
+                    </div>
+                </div>
+                <div class="alias-actions">
+                    <button class="action-btn edit"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="action-btn delete"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+            
+            <div class="alias-item">
+                <div class="alias-info">
+                    <h4>shopping@secure.letters</h4>
+                    <p>For online shopping • Created: 1 month ago</p>
+                    <div class="alias-stats">
+                        <div class="stat"><i class="fas fa-envelope"></i> 18 emails received</div>
+                        <div class="stat"><i class="fas fa-filter"></i> Auto-tagged: Shopping</div>
+                    </div>
+                </div>
+                <div class="alias-actions">
+                    <button class="action-btn edit"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="action-btn delete"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+            
+            <div class="alias-item">
+                <div class="alias-info">
+                    <h4>work@letters.city</h4>
+                    <p>For professional contacts • Created: 3 weeks ago</p>
+                    <div class="alias-stats">
+                        <div class="stat"><i class="fas fa-envelope"></i> 67 emails received</div>
+                        <div class="stat"><i class="fas fa-filter"></i> Auto-tagged: Work</div>
+                    </div>
+                </div>
+                <div class="alias-actions">
+                    <button class="action-btn edit"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="action-btn delete"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+            
+            <div class="alias-item">
+                <div class="alias-info">
+                    <h4>social@mymail.ltrs</h4>
+                    <p>For social media accounts • Created: 1 week ago</p>
+                    <div class="alias-stats">
+                        <div class="stat"><i class="fas fa-envelope"></i> 5 emails received</div>
+                        <div class="stat"><i class="fas fa-filter"></i> Auto-tagged: Social</div>
+                    </div>
+                </div>
+                <div class="alias-actions">
+                    <button class="action-btn edit"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="action-btn delete"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising performance.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.feature-card, .alias-item, .action-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 40px rgba(168, 85, 247, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Toggle alias activation
+        document.querySelectorAll('.alias-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                // Don't toggle if clicking action buttons
+                if (!e.target.closest('.alias-actions')) {
+                    document.querySelectorAll('.alias-item').forEach(i => {
+                        i.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        // Generate random alias
+        document.querySelector('.action-card:nth-child(2)').addEventListener('click', function() {
+            const prefixes = ['secure', 'private', 'anon', 'masked', 'hidden'];
+            const suffixes = ['user', 'mail', 'contact', 'id', 'address'];
+            const domains = ['@letters.city', '@secure.letters', '@mymail.ltrs'];
+            
+            const randomPrefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+            const randomSuffix = suffixes[Math.floor(Math.random() * suffixes.length)];
+            const randomDomain = domains[Math.floor(Math.random() * domains.length)];
+            const randomNum = Math.floor(Math.random() * 1000);
+            
+            const randomAlias = `${randomPrefix}${randomSuffix}${randomNum}${randomDomain}`;
+            
+            document.getElementById('alias-name').value = randomAlias.split('@')[0];
+            document.getElementById('alias-description').value = 'Random alias for privacy';
+            
+            // Scroll to alias builder
+            document.querySelector('.alias-builder').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>

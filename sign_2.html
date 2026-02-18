@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mangu Mail - Revolutionary Email Experience</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            },
+            secondary: {
+              50: '#f5f3ff',
+              100: '#ede9fe',
+              200: '#ddd6fe',
+              300: '#c4b5fd',
+              400: '#a78bfa',
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9',
+              800: '#5b21b6',
+              900: '#4c1d95',
+            }
+          },
+          animation: {
+            'float': 'float 6s ease-in-out infinite',
+            'ai-pulse': 'ai-pulse 3s ease-in-out infinite',
+            'fadeIn': 'fadeIn 0.3s ease-in',
+            'slideUp': 'slideUp 0.3s ease-out',
+            'particle-float': 'particle-float 15s infinite linear',
+            'glow': 'glow 2s infinite alternate',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    :root {
+      --bg-dark: #0a0a0f;
+      --bg-darker: #05050a;
+      --bg-card: #16161f;
+      --bg-card-hover: #1d1d28;
+      --text-light: #ffffff;
+      --text-gray: #8b8b92;
+      --text-dim: #5a5a64;
+      --purple-primary: #a855f7;
+      --purple-dark: #7c3aed;
+      --purple-light: #c084fc;
+      --pink-accent: #ec4899;
+      --orange-accent: #ff8c00;
+      --border-color: rgba(168, 85, 247, 0.3);
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      --glow: 0 0 15px rgba(168, 85, 247, 0.4);
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    
+    .gradient-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+    .gradient-secondary { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+    .gradient-success { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+    .gradient-warning { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+    
+    .glass-effect {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .floating-action {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      box-shadow: 0 8px 32px rgba(102, 126, 234, 0.4);
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .ai-glow {
+      box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+      animation: ai-pulse 3s ease-in-out infinite;
+    }
+    
+    @keyframes ai-pulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(147, 51, 234, 0.3); }
+      50% { box-shadow: 0 0 30px rgba(147, 51, 234, 0.6); }
+    }
+    
+    .attention-marketplace {
+      background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+      border: 2px solid #f6ad55;
+    }
+    
+    .voice-note-player {
+      background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+    }
+    
+    .selected-email {
+      border-left: 4px solid #7c3aed;
+      background-color: #f5f3ff;
+    }
+    
+    .dark .selected-email {
+      background-color: rgba(55, 48, 163, 0.2);
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.3s ease-in;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .slide-up {
+      animation: slideUp 0.3s ease-out;
+    }
+    
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    
+    .gradient-button {
+      background-image: linear-gradient(to right, #7c3aed, #6366f1);
+      transition: all 0.3s ease;
+    }
+    
+    .gradient-button:hover {
+      background-image: linear-gradient(to right, #6d28d9, #4446e5);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+    }
+    
+    .sidebar-gradient {
+      background-image: linear-gradient(to bottom, #7c3aed, #6366f1);
+    }
+    
+    .dark .sidebar-gradient {
+      background-image: linear-gradient(to bottom, #4c1d95, #3730a3);
+    }
+    
+    .smart-label {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 9999px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      margin-right: 6px;
+    }
+    
+    .label-work {
+      background-color: #e0f2fe;
+      color: #0369a1;
+    }
+    
+    .label-personal {
+      background-color: #ede9fe;
+      color: #5b21b6;
+    }
+    
+    .label-update {
+      background-color: #dcfce7;
+      color: #166534;
+    }
+    
+    .label-urgent {
+      background-color: #fee2e2;
+      color: #b91c1c;
+    }
+    
+    .label-social {
+      background-color: #ffedd5;
+      color: #c2410c;
+    }
+    
+    .dark .label-work {
+      background-color: #0c4a6e;
+      color: #bae6fd;
+    }
+    
+    .dark .label-personal {
+      background-color: #4c1d95;
+      color: #ddd6fe;
+    }
+    
+    .dark .label-update {
+      background-color: #14532d;
+      color: #bbf7d0;
+    }
+    
+    .dark .label-urgent {
+      background-color: #7f1d1d;
+      color: #fecaca;
+    }
+    
+    .dark .label-social {
+      background-color: #7c2d12;
+      color: #fed7aa;
+    }
+    
+    /* Particles Background */
+    .particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+    
+    .particle {
+      position: absolute;
+      background: var(--purple-primary);
+      border-radius: 50%;
+      opacity: 0.3;
+      animation: particle-float 15s infinite linear;
+    }
+    
+    @keyframes particle-float {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+      }
+      100% {
+        transform: translateY(-100vh) translateX(100px) rotate(360deg);
+      }
+    }
+    
+    /* Modern UI Enhancements */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+    }
+    
+    .dark .glass-card {
+      background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .hover-glow:hover {
+      box-shadow: 0 0 15px rgba(124, 58, 237, 0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .glowing-border {
+      border: 1px solid rgba(124, 58, 237, 0.3);
+      box-shadow: 0 0 10px rgba(124, 58, 237, 0.2);
+    }
+    
+    @keyframes glow {
+      0% { box-shadow: 0 0 5px rgba(124, 58, 237, 0.5); }
+      100% { box-shadow: 0 0 20px rgba(124, 58, 237, 0.8); }
+    }
+    
+    .ai-response-bubble {
+      background: linear-gradient(135deg, #7c3aed, #6366f1);
+      color: white;
+      border-radius: 18px;
+      padding: 12px 16px;
+      max-width: 80%;
+      margin: 8px 0;
+      animation: slideUp 0.3s ease-out;
+    }
+    
+    .user-message-bubble {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 18px;
+      padding: 12px 16px;
+      max-width: 80%;
+      margin: 8px 0;
+      margin-left: auto;
+      animation: slideUp 0.3s ease-out;
+    }
+    
+    .dark .user-message-bubble {
+      background: rgba(255, 255, 255, 0.05);
+    }
+    
+    .sentiment-indicator {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 6px;
+    }
+    
+    .sentiment-positive { background-color: #10b981; }
+    .sentiment-neutral { background-color: #f59e0b; }
+    .sentiment-negative { background-color: #ef4444; }
+    
+    .burning-email {
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .burning-email::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(transparent, rgba(255, 100, 100, 0.3));
+      animation: burnEffect 2s infinite linear;
+      z-index: 1;
+    }
+    
+    @keyframes burnEffect {
+      0% { opacity: 0.3; }
+      50% { opacity: 0.6; }
+      100% { opacity: 0.3; }
+    }
+    
+    .ephemeral-badge {
+      background: linear-gradient(45deg, #6a11cb, #2575fc);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: bold;
+    }
+    
+    .nft-badge {
+      background: linear-gradient(45deg, #8e2de2, #4a00e0);
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: bold;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .voice-wave {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      height: 24px;
+    }
+    
+    .voice-bar {
+      width: 4px;
+      background-color: #7c3aed;
+      border-radius: 2px;
+      animation: voicePulse 1.2s infinite ease-in-out;
+    }
+    
+    .voice-bar:nth-child(1) { animation-delay: 0s; height: 8px; }
+    .voice-bar:nth-child(2) { animation-delay: 0.2s; height: 14px; }
+    .voice-bar:nth-child(3) { animation-delay: 0.4s; height: 18px; }
+    .voice-bar:nth-child(4) { animation-delay: 0.6s; height: 14px; }
+    .voice-bar:nth-child(5) { animation-delay: 0.8s; height: 8px; }
+    
+    @keyframes voicePulse {
+      0%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(0.5); }
+    }
+  </style>
+</head>
+<body class="h-screen flex flex-col bg-slate-50 font-sans text-slate-800 dark:bg-slate-900 dark:text-slate-200 overflow-hidden">
+  <!-- Particles Background -->
+  <div class="particles" id="particles"></div>
+  
+  <!-- AI Assist Bubble -->
+  <div class="fixed bottom-6 right-6 z-50">
+    <div class="floating-action w-16 h-16 rounded-full text-white shadow-2xl flex items-center justify-center cursor-pointer ai-glow" onclick="toggleAIAssist()">
+      <i class="fas fa-magic text-xl"></i>
+    </div>
+  </div>
+
+  <!-- Top Bar -->
+  <header class="h-16 bg-white border-b flex items-center px-6 justify-between shadow-sm dark:bg-slate-800 dark:border-slate-700 relative z-10">
+    <div class="flex items-center space-x-3">
+      <span class="material-icons text-3xl text-indigo-600 dark:text-indigo-400">mail_outline</span>
+      <h1 class="text-2xl font-bold text-slate-900 dark:text-white">Mangu Mail</h1>
+      <span class="text-xs bg-indigo-100 text-indigo-800 rounded-full px-2 py-1 ml-2 dark:bg-indigo-900 dark:text-indigo-100">Revolutionary Email</span>
+    </div>
+    
+    <!-- Search Bar -->
+    <div class="relative flex-1 max-w-xl mx-6">
+      <span class="material-icons absolute left-3 top-2.5 text-slate-400 dark:text-slate-500">search</span>
+      <input type="text" placeholder="Search mail, contacts, docs..." 
+             class="w-full pl-10 pr-4 py-2 rounded-full bg-slate-100 border border-slate-200 focus:ring-2 focus:ring-indigo-300 focus:bg-white transition-all dark:bg-slate-700 dark:border-slate-600 dark:text-white dark:focus:bg-slate-600" />
+    </div>
+    
+    <div class="flex items-center space-x-4">
+      <button id="theme-toggle" class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700">
+        <span id="theme-icon" class="material-icons">dark_mode</span>
+      </button>
+      <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 relative">
+        <span class="material-icons text-slate-600 dark:text-slate-300">notifications_none</span>
+        <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+      </button>
+      <button class="w-9 h-9 flex items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-700" onclick="showView('settings')">
+        <span class="material-icons text-slate-600 dark:text-slate-300">settings</span>
+      </button>
+      <div class="social-ring">
+        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-600 cursor-pointer dark:bg-slate-700 dark:text-slate-300" onclick="showView('profile')">
+          <i class="fas fa-user"></i>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+    <!-- Sidebar -->
+    <aside class="w-60 sidebar-gradient text-white flex flex-col shadow-lg z-20 dark:bg-gradient-to-b dark:from-indigo-900 dark:to-purple-900">
+      <header class="h-16 flex items-center px-6 text-xl font-bold tracking-tight">
+        <span class="material-icons mr-2">mail</span> Mangu
+      </header>
+      
+      <nav class="flex-1 overflow-y-auto px-2 space-y-1 text-sm font-medium mt-4">
+        <a href="#" class="nav-item active flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('inbox')">
+          <span class="material-icons">inbox</span> Inbox
+          <span class="ml-auto text-xs bg-white/20 rounded-full px-2">24</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('starred')">
+          <span class="material-icons">star</span> Starred
+          <span class="ml-auto text-xs bg-white/20 rounded-full px-2">5</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('ephemeral')">
+          <span class="material-icons">hourglass_top</span> Ephemeral
+          <span class="ml-auto text-xs bg-white/20 rounded-full px-2">3</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('sent')">
+          <span class="material-icons">send</span> Sent
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('workflows')">
+          <i class="fas fa-bolt w-5"></i>
+          <span>AI Workflows</span>
+          <span class="ml-auto ai-glow text-xs px-2 py-1 bg-purple-500 rounded-full">NEW</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('aliases')">
+          <i class="fas fa-user-secret w-5"></i>
+          <span>Email Aliases</span>
+          <span class="ml-auto text-xs bg-white/20 rounded-full px-2">5</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('kanban')">
+          <i class="fas fa-columns w-5"></i>
+          <span>Kanban Board</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('marketplace')">
+          <i class="fas fa-store w-5"></i>
+          <span>Marketplace</span>
+          <span class="ml-auto text-xs px-2 py-1 bg-yellow-500 rounded-full">💰</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('social-graph')">
+          <i class="fas fa-heart w-5"></i>
+          <span>Social Graph</span>
+        </a>
+        <a href="#" class="nav-item flex items-center px-4 py-3 rounded-lg gap-3 hover-glow" onclick="showView('social-feed')">
+          <i class="fas fa-users w-5"></i>
+          <span>Social Feed</span>
+          <span class="ml-auto text-xs bg-white/20 rounded-full px-2">12</span>
+        </a>
+        
+        <section class="mt-6 px-2">
+          <div class="flex justify-between items-center mb-2">
+            <h3 class="uppercase text-xs opacity-80">Channels</h3>
+            <button class="text-xs opacity-80 hover:opacity-100">+ Add</button>
+          </div>
+          <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer hover-glow" onclick="showView('project-phoenix')">
+            <span class="material-icons">groups</span>
+            <span>Project Phoenix</span>
+          </div>
+          <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer hover-glow" onclick="showView('design-guild')">
+            <span class="material-icons">palette</span>
+            <span>Design Guild</span>
+          </div>
+          <div class="channel-pill flex items-center gap-2 px-4 py-2.5 rounded-md cursor-pointer hover-glow" onclick="showView('marketing-team')">
+            <span class="material-icons">campaign</span>
+            <span>Marketing Team</span>
+          </div>
+        </section>
+      </nav>
+      
+      <button onclick="toggleCompose()" class="m-4 flex items-center justify-center bg-white text-slate-900 font-semibold rounded-xl h-12 gap-2 hover:shadow-lg transition-shadow dark:bg-slate-800 dark:text-white hover-glow">
+        <span class="material-icons">add</span> Compose
+      </button>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 grid grid-cols-12 overflow-hidden relative">
+      <!-- Inbox View -->
+      <section id="inbox-view" class="col-span-12 flex flex-col">
+        <!-- Focused Inbox Tabs -->
+        <div class="flex border-b dark:border-slate-700 bg-white dark:bg-slate-800">
+          <button class="flex-1 py-3 text-center focused-tab active hover:bg-slate-100 dark:hover:bg-slate-700" onclick="switchInboxTab('all')">All</button>
+          <button class="flex-1 py-3 text-center focused-tab hover:bg-slate-100 dark:hover:bg-slate-700" onclick="switchInboxTab('focused')">Focused</button>
+          <button class="flex-1 py-3 text-center focused-tab hover:bg-slate-100 dark:hover:bg-slate-700" onclick="switchInboxTab('other')">Other</button>
+          <button class="flex-1 py-3 text-center focused-tab hover:bg-slate-100 dark:hover:bg-slate-700" onclick="switchInboxTab('social')">Social</button>
+        </div>
+
+        <!-- Workflow Cards -->
+        <div class="p-4 space-y-3 border-b bg-slate-50/80 backdrop-blur-sm dark:bg-slate-800/80 dark:border-slate-700">
+          <div class="workflow-card glass-card px-4 py-3 shadow-sm slide-up">
+            <div class="flex items-center justify-between">
+              <h4 class="font-semibold text-slate-900 dark:text-white mb-1">Review Quarterly Report</h4>
+              <span class="material-icons text-indigo-500">auto_awesome</span>
+            </div>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">The Q3 financial report is ready for your review before sending to stakeholders.</p>
+            <div class="flex gap-2">
+              <button class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs hover:bg-indigo-700">Review</button>
+              <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">Schedule</button>
+              <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">Share</button>
+            </div>
+          </div>
+
+          <div class="workflow-card glass-card px-4 py-3 shadow-sm slide-up">
+            <h4 class="font-semibold text-slate-900 dark:text-white mb-1">Team Meeting Follow-up</h4>
+            <p class="text-sm text-slate-600 dark:text-slate-300 mb-2">Action items from yesterday's leadership meeting need assignment.</p>
+            <div class="flex gap-2">
+              <button class="px-3 py-1.5 bg-indigo-600 text-white rounded-lg text-xs hover:bg-indigo-700">Assign</button>
+              <button class="px-3 py-1.5 border border-slate-200 rounded-lg text-xs hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700">Postpone</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email List -->
+        <div class="flex-1 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-700 email-list-container">
+          <!-- Emails rendered dynamically -->
+        </div>
+      </section>
+      
+      <!-- Starred View -->
+      <section id="starred-view" class="col-span-12 hidden flex flex-col">
+        <div class="flex border-b dark:border-slate-700">
+          <div class="flex-1 py-3 text-center bg-gradient-to-r from-amber-500 to-yellow-500 text-white">
+            Starred Messages
+          </div>
+        </div>
+        <div class="flex-1 overflow-y-auto divide-y divide-slate-100 dark:divide-slate-700 email-list-container">
+          <!-- Starred emails rendered dynamically -->
+        </div>
+      </section>
+      
+      <!-- Marketplace View -->
+      <section id="marketplace-view" class="col-span-12 hidden p-6 overflow-y-auto">
+        <div class="max-w-6xl mx-auto">
+          <div class="flex justify-between items-center mb-8">
+            <div>
+              <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Attention Marketplace</h2>
+              <p class="text-slate-600 dark:text-slate-400">Pay to prioritize and earn for your attention</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="bg-indigo-100 dark:bg-indigo-900/50 rounded-full px-4 py-2 text-indigo-800 dark:text-indigo-200">
+                Balance: $<span id="marketplace-balance">327.50</span>
+              </div>
+              <button id="claim-earnings" class="px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl hover:opacity-90 transition-opacity">
+                Claim Earnings
+              </button>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- Stake Form -->
+            <div class="lg:col-span-2 glass-card p-6 shadow-lg">
+              <h3 class="text-lg font-semibold text-slate-900 mb-4 dark:text-white">Create New Stake</h3>
+              <form id="stake-form" class="space-y-4">
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1 dark:text-slate-300">Recipient Email</label>
+                  <input type="email" id="stake-recipient" required class="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-300 dark:bg-slate-700 dark:border-slate-600 dark:text-white" placeholder="recipient@example.com">
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1 dark:text-slate-300">Amount ($)</label>
+                    <input type="number" id="stake-amount" min="1" max="100" step="0.5" required class="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-300 dark:bg-slate-700 dark:border-slate-600 dark:text-white" placeholder="5.00">
+                  </div>
+                  <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1 dark:text-slate-300">Priority Level</label>
+                    <select class="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-300 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+                      <option>Standard (1-2 days)</option>
+                      <option>Urgent (4-8 hours)</option>
+                      <option>Critical (1 hour)</option>
+                    </select>
+                  </div>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-slate-700 mb-1 dark:text-slate-300">Message</label>
+                  <textarea required class="w-full bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-300 h-32 resize-none dark:bg-slate-700 dark:border-slate-600 dark:text-white" placeholder="Why this deserves attention..."></textarea>
+                </div>
+                <button type="submit" class="w-full gradient-button px-4 py-3 rounded-lg text-white shadow-lg font-semibold">
+                  Stake & Send
+                </button>
+              </form>
+            </div>
+
+            <!-- Stats & Leaderboard -->
+            <div class="space-y-6">
+              <!-- Earnings Stats -->
+              <div class="glass-card p-6 shadow-lg">
+                <h3 class="text-lg font-semibold text-slate-900 mb-4 dark:text-white">Your Earnings</h3>
+                <div class="space-y-3">
+                  <div class="flex justify-between items-center">
+                    <span class="text-slate-600 dark:text-slate-300">Today</span>
+                    <span class="font-semibold text-green-600">$15.50</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-slate-600 dark:text-slate-300">This Week</span>
+                    <span class="font-semibold text-green-600">$87.25</span>
+                  </div>
+                  <div class="flex justify-between items-center">
+                    <span class="text-slate-600 dark:text-slate-300">This Month</span>
+                    <span class="font-semibold text-green-600">$327.50</span>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Leaderboard -->
+              <div class="glass-card shadow-lg overflow-hidden">
+                <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-4 text-white">
+                  <h3 class="text-lg font-semibold">Top Earners</h3>
+                </div>
+                <div id="leaderboard" class="divide-y divide-slate-200 dark:divide-slate-700">
+                  <!-- Filled dynamically -->
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Pending Stakes -->
+          <div class="mt-8">
+            <h3 class="text-lg font-semibold text-slate-900 mb-4 dark:text-white">Your Active Stakes</h3>
+            <div id="pending-stakes" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <!-- Filled dynamically -->
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Social Graph View -->
+      <section id="social-graph-view" class="col-span-12 hidden flex flex-col p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-8">
+          <div>
+            <h2 class="text-2xl font-bold text-slate-900 dark:text-white">Your Social Graph</h2>
+            <p class="text-slate-600 dark:text-slate-400">Visualize your professional relationships</p>
+          </div>
+          <div class="flex gap-3">
+            <button class="px-4 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors">
+              <i class="fas fa-sync mr-2"></i>
+              Refresh
+            </button>
+            <button class="px-4 py-2 border border-slate-200 rounded-xl hover:bg-slate-50 transition-colors dark:border-slate-600 dark:hover:bg-slate-700">
+              <i class="fas fa-filter mr-2"></i>
+              Filter
+            </button>
+          </div>
+        </div>
+        
+        <div class="glass-card p-6 flex-1 relative overflow-hidden">
+          <div class="absolute inset-0">
+            <svg width="100%" height="100%" class="absolute inset-0">
+              <line x1="20%" y1="30%" x2="40%" y2="50%" class="social-connection" stroke="rgba(124, 58, 237, 0.5)" stroke-width="2"></line>
+              <line x1="20%" y1="30%" x2="60%" y2="40%" class="social-connection" stroke="rgba(124, 58, 237, 0.5)" stroke-width="2"></line>
+              <line x1="40%" y1="50%" x2="60%" y2="40%" class="social-connection" stroke="rgba(124, 58, 237, 0.5)" stroke-width="2"></line>
+              <line x1="60%" y1="40%" x2="70%" y2="60%" class="social-connection" stroke="rgba(124, 58, 237, 0.5)" stroke-width="2"></line>
+              <line x1="70%" y1="60%" x2="50%" y2="70%" class="social-connection" stroke="rgba(124, 58, 237, 0.5)" stroke-width="2"></line>
+            </svg>
+            
+            <div class="social-node absolute w-16 h-16 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xl" style="top: 30%; left: 20%;">
+              You
+            </div>
+            
+            <div class="social-node absolute w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white font-bold text-lg" style="top: 50%; left: 40%;">
+              MC
+            </div>
+            
+            <div class="social-node absolute w-14 h-14 rounded-full bg-gradient-to-br from-pink-500 to-rose-400 flex items-center justify-center text-white font-bold text-lg" style="top: 40%; left: 60%;">
+              SW
+            </div>
+            
+            <div class="social-node absolute w-14 h-14 rounded-full bg-gradient-to-br from-yellow-500 to-amber-400 flex items-center justify-center text-white font-bold text-lg" style="top: 60%; left: 70%;">
+              DP
+            </div>
+            
+            <div class="social-node absolute w-14 h-14 rounded-full bg-gradient-to-br from-green-500 to-emerald-400 flex items-center justify-center text-white font-bold text-lg" style="top: 70%; left: 50%;">
+              LZ
+            </div>
+          </div>
+          
+          <div class="absolute bottom-6 left-6 glass-card p-4 rounded-xl shadow">
+            <h3 class="font-semibold mb-2 dark:text-white">Connection Insights</h3>
+            <p class="text-sm text-slate-600 dark:text-slate-300">You have <span class="font-semibold">24 connections</span> across <span class="font-semibold">5 companies</span>. Your strongest connection is with Michael Chen (12 interactions last month).</p>
+          </div>
+        </div>
+      </section>
+      
+      <!-- Email Detail View -->
+      <section id="email-detail" class="col-span-8 flex flex-col glass-card">
+        <div id="empty-state" class="flex items-center justify-center h-full text-slate-400 dark:text-slate-500">
+          <div class="text-center">
+            <span class="material-icons text-5xl mb-4">drafts</span>
+            <p class="text-xl font-light">Select an email to view</p>
+            <p class="text-slate-500 dark:text-slate-500 mt-2">Your messages will appear here</p>
+          </div>
+        </div>
+
+        <div id="email-content" class="hidden flex-col h-full fade-in">
+          <header class="h-16 flex items-center justify-between border-b px-6 dark:border-slate-700">
+            <h2 id="email-subject" class="font-semibold text-lg text-slate-900 dark:text-white"></h2>
+            <div class="flex gap-1">
+              <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+                <span class="material-icons text-slate-600 dark:text-slate-300">archive</span>
+              </button>
+              <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+                <span class="material-icons text-slate-600 dark:text-slate-300">delete</span>
+              </button>
+              <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+                <span class="material-icons text-slate-600 dark:text-slate-300">send</span>
+              </button>
+              <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700" title="Burner Thread">
+                <span class="material-icons text-slate-600 dark:text-slate-300">shield</span>
+              </button>
+            </div>
+          </header>
+
+          <article class="flex-1 overflow-y-auto p-8 space-y-6 dark:text-slate-300">
+            <section class="space-y-1">
+              <p id="email-sender" class="font-medium text-slate-900 dark:text-white"></p>
+              <p class="text-xs text-slate-500 dark:text-slate-400">To: You • Today at 10:24 AM</p>
+              <div class="flex gap-2 mt-2">
+                <span class="smart-label label-work">Work</span>
+                <span class="smart-label label-update">Update</span>
+                <span class="nft-badge">
+                  <span class="material-icons text-xs">verified</span>
+                  NFT Verified
+                </span>
+              </div>
+            </section>
+
+            <div class="py-6">
+              <div class="ai-glow rounded-2xl p-4 mb-6 bg-gradient-to-r from-purple-50 to-indigo-50 dark:bg-slate-700/50">
+                <div class="flex items-center gap-2 mb-2">
+                  <i class="fas fa-robot text-purple-500"></i>
+                  <h3 class="font-semibold text-slate-900 dark:text-white">AI Summary</h3>
+                </div>
+                <div id="ai-summary"></div>
+              </div>
+              
+              <p id="email-body" class="leading-relaxed text-slate-700 dark:text-slate-300"></p>
+            </div>
+
+            <div id="email-attachments" class="flex gap-2"></div>
+            <div id="email-thread" class="mt-8 space-y-4"></div>
+
+            <div class="mt-8 flex gap-3 flex-wrap">
+              <button class="gradient-button px-4 py-2 rounded-lg text-white shadow">
+                Reply
+              </button>
+              <button class="px-4 py-2 border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700">
+                Forward
+              </button>
+              <button class="px-4 py-2 flex items-center gap-1 border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700">
+                <span class="material-icons text-sm">schedule</span> Send Later
+              </button>
+              <button id="morph-to-doc" class="gradient-button px-4 py-2 rounded-lg text-white shadow flex items-center gap-1">
+                <span class="material-icons text-sm">auto_awesome_motion</span> Convert to Document
+              </button>
+              <button id="record-voice-btn" class="px-4 py-2 flex items-center gap-1 border border-slate-200 rounded-lg text-slate-700 hover:bg-slate-50 dark:border-slate-700 dark:text-slate-300 dark:hover:bg-slate-700">
+                <span class="material-icons text-sm">mic</span> Voice Reply
+              </button>
+            </div>
+          </article>
+        </div>
+      </section>
+      
+      <!-- Document View -->
+      <section id="document-view" class="col-span-8 hidden flex-col glass-card">
+        <header class="h-16 flex items-center justify-between border-b px-6 dark:border-slate-700">
+          <h2 id="document-title" class="font-semibold text-lg text-slate-900 dark:text-white"></h2>
+          <div class="flex gap-1">
+            <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+              <span class="material-icons text-slate-600 dark:text-slate-300">edit</span>
+            </button>
+            <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+              <span class="material-icons text-slate-600 dark:text-slate-300">save</span>
+            </button>
+            <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700">
+              <span class="material-icons text-slate-600 dark:text-slate-300">share</span>
+            </button>
+            <button class="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700" onclick="document.getElementById('document-view').classList.add('hidden'); document.getElementById('email-content').classList.remove('hidden');">
+              <span class="material-icons text-slate-600 dark:text-slate-300">close</span>
+            </button>
+          </div>
+        </header>
+
+        <article class="flex-1 overflow-y-auto p-8 dark:text-slate-300">
+          <div id="document-content" class="document-editor prose dark:prose-invert max-w-none">
+            <!-- Filled dynamically -->
+          </div>
+        </article>
+      </section>
+      
+      <!-- AI Assist Modal -->
+      <div id="aiAssistModal" class="hidden fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
+        <div class="glass-card w-full max-w-2xl shadow-xl overflow-hidden slide-up">
+          <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-4 text-white flex justify-between items-center">
+            <div class="flex items-center gap-3">
+              <i class="fas fa-robot text-2xl"></i>
+              <h3 class="text-xl font-semibold">AI Assistant</h3>
+            </div>
+            <button onclick="toggleAIAssist()" class="material-icons hover:text-slate-200">close</button>
+          </div>
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-6">
+              <div class="ai-glow w-16 h-16 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white">
+                <i class="fas fa-robot text-2xl"></i>
+              </div>
+              <div>
+                <h4 class="font-semibold text-slate-900 dark:text-white">How can I assist you?</h4>
+                <p class="text-sm text-slate-600 dark:text-slate-400">I can help with drafting, summarizing, and more</p>
+              </div>
+            </div>
+            
+            <div class="grid grid-cols-2 gap-4">
+              <button class="text-left p-4 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors dark:bg-slate-700 dark:hover:bg-slate-600" onclick="handleAIAction('draft')">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="material-icons text-indigo-600 dark:text-indigo-400">drafts</span>
+                  <span class="font-medium">Draft a Response</span>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Generate a thoughtful reply to this email</p>
+              </button>
+              
+              <button class="text-left p-4 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors dark:bg-slate-700 dark:hover:bg-slate-600" onclick="handleAIAction('summarize')">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="material-icons text-indigo-600 dark:text-indigo-400">summarize</span>
+                  <span class="font-medium">Summarize Thread</span>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Create a concise summary of this conversation</p>
+              </button>
+              
+              <button class="text-left p-4 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors dark:bg-slate-700 dark:hover:bg-slate-600" onclick="handleAIAction('schedule')">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="material-icons text-indigo-600 dark:text-indigo-400">schedule</span>
+                  <span class="font-medium">Schedule Meeting</span>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Find available times and schedule a meeting</p>
+              </button>
+              
+              <button class="text-left p-4 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors dark:bg-slate-700 dark:hover:bg-slate-600" onclick="handleAIAction('document')">
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="material-icons text-indigo-600 dark:text-indigo-400">description</span>
+                  <span class="font-medium">Convert to Document</span>
+                </div>
+                <p class="text-sm text-slate-600 dark:text-slate-400">Transform this thread into an editable document</p>
+              </button>
+            </div>
+            
+            <div class="mt-8">
+              <h4 class="font-medium text-slate-900 mb-2 dark:text-white">Custom Request</h4>
+              <div class="flex gap-2">
+                <input type="text" placeholder="What would you like me to do?" class="flex-1 bg-slate-100 border border-slate-200 rounded-xl px-4 py-3 focus:ring-2 focus:ring-indigo-300 dark:bg-slate-700 dark:border-slate-600 dark:text-white">
+                <button class="px-4 py-3 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700">Go</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Global State Management
+    const appState = {
+      user: {
+        id: "user_123",
+        name: "Your Name",
+        email: "your.email@company.com",
+        balance: 327.50,
+        aliases: [
+          { address: "user+work@domain.com", category: "work", expiresAt: null },
+          { address: "user+shopping@domain.com", category: "shopping", expiresAt: "2023-12-31" }
+        ]
+      },
+      emails: {
+        inbox: [
+          {
+            id: "email_1",
+            sender: { name: "Alex Johnson", email: "alex.johnson@company.com" },
+            subject: "Project Update: Q3 Deliverables",
+            body: "Hi there,\n\nI wanted to provide an update on the Q3 deliverables...",
+            timestamp: "2023-07-26T10:24:00Z",
+            labels: ["work", "update"],
+            attachments: [
+              { name: "Q3_Progress_Report.pdf", size: "2.4 MB", type: "pdf" },
+              { name: "Voice_Note.mp3", size: "1.2 MB", type: "audio" }
+            ],
+            stake: 5.00,
+            thread: [
+              {
+                id: "reply_1",
+                sender: { name: "You", email: "your.email@company.com" },
+                body: "Thanks for the update Alex! The dashboard looks great...",
+                timestamp: "2023-07-26T11:30:00Z"
+              }
+            ]
+          }
+        ],
+        sent: [],
+        drafts: [],
+        starred: []
+      },
+      marketplace: {
+        stakes: [
+          { id: "stake_1", amount: 5.00, recipient: "alex.johnson@company.com", status: "accepted" },
+          { id: "stake_2", amount: 10.00, recipient: "sarah.williams@company.com", status: "pending" }
+        ],
+        earnings: { daily: 15.50, weekly: 87.25, monthly: 327.50 },
+        leaderboard: [
+          { name: "You", earnings: 327.50 },
+          { name: "Alex Johnson", earnings: 285.75 },
+          { name: "Sarah Williams", earnings: 243.20 }
+        ]
+      },
+      channels: {
+        "project-phoenix": {
+          id: "project-phoenix",
+          name: "Project Phoenix",
+          members: ["You", "Alex Johnson", "Sarah Williams"],
+          messages: [
+            { id: "msg_1", sender: "Alex Johnson", text: "Has anyone reviewed the latest design?", timestamp: "2023-07-26T10:30:00Z" },
+            { id: "msg_2", sender: "Sarah Williams", text: "I just sent feedback", timestamp: "2023-07-26T10:32:00Z" }
+          ],
+          emailAddress: "phoenix@company.com"
+        }
+      },
+      social: {
+        posts: [
+          {
+            id: "post_1",
+            author: { name: "Michael Chen", initials: "MC" },
+            content: "Just launched our new dashboard feature! 🚀 Huge thanks to the entire team...",
+            timestamp: "2023-07-25T14:30:00Z",
+            reactions: { likes: 42, comments: 7, shares: 3 }
+          }
+        ],
+        connections: 24
+      },
+      workflows: {
+        active: [
+          { id: "workflow_1", title: "Review Quarterly Report", status: "pending" }
+        ]
+      },
+      currentView: "inbox",
+      selectedEmailId: "email_1",
+      aiAssistActive: false
+    };
+
+    // Create floating particles
+    function createParticles() {
+      const particlesContainer = document.getElementById('particles');
+      const particleCount = 20;
+      
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.classList.add('particle');
+        
+        // Random properties
+        const size = Math.random() * 6 + 2;
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        const delay = Math.random() * 15;
+        const duration = Math.random() * 10 + 15;
+        const color = Math.random() > 0.5 ? 'var(--purple-primary)' : 'var(--pink-accent)';
+        
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.left = `${posX}%`;
+        particle.style.top = `${posY}%`;
+        particle.style.background = color;
+        particle.style.animationDelay = `${delay}s`;
+        particle.style.animationDuration = `${duration}s`;
+        
+        particlesContainer.appendChild(particle);
+      }
+    }
+
+    // Initialize the application
+    document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
+      renderApp();
+      initEventListeners();
+      loadInitialData();
+      createParticles();
+    });
+
+    function initTheme() {
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+        document.getElementById('theme-icon').textContent = 'light_mode';
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.getElementById('theme-icon').textContent = 'dark_mode';
+      }
+    }
+
+    function toggleTheme() {
+      document.documentElement.classList.toggle('dark');
+      if (document.documentElement.classList.contains('dark')) {
+        document.getElementById('theme-icon').textContent = 'light_mode';
+        localStorage.theme = 'dark';
+      } else {
+        document.getElementById('theme-icon').textContent = 'dark_mode';
+        localStorage.theme = 'light';
+      }
+    }
+
+    function initEventListeners() {
+      document.getElementById('theme-toggle').addEventListener('click', toggleTheme);
+      
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+          const view = e.currentTarget.getAttribute('onclick').match(/showView\('(.*)'\)/)[1];
+          showView(view);
+        });
+      });
+    }
+
+    function showView(viewName) {
+      appState.currentView = viewName;
+      document.querySelectorAll('[id$="-view"]').forEach(view => {
+        view.classList.add('hidden');
+      });
+      document.getElementById(`${viewName}-view`).classList.remove('hidden');
+      
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      const activeItem = document.querySelector(`.nav-item[onclick*="showView('${viewName}')"]`);
+      if (activeItem) activeItem.classList.add('active');
+    }
+
+    function renderApp() {
+      renderEmailList();
+      renderMarketplace();
+    }
+
+    function renderEmailList() {
+      const container = document.querySelector('.email-list-container');
+      if (!container) return;
+      
+      container.innerHTML = '';
+      
+      const emails = appState.emails[appState.currentView] || [];
+      emails.forEach(email => {
+        const row = document.createElement('div');
+        row.className = 'email-row flex flex-col gap-0.5 px-4 py-3 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800';
+        row.setAttribute('data-email-id', email.id);
+        row.onclick = () => selectEmail(email.id);
+        
+        if (appState.selectedEmailId === email.id) {
+          row.classList.add('selected-email');
+        }
+        
+        row.innerHTML = `
+          <div class="flex justify-between items-center">
+            <p class="font-medium text-slate-900 dark:text-white">${email.sender.name}</p>
+            <span class="text-xs text-slate-500 dark:text-slate-400">${new Date(email.timestamp).toLocaleTimeString()}</span>
+          </div>
+          <p class="truncate text-slate-800 font-semibold dark:text-white">${email.subject}</p>
+          <div class="flex items-center mt-1">
+            ${email.labels.map(label => `<span class="smart-label label-${label}">${label}</span>`).join('')}
+            ${email.stake ? `<div class="attention-marketplace text-xs px-2 py-1 rounded-full ml-2">$${email.stake.toFixed(2)}</div>` : ''}
+          </div>
+          <p class="text-xs text-slate-500 dark:text-slate-400 email-preview">${email.body.substring(0, 100)}...</p>
+        `;
+        container.appendChild(row);
+      });
+    }
+
+    function selectEmail(emailId) {
+      appState.selectedEmailId = emailId;
+      renderSelectedEmail();
+      
+      document.querySelectorAll('.email-row').forEach(row => {
+        row.classList.remove('selected-email');
+      });
+      const selectedRow = document.querySelector(`.email-row[data-email-id="${emailId}"]`);
+      if (selectedRow) selectedRow.classList.add('selected-email');
+    }
+
+    async function renderSelectedEmail() {
+      const email = appState.emails.inbox.find(e => e.id === appState.selectedEmailId);
+      if (!email) return;
+      
+      document.getElementById('email-content').classList.remove('hidden');
+      document.getElementById('empty-state').classList.add('hidden');
+      
+      document.getElementById('email-subject').textContent = email.subject;
+      document.getElementById('email-sender').textContent = `${email.sender.name} <${email.sender.email}>`;
+      
+      if (!email.aiSummary) {
+        email.aiSummary = await api.ai.summarize(email);
+      }
+      document.getElementById('ai-summary').innerHTML = email.aiSummary;
+      
+      document.getElementById('email-body').textContent = email.body;
+    }
+
+    function renderMarketplace() {
+      if (!document.getElementById('marketplace-view')) return;
+      
+      document.getElementById('marketplace-balance').textContent = appState.user.balance.toFixed(2);
+      
+      const stakesContainer = document.getElementById('pending-stakes');
+      stakesContainer.innerHTML = '';
+      
+      appState.marketplace.stakes.filter(s => s.status === 'pending').forEach(stake => {
+        const stakeEl = document.createElement('div');
+        stakeEl.className = 'glass-card p-4';
+        stakeEl.innerHTML = `
+          <div class="flex justify-between">
+            <div>
+              <h4 class="font-medium text-slate-900 dark:text-white">${stake.recipient}</h4>
+              <p class="text-sm text-slate-600 dark:text-slate-400">Amount: $${stake.amount.toFixed(2)}</p>
+            </div>
+            <div class="text-right">
+              <p class="text-sm text-slate-500 dark:text-slate-400">${new Date(stake.timestamp).toLocaleTimeString()}</p>
+              <span class="text-xs bg-yellow-100 text-yellow-800 rounded-full px-2 py-1 dark:bg-yellow-900/50 dark:text-yellow-200">Pending</span>
+            </div>
+          </div>
+        `;
+        stakesContainer.appendChild(stakeEl);
+      });
+    }
+
+    // API Structure
+    const api = {
+      ai: {
+        summarize: async (email) => {
+          return new Promise(resolve => setTimeout(() => {
+            const summary = `
+              <ul class="list-disc pl-5 text-slate-700 dark:text-slate-300 space-y-1 text-sm">
+                <li>Project is on track for Friday completion</li>
+                <li>API integration completed successfully</li>
+                <li>Dashboard UI finalized with design team</li>
+                <li>Minor setback with reporting module but solution identified</li>
+                <li>Action required: Review attached progress report</li>
+              </ul>
+            `;
+            resolve(summary);
+          }, 800));
+        }
+      }
+    };
+
+    async function loadInitialData() {
+      try {
+        const emails = await api.emails.fetch();
+        appState.emails = emails;
+        renderEmailList();
+        
+        const balance = await api.marketplace.getBalance();
+        appState.user.balance = balance;
+        renderMarketplace();
+      } catch (error) {
+        console.error("Error loading initial data:", error);
+      }
+    }
+
+    function toggleAIAssist() {
+      document.getElementById('aiAssistModal').classList.toggle('hidden');
+    }
+
+    async function handleAIAction(action) {
+      const email = appState.emails.inbox.find(e => e.id === appState.selectedEmailId);
+      if (!email) return;
+      
+      switch(action) {
+        case 'draft':
+          // Implement draft functionality
+          break;
+        case 'summarize':
+          email.aiSummary = await api.ai.summarize(email);
+          renderSelectedEmail();
+          break;
+        case 'schedule':
+          // Implement scheduling
+          break;
+        case 'document':
+          morphToDocument();
+          break;
+      }
+      
+      toggleAIAssist();
+    }
+
+    function toggleCompose() {
+      // Implement compose functionality
+      alert('Compose new email functionality would open here');
+    }
+  </script>
+</body>
+</html>

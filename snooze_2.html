@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signature Management - Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --cyan-accent: #00f5d4;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            --neon-glow: 0 0 10px rgba(168, 85, 247, 0.7), 0 0 20px rgba(168, 85, 247, 0.5), 0 0 30px rgba(168, 85, 247, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(168, 85, 247, 0.05) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(236, 72, 153, 0.05) 0%, transparent 20%);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            box-shadow: var(--neon-glow);
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        .top-nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--cyan-accent);
+            transition: width 0.3s;
+        }
+
+        .top-nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Header */
+        .main-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .city-logo {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 2px solid var(--orange-accent);
+            border-radius: 50px;
+            margin-bottom: 12px;
+            background: rgba(255, 140, 0, 0.05);
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .city-logo::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 140, 0, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .city-logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-light);
+            position: relative;
+            z-index: 1;
+        }
+
+        .tagline {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-ai {
+            background: linear-gradient(135deg, var(--purple-primary), var(--pink-accent));
+            color: white;
+            box-shadow: var(--neon-glow);
+        }
+
+        .btn-ai:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(168, 85, 247, 0.5);
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, var(--purple-primary), var(--cyan-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-header p {
+            color: var(--text-gray);
+            font-size: 16px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid var(--purple-primary);
+            border-radius: 20px;
+            padding: 5px 15px;
+            margin-top: 15px;
+            font-size: 12px;
+            color: var(--cyan-accent);
+        }
+
+        /* Layout */
+        .signature-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--purple-primary), var(--cyan-accent));
+        }
+
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+        }
+
+        .new-signature-btn {
+            background: var(--purple-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: var(--neon-glow);
+        }
+
+        .new-signature-btn:hover {
+            background: var(--purple-dark);
+            transform: translateY(-2px);
+        }
+
+        .signature-list {
+            list-style: none;
+        }
+
+        .signature-item {
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .signature-item:hover {
+            background: var(--bg-card-hover);
+            transform: translateX(5px);
+        }
+
+        .signature-item.active {
+            background: var(--bg-card-hover);
+            border-color: var(--orange-accent);
+            box-shadow: 0 0 15px rgba(255, 140, 0, 0.2);
+        }
+
+        .signature-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .signature-type {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .ai-indicator {
+            color: var(--cyan-accent);
+            font-size: 10px;
+            background: rgba(0, 245, 212, 0.1);
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        /* Main Content */
+        .main-content {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--pink-accent), var(--orange-accent));
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .content-header h2 {
+            font-size: 22px;
+        }
+
+        .content-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-btn {
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            background: transparent;
+            color: var(--text-light);
+        }
+
+        .action-btn:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-2px);
+        }
+
+        .action-btn.primary {
+            background: var(--purple-primary);
+            border-color: var(--purple-primary);
+        }
+
+        /* Signature Editor */
+        .signature-editor {
+            margin-bottom: 30px;
+        }
+
+        .editor-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 15px;
+        }
+
+        .tab {
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: transparent;
+            color: var(--text-gray);
+            border: none;
+            position: relative;
+        }
+
+        .tab.active {
+            background: var(--purple-primary);
+            color: white;
+        }
+
+        .tab::after {
+            content: '';
+            position: absolute;
+            bottom: -16px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--purple-primary);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .tab.active::after {
+            transform: scaleX(1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            color: var(--text-light);
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+            box-shadow: 0 0 10px rgba(255, 140, 0, 0.2);
+        }
+
+        .signature-preview {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 200px;
+            color: #333;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: var(--bg-dark);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .toolbar-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toolbar-btn:hover {
+            border-color: var(--orange-accent);
+            background: var(--bg-card-hover);
+            transform: translateY(-2px);
+        }
+
+        .ai-toolbar {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .ai-feature-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid var(--purple-primary);
+            border-radius: 6px;
+            color: var(--text-light);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .ai-feature-btn:hover {
+            background: rgba(168, 85, 247, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* AI Assistant Panel */
+        .ai-assistant {
+            background: var(--bg-darker);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .ai-assistant-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .ai-icon {
+            color: var(--cyan-accent);
+            font-size: 18px;
+        }
+
+        .ai-assistant h3 {
+            font-size: 16px;
+        }
+
+        .ai-suggestions {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .ai-suggestion {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .ai-suggestion:hover {
+            border-color: var(--cyan-accent);
+            transform: translateY(-2px);
+        }
+
+        .ai-prompt {
+            display: flex;
+            gap: 10px;
+        }
+
+        .ai-prompt input {
+            flex: 1;
+            padding: 10px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-light);
+        }
+
+        .ai-prompt button {
+            padding: 10px 15px;
+            background: var(--cyan-accent);
+            color: var(--bg-dark);
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .ai-prompt button:hover {
+            background: var(--purple-primary);
+            color: white;
+        }
+
+        /* Settings Section */
+        .settings-section {
+            margin-top: 30px;
+            padding-top: 25px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .settings-section h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .setting-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .toggle {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 3px;
+            background-color: var(--text-gray);
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--purple-primary);
+            border-color: var(--purple-primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+            background-color: white;
+        }
+
+        .setting-label {
+            font-size: 14px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--purple-primary), var(--pink-accent), var(--cyan-accent));
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .ai-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .ai-option {
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .ai-option:hover {
+            border-color: var(--cyan-accent);
+            transform: translateY(-5px);
+        }
+
+        .ai-option i {
+            font-size: 24px;
+            color: var(--cyan-accent);
+            margin-bottom: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .signature-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .settings-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .top-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .ai-suggestions {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(168, 85, 247, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(168, 85, 247, 0); }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="#" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#ai" class="btn btn-ai">AI Assistant</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Header -->
+        <header class="main-header">
+            <div class="city-logo">
+                <h1>LETTERS CITY</h1>
+            </div>
+            <p class="tagline">Private. Encrypted for you. Enhanced with AI.</p>
+            <a href="#" class="btn btn-primary">BACK TO DASHBOARD</a>
+        </header>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1>Signature Management</h1>
+            <p>Create and manage professional email signatures enhanced with AI capabilities</p>
+            <div class="ai-badge">
+                <i class="fas fa-robot"></i>
+                <span>AI-Powered Signature Generation</span>
+            </div>
+        </div>
+
+        <!-- Main Content Layout -->
+        <div class="signature-layout">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2>Your Signatures</h2>
+                    <button class="new-signature-btn" id="new-signature-btn">+ New</button>
+                </div>
+                <ul class="signature-list">
+                    <li class="signature-item active">
+                        <div>
+                            <div class="signature-name">Professional</div>
+                            <div class="signature-type">Default Signature</div>
+                        </div>
+                        <span class="ai-indicator">AI</span>
+                    </li>
+                    <li class="signature-item">
+                        <div>
+                            <div class="signature-name">Marketing</div>
+                            <div class="signature-type">For promotional emails</div>
+                        </div>
+                        <span class="ai-indicator">AI</span>
+                    </li>
+                    <li class="signature-item">
+                        <div>
+                            <div class="signature-name">Minimal</div>
+                            <div class="signature-type">Simple and clean</div>
+                        </div>
+                    </li>
+                    <li class="signature-item">
+                        <div>
+                            <div class="signature-name">Personal</div>
+                            <div class="signature-type">For personal correspondence</div>
+                        </div>
+                        <span class="ai-indicator">AI</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <div class="content-header">
+                    <h2>Edit Signature</h2>
+                    <div class="content-actions">
+                        <button class="action-btn">Preview</button>
+                        <button class="action-btn primary">Save Changes</button>
+                    </div>
+                </div>
+
+                <div class="signature-editor">
+                    <div class="editor-tabs">
+                        <button class="tab active">Visual Editor</button>
+                        <button class="tab">HTML Editor</button>
+                        <button class="tab">Plain Text</button>
+                        <button class="tab">AI Assistant</button>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signature-name">Signature Name</label>
+                        <input type="text" id="signature-name" class="form-control" value="Professional">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Signature Content</label>
+                        <div class="toolbar">
+                            <button class="toolbar-btn"><i class="fas fa-bold"></i></button>
+                            <button class="toolbar-btn"><i class="fas fa-italic"></i></button>
+                            <button class="toolbar-btn"><i class="fas fa-underline"></i></button>
+                            <button class="toolbar-btn"><i class="fas fa-list-ul"></i></button>
+                            <button class="toolbar-btn"><i class="fas fa-list-ol"></i></button>
+                            <button class="toolbar-btn"><i class="fas fa-link"></i></button>
+                            <button class="toolbar-btn"><i class="fas fa-image"></i></button>
+                            <button class="toolbar-btn"><i class="fas fa-table"></i></button>
+                            <button class="toolbar-btn"><i class="fas fa-smile"></i></button>
+                            <button class="toolbar-btn" id="ai-enhance-btn"><i class="fas fa-robot"></i></button>
+                        </div>
+                        <div class="ai-toolbar">
+                            <button class="ai-feature-btn"><i class="fas fa-magic"></i> Enhance with AI</button>
+                            <button class="ai-feature-btn"><i class="fas fa-palette"></i> AI Style Transfer</button>
+                            <button class="ai-feature-btn"><i class="fas fa-chart-line"></i> Optimize for Engagement</button>
+                        </div>
+                        <div class="signature-preview">
+                            <p><strong>Jane Smith</strong></p>
+                            <p>Senior Marketing Manager | Letters City</p>
+                            <p>✉️ jane.smith@letters.city | 📱 +1 (555) 123-4567</p>
+                            <p>📍 123 Business Ave, Suite 100, San Francisco, CA 94107</p>
+                            <p><a href="#">www.letters.city</a> | <a href="#">LinkedIn</a> | <a href="#">Twitter</a></p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="signature-select">Apply this signature to:</label>
+                        <select id="signature-select" class="form-control">
+                            <option>All outgoing messages</option>
+                            <option>New messages only</option>
+                            <option>Replies and forwards only</option>
+                            <option>Do not use</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- AI Assistant Panel -->
+                <div class="ai-assistant">
+                    <div class="ai-assistant-header">
+                        <i class="fas fa-robot ai-icon"></i>
+                        <h3>AI Signature Assistant</h3>
+                    </div>
+                    <p>Get AI-powered suggestions to improve your signature:</p>
+                    <div class="ai-suggestions">
+                        <div class="ai-suggestion">Add a call-to-action</div>
+                        <div class="ai-suggestion">Optimize for mobile</div>
+                        <div class="ai-suggestion">Include social proof</div>
+                        <div class="ai-suggestion">Add branding elements</div>
+                    </div>
+                    <div class="ai-prompt">
+                        <input type="text" placeholder="Ask the AI to improve your signature...">
+                        <button>Generate</button>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h3>Signature Settings</h3>
+                    <div class="settings-grid">
+                        <div class="setting-item">
+                            <label class="toggle">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span class="setting-label">Add signature before quoted text</span>
+                        </div>
+                        <div class="setting-item">
+                            <label class="toggle">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="setting-label">Insert signature above original message</span>
+                        </div>
+                        <div class="setting-item">
+                            <label class="toggle">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span class="setting-label">Automatically add to new messages</span>
+                        </div>
+                        <div class="setting-item">
+                            <label class="toggle">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span class="setting-label">Include in replies and forwards</span>
+                        </div>
+                        <div class="setting-item">
+                            <label class="toggle">
+                                <input type="checkbox" checked>
+                                <span class="slider"></span>
+                            </label>
+                            <span class="setting-label">AI-powered contextual signatures</span>
+                        </div>
+                        <div class="setting-item">
+                            <label class="toggle">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <span class="setting-label">Auto-optimize signature content</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising performance and AI intelligence.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">AI Capabilities</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">API Docs</a></li>
+                        <li><a href="#">AI Signature Guide</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved. Powered by AI.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- AI Modal -->
+    <div class="modal" id="ai-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>AI Signature Creation</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <p>Choose how you'd like to create your signature:</p>
+            <div class="ai-options">
+                <div class="ai-option">
+                    <i class="fas fa-bolt"></i>
+                    <div>Quick Generate</div>
+                    <small>AI creates a signature based on your profile</small>
+                </div>
+                <div class="ai-option">
+                    <i class="fas fa-cogs"></i>
+                    <div>Custom AI</div>
+                    <small>Guide the AI with specific instructions</small>
+                </div>
+                <div class="ai-option">
+                    <i class="fas fa-chart-line"></i>
+                    <div>Optimized</div>
+                    <small>AI creates engagement-optimized signature</small>
+                </div>
+                <div class="ai-option">
+                    <i class="fas fa-paint-brush"></i>
+                    <div>Style Transfer</div>
+                    <small>Apply styles from your favorite signatures</small>
+                </div>
+            </div>
+            <button class="btn btn-ai" style="width: 100%; margin-top: 20px;">Start AI Creation</button>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Signature list interaction
+        document.querySelectorAll('.signature-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.signature-item').forEach(i => {
+                    i.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Update signature name in form
+                const signatureName = this.querySelector('.signature-name').textContent;
+                document.getElementById('signature-name').value = signatureName;
+                
+                // Show AI indicator if present
+                const aiIndicator = this.querySelector('.ai-indicator');
+                if (aiIndicator) {
+                    document.querySelector('.ai-badge').style.display = 'inline-flex';
+                } else {
+                    document.querySelector('.ai-badge').style.display = 'none';
+                }
+            });
+        });
+
+        // Tab switching
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Show/hide AI assistant based on tab
+                const aiAssistant = document.querySelector('.ai-assistant');
+                if (this.textContent === 'AI Assistant') {
+                    aiAssistant.style.display = 'block';
+                } else {
+                    aiAssistant.style.display = 'none';
+                }
+            });
+        });
+
+        // New signature button with AI options
+        document.getElementById('new-signature-btn').addEventListener('click', function() {
+            document.getElementById('ai-modal').style.display = 'flex';
+        });
+
+        // AI Enhance button
+        document.getElementById('ai-enhance-btn').addEventListener('click', function() {
+            this.classList.add('pulse');
+            setTimeout(() => {
+                this.classList.remove('pulse');
+            }, 2000);
+            
+            // Show a temporary message
+            const preview = document.querySelector('.signature-preview');
+            const originalContent = preview.innerHTML;
+            preview.innerHTML = '<p><i class="fas fa-robot"></i> AI is enhancing your signature...</p>';
+            
+            setTimeout(() => {
+                preview.innerHTML = originalContent + '<p style="color: #a855f7; margin-top: 10px;"><i class="fas fa-robot"></i> <em>AI-Enhanced: Optimized for engagement and mobile viewing</em></p>';
+                
+                // Add AI indicator to active signature
+                const activeItem = document.querySelector('.signature-item.active');
+                if (!activeItem.querySelector('.ai-indicator')) {
+                    const aiIndicator = document.createElement('span');
+                    aiIndicator.className = 'ai-indicator';
+                    aiIndicator.textContent = 'AI';
+                    activeItem.appendChild(aiIndicator);
+                }
+            }, 1500);
+        });
+
+        // Close modal
+        document.querySelector('.modal-close').addEventListener('click', function() {
+            document.getElementById('ai-modal').style.display = 'none';
+        });
+
+        // Close modal when clicking outside
+        window.addEventListener('click', function(e) {
+            if (e.target === document.getElementById('ai-modal')) {
+                document.getElementById('ai-modal').style.display = 'none';
+            }
+        });
+
+        // AI suggestion clicks
+        document.querySelectorAll('.ai-suggestion').forEach(suggestion => {
+            suggestion.addEventListener('click', function() {
+                this.style.backgroundColor = 'rgba(168, 85, 247, 0.2)';
+                this.style.borderColor = 'var(--purple-primary)';
+                
+                // Simulate AI processing
+                setTimeout(() => {
+                    const preview = document.querySelector('.signature-preview');
+                    preview.innerHTML += `<p style="color: #00f5d4; margin-top: 10px;"><i class="fas fa-check-circle"></i> <em>AI Applied: ${this.textContent}</em></p>`;
+                }, 1000);
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.signature-item, .action-btn, .toolbar-btn, .ai-feature-btn').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.boxShadow = '0 4px 12px rgba(168, 85, 247, 0.3)';
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // AI option selection
+        document.querySelectorAll('.ai-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.ai-option').forEach(o => {
+                    o.style.borderColor = 'var(--border-color)';
+                    o.style.transform = 'translateY(0)';
+                });
+                this.style.borderColor = 'var(--cyan-accent)';
+                this.style.transform = 'translateY(-5px)';
+            });
+        });
+    </script>
+</body>
+</html>

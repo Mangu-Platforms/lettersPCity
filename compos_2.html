@@ -1,0 +1,896 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security & Privacy Settings - Letters City</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --text-dim: #5a5a64;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --pink-accent: #ec4899;
+            --orange-accent: #ff8c00;
+            --border-color: rgba(168, 85, 247, 0.3);
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            padding: 20px 0;
+            margin-bottom: 40px;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 24px;
+            height: 24px;
+            background: var(--purple-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .logo-text {
+            color: var(--text-light);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .top-nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .top-nav-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .top-nav-links a:hover {
+            color: var(--text-light);
+        }
+
+        /* Main Header */
+        .main-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .city-logo {
+            display: inline-block;
+            padding: 12px 35px;
+            border: 2px solid var(--orange-accent);
+            border-radius: 50px;
+            margin-bottom: 12px;
+        }
+
+        .city-logo h1 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: var(--text-light);
+        }
+
+        .tagline {
+            color: var(--text-gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* Settings Layout */
+        .settings-container {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .settings-sidebar {
+            flex: 0 0 250px;
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            height: fit-content;
+        }
+
+        .settings-sidebar h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            padding: 12px 15px;
+            color: var(--text-gray);
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .sidebar-nav a:hover {
+            background: var(--bg-card-hover);
+            color: var(--text-light);
+        }
+
+        .sidebar-nav a.active {
+            background: var(--bg-card-hover);
+            color: var(--text-light);
+            border-left: 3px solid var(--orange-accent);
+        }
+
+        .settings-content {
+            flex: 1;
+        }
+
+        .settings-header {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .settings-header h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
+        }
+
+        .settings-header p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        /* Settings Cards */
+        .settings-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .settings-card:hover {
+            border-color: rgba(168, 85, 247, 0.3);
+        }
+
+        .settings-card-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .settings-card-header h3 {
+            font-size: 20px;
+        }
+
+        .settings-card-header .icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Toggle Switches */
+        .toggle-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .toggle-container:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-label {
+            flex: 1;
+        }
+
+        .toggle-label h4 {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        .toggle-label p {
+            color: var(--text-gray);
+            font-size: 13px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 26px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--text-dim);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .toggle-slider {
+            background-color: var(--purple-primary);
+        }
+
+        input:checked + .toggle-slider:before {
+            transform: translateX(24px);
+        }
+
+        /* Privacy Options */
+        .privacy-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .privacy-option {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .privacy-option:hover {
+            border-color: var(--border-color);
+        }
+
+        .privacy-option.selected {
+            border-color: var(--orange-accent);
+        }
+
+        .privacy-option h4 {
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .privacy-option p {
+            color: var(--text-gray);
+            font-size: 13px;
+        }
+
+        .privacy-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            color: var(--purple-primary);
+        }
+
+        /* Data Sharing Grid */
+        .data-sharing-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .data-sharing-item {
+            background: var(--bg-darker);
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s;
+        }
+
+        .data-sharing-item:hover {
+            border-color: var(--border-color);
+        }
+
+        .data-sharing-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .data-sharing-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--purple-primary);
+        }
+
+        .data-sharing-header h4 {
+            font-size: 16px;
+        }
+
+        .data-sharing-item p {
+            color: var(--text-gray);
+            font-size: 13px;
+            margin-bottom: 15px;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            border: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--text-light);
+            color: var(--bg-dark);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-2px);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-card);
+            border-radius: 20px 20px 0 0;
+            padding: 50px 40px 30px;
+            margin-top: 50px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-column p {
+            color: var(--text-gray);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text-light);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 25px;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .settings-container {
+                flex-direction: column;
+            }
+            
+            .settings-sidebar {
+                flex: none;
+                width: 100%;
+            }
+            
+            .privacy-options,
+            .data-sharing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .top-nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section {
+            animation: fadeIn 0.6s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Top Navigation -->
+        <nav class="top-nav">
+            <a href="#" class="logo-link">
+                <div class="logo-icon">✉</div>
+                <span class="logo-text">Letters</span>
+            </a>
+            <ul class="top-nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#settings">Settings</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Header -->
+        <header class="main-header">
+            <div class="city-logo">
+                <h1>LETTERS CITY</h1>
+            </div>
+            <p class="tagline">Private. Encrypted for you</p>
+        </header>
+
+        <!-- Settings Container -->
+        <div class="settings-container">
+            <!-- Settings Sidebar -->
+            <div class="settings-sidebar">
+                <h3>Settings</h3>
+                <ul class="sidebar-nav">
+                    <li><a href="#" class="active">Security & Privacy</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Notifications</a></li>
+                    <li><a href="#">Appearance</a></li>
+                    <li><a href="#">Integrations</a></li>
+                    <li><a href="#">Billing</a></li>
+                </ul>
+            </div>
+
+            <!-- Settings Content -->
+            <div class="settings-content">
+                <div class="settings-header">
+                    <h2>Security & Privacy Settings</h2>
+                    <p>Control how your data is used and protected in Letters City</p>
+                </div>
+
+                <!-- Account Security Card -->
+                <div class="settings-card">
+                    <div class="settings-card-header">
+                        <div class="card-title">
+                            <div class="icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>Account Security</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="toggle-container">
+                        <div class="toggle-label">
+                            <h4>Two-Factor Authentication</h4>
+                            <p>Add an extra layer of security to your account</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="toggle-container">
+                        <div class="toggle-label">
+                            <h4>Login Notifications</h4>
+                            <p>Get alerts when your account is accessed from a new device</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="toggle-container">
+                        <div class="toggle-label">
+                            <h4>Automatic Logout</h4>
+                            <p>Automatically log out after 30 minutes of inactivity</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Data Privacy Card -->
+                <div class="settings-card">
+                    <div class="settings-card-header">
+                        <div class="card-title">
+                            <div class="icon">
+                                <i class="fas fa-user-lock"></i>
+                            </div>
+                            <h3>Data Privacy</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="toggle-container">
+                        <div class="toggle-label">
+                            <h4>Email Encryption</h4>
+                            <p>Encrypt all your emails end-to-end</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox" checked>
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="toggle-container">
+                        <div class="toggle-label">
+                            <h4>Ad Personalization</h4>
+                            <p>Allow personalized ads based on your email content</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                    
+                    <div class="toggle-container">
+                        <div class="toggle-label">
+                            <h4>Data Collection for Improvement</h4>
+                            <p>Help us improve Letters City by sharing usage data</p>
+                        </div>
+                        <label class="toggle-switch">
+                            <input type="checkbox">
+                            <span class="toggle-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Privacy Level Card -->
+                <div class="settings-card">
+                    <div class="settings-card-header">
+                        <div class="card-title">
+                            <div class="icon">
+                                <i class="fas fa-user-secret"></i>
+                            </div>
+                            <h3>Privacy Level</h3>
+                        </div>
+                    </div>
+                    
+                    <p style="margin-bottom: 20px; color: var(--text-gray); font-size: 14px;">
+                        Choose your preferred privacy level for email communication
+                    </p>
+                    
+                    <div class="privacy-options">
+                        <div class="privacy-option">
+                            <div class="privacy-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <h4>Standard</h4>
+                            <p>Basic encryption with standard privacy controls</p>
+                        </div>
+                        
+                        <div class="privacy-option selected">
+                            <div class="privacy-icon">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <h4>Enhanced</h4>
+                            <p>Stronger encryption with advanced privacy features</p>
+                        </div>
+                        
+                        <div class="privacy-option">
+                            <div class="privacy-icon">
+                                <i class="fas fa-user-ninja"></i>
+                            </div>
+                            <h4>Maximum</h4>
+                            <p>Maximum security with all privacy features enabled</p>
+                        </div>
+                        
+                        <div class="privacy-option">
+                            <div class="privacy-icon">
+                                <i class="fas fa-user-cog"></i>
+                            </div>
+                            <h4>Custom</h4>
+                            <p>Configure your own privacy settings manually</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Sharing Preferences Card -->
+                <div class="settings-card">
+                    <div class="settings-card-header">
+                        <div class="card-title">
+                            <div class="icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <h3>Data Sharing Preferences</h3>
+                        </div>
+                    </div>
+                    
+                    <p style="margin-bottom: 20px; color: var(--text-gray); font-size: 14px;">
+                        Control how your data is shared with third-party services
+                    </p>
+                    
+                    <div class="data-sharing-grid">
+                        <div class="data-sharing-item">
+                            <div class="data-sharing-header">
+                                <div class="data-sharing-icon">
+                                    <i class="fab fa-google-drive"></i>
+                                </div>
+                                <h4>Google Drive</h4>
+                            </div>
+                            <p>Allow access to Google Drive for file attachments</p>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="data-sharing-item">
+                            <div class="data-sharing-header">
+                                <div class="data-sharing-icon">
+                                    <i class="fab fa-dropbox"></i>
+                                </div>
+                                <h4>Dropbox</h4>
+                            </div>
+                            <p>Allow access to Dropbox for file attachments</p>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="data-sharing-item">
+                            <div class="data-sharing-header">
+                                <div class="data-sharing-icon">
+                                    <i class="fab fa-slack"></i>
+                                </div>
+                                <h4>Slack</h4>
+                            </div>
+                            <p>Allow notifications to be sent to Slack</p>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        
+                        <div class="data-sharing-item">
+                            <div class="data-sharing-header">
+                                <div class="data-sharing-icon">
+                                    <i class="fab fa-microsoft"></i>
+                                </div>
+                                <h4>Microsoft 365</h4>
+                            </div>
+                            <p>Allow integration with Microsoft 365 services</p>
+                            <label class="toggle-switch">
+                                <input type="checkbox">
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="btn-group">
+                        <button class="btn btn-primary">Save Changes</button>
+                        <button class="btn btn-secondary">Reset to Defaults</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Letters</h3>
+                    <p>The pinnacle of email elegance, combining sophisticated design with uncompromising performance.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Product</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">API Docs</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2025 Letters. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Toggle switch functionality
+        document.querySelectorAll('.toggle-switch input').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const card = this.closest('.settings-card');
+                card.style.borderColor = this.checked ? 'var(--orange-accent)' : 'rgba(255, 255, 255, 0.05)';
+            });
+        });
+
+        // Privacy option selection
+        document.querySelectorAll('.privacy-option').forEach(option => {
+            option.addEventListener('click', function() {
+                document.querySelectorAll('.privacy-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add hover effects
+        document.querySelectorAll('.settings-card, .privacy-option, .data-sharing-item').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.boxShadow = '0 10px 40px rgba(168, 85, 247, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.boxShadow = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

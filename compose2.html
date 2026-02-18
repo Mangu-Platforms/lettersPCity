@@ -1,0 +1,968 @@
+V9
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Letters City - Email Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #0a0a0f;
+            --bg-darker: #05050a;
+            --bg-card: #16161f;
+            --bg-card-hover: #1d1d28;
+            --purple-primary: #a855f7;
+            --purple-dark: #7c3aed;
+            --orange-accent: #ff8c00;
+            --text-light: #ffffff;
+            --text-gray: #8b8b92;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            background: var(--bg-darker);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, var(--purple-primary), var(--orange-accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-weight: 700;
+        }
+
+        .logo i {
+            color: var(--purple-primary);
+            font-size: 1.8rem;
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 600px;
+            margin: 0 2rem;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: var(--bg-card);
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: var(--orange-accent);
+            box-shadow: 0 0 0 2px rgba(255, 140, 0, 0.2);
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+        }
+
+        .user-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .user-actions button {
+            background: transparent;
+            border: none;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+            padding: 0.5rem;
+            border-radius: 50%;
+        }
+
+        .user-actions button:hover {
+            color: var(--purple-primary);
+            background: rgba(168, 85, 247, 0.1);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--purple-primary), var(--orange-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* Main Layout */
+        .dashboard {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: var(--bg-darker);
+            padding: 1.5rem 1rem;
+            overflow-y: auto;
+            transition: var(--transition);
+        }
+
+        .compose-btn {
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            width: 100%;
+            justify-content: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+
+        .compose-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.4);
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-title {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 0.3rem;
+            color: var(--text-light);
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-card);
+        }
+
+        .nav-item.active {
+            background: var(--bg-card);
+            color: var(--purple-primary);
+            border-left: 3px solid var(--orange-accent);
+        }
+
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .badge {
+            background: var(--purple-primary);
+            color: white;
+            border-radius: 50px;
+            padding: 0.2rem 0.6rem;
+            font-size: 0.8rem;
+            margin-left: auto;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+            background: var(--bg-dark);
+        }
+
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .content-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .content-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: var(--bg-card);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-btn:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(255, 140, 0, 0.3);
+        }
+
+        /* Email List */
+        .email-list {
+            background: var(--bg-card);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .email-item {
+            display: flex;
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .email-item:hover {
+            background: var(--bg-card-hover);
+            border-left: 3px solid var(--orange-accent);
+        }
+
+        .email-item.unread {
+            background: rgba(168, 85, 247, 0.05);
+        }
+
+        .email-item.selected {
+            border-left: 3px solid var(--orange-accent);
+            background: rgba(255, 140, 0, 0.05);
+        }
+
+        .email-checkbox {
+            margin-right: 1rem;
+        }
+
+        .email-sender {
+            width: 200px;
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .email-content {
+            flex: 1;
+            padding-right: 1rem;
+        }
+
+        .email-subject {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+            color: var(--text-light);
+        }
+
+        .email-preview {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .email-time {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            width: 80px;
+            text-align: right;
+        }
+
+        .email-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 1rem;
+        }
+
+        .email-action-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-gray);
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+
+        .email-action-btn:hover {
+            color: var(--purple-primary);
+            background: rgba(168, 85, 247, 0.1);
+        }
+
+        /* Reading Pane */
+        .reading-pane {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .email-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .email-header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .email-subject-large {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .email-sender-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .sender-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--purple-primary), var(--orange-accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .sender-details {
+            flex: 1;
+        }
+
+        .sender-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .sender-email {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .email-date {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .email-body {
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .email-attachments {
+            margin-top: 2rem;
+        }
+
+        .attachments-title {
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .attachment-list {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .attachment-item {
+            background: var(--bg-dark);
+            border-radius: 10px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            width: 200px;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .attachment-item:hover {
+            border-color: var(--orange-accent);
+            transform: translateY(-3px);
+        }
+
+        .attachment-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .attachment-info {
+            flex: 1;
+        }
+
+        .attachment-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .attachment-size {
+            color: var(--text-gray);
+            font-size: 0.8rem;
+        }
+
+        /* Quick Stats */
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .stat-card:hover {
+            border-color: rgba(255, 140, 0, 0.3);
+            transform: translateY(-3px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--purple-primary), var(--purple-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .stat-info {
+            flex: 1;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .dashboard {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .nav-items {
+                display: flex;
+                overflow-x: auto;
+                gap: 0.5rem;
+                padding-bottom: 1rem;
+            }
+
+            .nav-item {
+                white-space: nowrap;
+                flex-shrink: 0;
+            }
+
+            .email-sender {
+                width: 150px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+
+            .search-bar {
+                margin: 0 1rem;
+            }
+
+            .user-actions {
+                gap: 1rem;
+            }
+
+            .content-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .email-item {
+                padding: 1rem;
+            }
+
+            .email-sender {
+                width: 120px;
+            }
+
+            .email-time {
+                width: 60px;
+            }
+
+            .quick-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.4rem;
+            }
+
+            .search-bar {
+                margin: 0 0.5rem;
+            }
+
+            .user-actions button {
+                font-size: 1rem;
+            }
+
+            .user-profile span {
+                display: none;
+            }
+
+            .email-sender {
+                width: 100px;
+            }
+
+            .email-actions {
+                display: none;
+            }
+
+            .reading-pane {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-city"></i>
+            <h1>Letters City</h1>
+        </div>
+        <div class="search-bar">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search emails, contacts, or keywords...">
+        </div>
+        <div class="user-actions">
+            <button title="Calendar"><i class="far fa-calendar"></i></button>
+            <button title="Contacts"><i class="far fa-address-book"></i></button>
+            <button title="Settings"><i class="fas fa-cog"></i></button>
+            <div class="user-profile">
+                <div class="user-avatar">JD</div>
+                <span>John Doe</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="dashboard">
+        <aside class="sidebar">
+            <button class="compose-btn">
+                <i class="fas fa-plus"></i> Compose
+            </button>
+
+            <div class="nav-section">
+                <div class="nav-title">Mail</div>
+                <div class="nav-items">
+                    <a href="#" class="nav-item active">
+                        <i class="fas fa-inbox"></i> Inbox <span class="badge">12</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-star"></i> Starred
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-paper-plane"></i> Sent
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-file-alt"></i> Drafts <span class="badge">3</span>
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-trash-alt"></i> Trash
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">Categories</div>
+                <div class="nav-items">
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-briefcase" style="color: #a855f7;"></i> Work
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-users" style="color: #ff8c00;"></i> Personal
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-tag" style="color: #10b981;"></i> Important
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-exclamation-circle" style="color: #ef4444;"></i> Urgent
+                    </a>
+                </div>
+            </div>
+
+            <div class="nav-section">
+                <div class="nav-title">Labels</div>
+                <div class="nav-items">
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-circle" style="color: #3b82f6;"></i> Clients
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-circle" style="color: #f59e0b;"></i> Team
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-circle" style="color: #10b981;"></i> Projects
+                    </a>
+                    <a href="#" class="nav-item">
+                        <i class="fas fa-circle" style="color: #8b5cf6;"></i> Meetings
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div class="content-header">
+                <h2 class="content-title">Inbox</h2>
+                <div class="content-actions">
+                    <button class="action-btn">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-filter"></i> Filter
+                    </button>
+                    <button class="action-btn">
+                        <i class="fas fa-cog"></i> Settings
+                    </button>
+                </div>
+            </div>
+
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-inbox"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value">1,248</div>
+                        <div class="stat-label">Total Emails</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-envelope-open"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value">892</div>
+                        <div class="stat-label">Read</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value">356</div>
+                        <div class="stat-label">Unread</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-paperclip"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-value">124</div>
+                        <div class="stat-label">With Attachments</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="email-list">
+                <div class="email-item unread selected">
+                    <div class="email-checkbox">
+                        <input type="checkbox">
+                    </div>
+                    <div class="email-sender">Sarah Johnson</div>
+                    <div class="email-content">
+                        <div class="email-subject">Quarterly Report Review</div>
+                        <div class="email-preview">Hi team, I've completed the initial draft of the Q3 report. Please review and provide feedback by Friday.</div>
+                    </div>
+                    <div class="email-time">10:24 AM</div>
+                    <div class="email-actions">
+                        <button class="email-action-btn"><i class="far fa-star"></i></button>
+                        <button class="email-action-btn"><i class="fas fa-paperclip"></i></button>
+                    </div>
+                </div>
+
+                <div class="email-item unread">
+                    <div class="email-checkbox">
+                        <input type="checkbox">
+                    </div>
+                    <div class="email-sender">Tech Support</div>
+                    <div class="email-content">
+                        <div class="email-subject">System Maintenance Scheduled</div>
+                        <div class="email-preview">We will be performing system maintenance this Saturday from 2-4 AM. Service may be intermittently...</div>
+                    </div>
+                    <div class="email-time">09:45 AM</div>
+                    <div class="email-actions">
+                        <button class="email-action-btn"><i class="far fa-star"></i></button>
+                        <button class="email-action-btn"><i class="fas fa-paperclip"></i></button>
+                    </div>
+                </div>
+
+                <div class="email-item">
+                    <div class="email-checkbox">
+                        <input type="checkbox">
+                    </div>
+                    <div class="email-sender">Marketing Team</div>
+                    <div class="email-content">
+                        <div class="email-subject">New Campaign Launch</div>
+                        <div class="email-preview">The Q4 marketing campaign is set to launch next Monday. Please ensure all assets are ready...</div>
+                    </div>
+                    <div class="email-time">Yesterday</div>
+                    <div class="email-actions">
+                        <button class="email-action-btn"><i class="far fa-star"></i></button>
+                        <button class="email-action-btn"><i class="fas fa-paperclip"></i></button>
+                    </div>
+                </div>
+
+                <div class="email-item">
+                    <div class="email-checkbox">
+                        <input type="checkbox">
+                    </div>
+                    <div class="email-sender">Alex Rivera</div>
+                    <div class="email-content">
+                        <div class="email-subject">Project Timeline Update</div>
+                        <div class="email-preview">The project timeline has been updated to reflect the new requirements. Please check the attached...</div>
+                    </div>
+                    <div class="email-time">Yesterday</div>
+                    <div class="email-actions">
+                        <button class="email-action-btn"><i class="far fa-star"></i></button>
+                        <button class="email-action-btn"><i class="fas fa-paperclip"></i></button>
+                    </div>
+                </div>
+
+                <div class="email-item">
+                    <div class="email-checkbox">
+                        <input type="checkbox">
+                    </div>
+                    <div class="email-sender">HR Department</div>
+                    <div class="email-content">
+                        <div class="email-subject">Benefits Enrollment Reminder</div>
+                        <div class="email-preview">This is a reminder that benefits enrollment closes this Friday. If you haven't completed your...</div>
+                    </div>
+                    <div class="email-time">Oct 12</div>
+                    <div class="email-actions">
+                        <button class="email-action-btn"><i class="far fa-star"></i></button>
+                        <button class="email-action-btn"><i class="fas fa-paperclip"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="reading-pane">
+                <div class="email-header">
+                    <div class="email-header-top">
+                        <h3 class="email-subject-large">Quarterly Report Review</h3>
+                        <div class="email-date">Today, 10:24 AM</div>
+                    </div>
+                    <div class="email-sender-info">
+                        <div class="sender-avatar">SJ</div>
+                        <div class="sender-details">
+                            <div class="sender-name">Sarah Johnson</div>
+                            <div class="sender-email">sarah.johnson@company.com</div>
+                        </div>
+                        <div class="email-actions">
+                            <button class="email-action-btn"><i class="fas fa-reply"></i></button>
+                            <button class="email-action-btn"><i class="fas fa-reply-all"></i></button>
+                            <button class="email-action-btn"><i class="fas fa-share"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="email-body">
+                    <p>Hi team,</p>
+                    <p>I've completed the initial draft of the Q3 financial report. The document includes all the key metrics we discussed in our last meeting, along with the performance analysis for each department.</p>
+                    <p>Please take some time to review the attached report and provide your feedback by this Friday. I've highlighted a few areas where I'd particularly appreciate your input.</p>
+                    <p>Looking forward to your thoughts!</p>
+                    <p>Best regards,<br>Sarah</p>
+                </div>
+
+                <div class="email-attachments">
+                    <div class="attachments-title">Attachments (3)</div>
+                    <div class="attachment-list">
+                        <div class="attachment-item">
+                            <div class="attachment-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="attachment-info">
+                                <div class="attachment-name">Q3-Report.pdf</div>
+                                <div class="attachment-size">2.4 MB</div>
+                            </div>
+                        </div>
+                        <div class="attachment-item">
+                            <div class="attachment-icon">
+                                <i class="fas fa-file-excel"></i>
+                            </div>
+                            <div class="attachment-info">
+                                <div class="attachment-name">Financial-Data.xlsx</div>
+                                <div class="attachment-size">1.8 MB</div>
+                            </div>
+                        </div>
+                        <div class="attachment-item">
+                            <div class="attachment-icon">
+                                <i class="fas fa-file-image"></i>
+                            </div>
+                            <div class="attachment-info">
+                                <div class="attachment-name">Charts.png</div>
+                                <div class="attachment-size">845 KB</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Add interactive functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Email selection
+            const emailItems = document.querySelectorAll('.email-item');
+            emailItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    if (e.target.type !== 'checkbox') {
+                        emailItems.forEach(i => i.classList.remove('selected'));
+                        this.classList.add('selected');
+                    }
+                });
+            });
+
+            // Star toggle
+            const starButtons = document.querySelectorAll('.email-action-btn .fa-star');
+            starButtons.forEach(star => {
+                star.addEventListener('click', function() {
+                    if (this.classList.contains('far')) {
+                        this.classList.remove('far');
+                        this.classList.add('fas');
+                        this.style.color = '#ff8c00';
+                    } else {
+                        this.classList.remove('fas');
+                        this.classList.add('far');
+                        this.style.color = '';
+                    }
+                });
+            });
+
+            // Compose button animation
+            const composeBtn = document.querySelector('.compose-btn');
+            composeBtn.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
+            });
+            composeBtn.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
