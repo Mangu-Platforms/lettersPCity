@@ -67,8 +67,17 @@ export class GenomeStore {
    */
   async upsertNode(node: GenomeNode): Promise<GenomeNode> {
     const nodeType = node.type as keyof Omit<Genome, "relationships">;
-    const collection = this.genome[nodeType] as any[];
 
+    // Handle vision specially (it's optional, not an array)
+    if (nodeType === "vision") {
+      (this.genome as any)[nodeType] = node;
+      console.log(`[Genome] Created ${node.type} node: ${node.id}`);
+      await this.save();
+      return node;
+    }
+
+    // All other types are arrays
+    const collection = (this.genome[nodeType] as any[]) || [];
     const idx = collection.findIndex((n) => n.id === node.id);
     if (idx >= 0) {
       collection[idx] = node;
@@ -78,6 +87,7 @@ export class GenomeStore {
       console.log(`[Genome] Created ${node.type} node: ${node.id}`);
     }
 
+    (this.genome[nodeType] as any) = collection;
     await this.save();
     return node;
   }
