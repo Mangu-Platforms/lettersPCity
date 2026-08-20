@@ -1,0 +1,90 @@
+# Inbound mail
+
+## Why this is not just an SMTP server
+
+Letters is an email host, and the original Forge plan called for a custom SMTP
+receiver — "not SendGrid/AWS SES; we control the infrastructure."
+
+Standardizing on Vercel makes that impossible in the web app. Vercel runs
+serverless functions: a process starts when a request arrives and stops when the
+response is sent. Receiving SMTP requires a process holding port 25 open
+indefinitely. There is no configuration of a Vercel deployment that does this.
+
+So inbound mail is split out. The Next.js app on Vercel owns the mailbox UI,
+auth, search and outbound composition. Receiving is a separate always-on
+concern that hands messages to the app through one endpoint.
+
+## The seam
+
+`POST /api/mail/inbound`
+
+```
+Content-Type: application/json
+X-Letters-Signature: <hex HMAC-SHA256 of the raw request body>
+```
+
+```json
+{
+  "to": "you@your-domain.com",
+  "from": "sender@example.com",
+  "from_name": "A Sender",
+  "subject": "Hello",
+  "body_text": "…",
+  "body_html": "<p>…</p>",
+  "message_id": "<abc123@example.com>",
+  "in_reply_to": "<earlier@example.com>",
+  "received_at": "2026-08-20T10:00:00Z"
+}
+```
+
+Responses:
+
+| Status | Meaning |
+| --- | --- |
+| `202` | Delivered. |
+| `200` `{"status":"duplicate"}` | Already delivered; redelivery is a no-op. |
+| `400` | Body is not valid JSON, or fails the payload schema. |
+| `401` | Signature missing or invalid. |
+| `404` | No mailbox accepts mail at that address. |
+| `500` | Lookup or insert failed. |
+
+### Authentication
+
+There is no user session on this path, so the endpoint authenticates the
+*sender* by HMAC over the raw request body, using `INBOUND_MAIL_WEBHOOK_SECRET`.
+The comparison is constant-time (`lib/messages/signature.ts`); tests in
+`tests/api/inbound-signature.test.ts` cover forged secrets, tampered bodies,
+truncated signatures, and re-serialized JSON.
+
+Because there is no session, the handler uses the service-role Supabase client
+and **bypasses RLS**. It therefore does its own authorization: it resolves
+`to` to a row in `mailboxes` and writes only into that mailbox. It cannot be
+made to write anywhere else, because `owner_id` and `mailbox_id` both come from
+that lookup and never from the payload.
+
+### Idempotency
+
+Mail gets redelivered — that is normal, not an error. A unique index on
+`(mailbox_id, message_id)` makes a repeat insert fail with `23505`, which the
+handler reports as `duplicate` with a success status rather than surfacing an
+error to the sender. A retrying relay will not produce duplicates in the inbox.
+
+## Attaching a real receiver
+
+Any of these can sit in front of the endpoint. None is wired up yet.
+
+1. **A relay provider** (Postmark, Mailgun, SES + Lambda). Fastest path: point
+   the domain's MX at the provider, translate their webhook shape to the payload
+   above, sign it, forward it. Costs a dependency and some privacy positioning.
+2. **A self-hosted MTA** (Postfix/Haraka on a small always-on VM). Matches the
+   original "we control the infrastructure" intent. Costs an ops surface:
+   IP reputation, SPF/DKIM/DMARC, TLS certs, spam filtering.
+
+Either way the app does not change — the payload contract above is the seam.
+
+## Outbound
+
+`app/compose/page.tsx` stores an outbound message in `Sent` but does not hand it
+to an MTA. Outbound needs the same always-on component, plus DKIM signing and a
+reputable sending IP, or deliverability to Gmail and Outlook will be poor. That
+is the known gap identified as the top risk in the Session 3 research.

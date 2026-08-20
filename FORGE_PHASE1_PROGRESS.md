@@ -1,5 +1,21 @@
 # Forge Phase 1 Progress Report
 
+> **Correction (2026-08-20).** An earlier version of this report claimed 58
+> genome nodes were persisted across Sessions 1–3. That was wrong. The genome
+> never persisted at all: three bugs in `GenomeStore` meant every reload
+> silently reset it to empty, every write landed in a key the schema does not
+> define, and invalid nodes were accepted without validation. The verification
+> lines in the orchestrators read the *plural* collections, which were always
+> empty — so those checks were printing zeros while the sessions reported
+> success.
+>
+> All three are fixed (commit `a37efa1`) and covered by
+> `tests/forge/genome-store.test.ts`. The genome now rebuilds cleanly and holds
+> **62 nodes** — vision 1, goals 4, features 8, requirements 15, research 31,
+> decisions 3 — and `GenomeSchema.parse` passes. Node counts below have been
+> corrected. The research and design *content* was always sound; only its
+> persistence was broken.
+
 **Date:** 2026-08-06  
 **Status:** Sessions 1–3 Complete (Scaffolding, Research, Product Design)  
 **Next:** Sessions 4–10 (Architecture through Refinement)
@@ -102,7 +118,7 @@ All agent decisions validated against:
 **Population:**
 - Research findings: 31 nodes (competitors, pain points, trends, patents, system models)
 - Product design: 1 vision, 8 features, 15 requirements, 3 roadmap decisions
-- Total: 58 nodes (and growing)
+- Total: **62 nodes** (verified against `GenomeSchema.parse`)
 
 ### Agent Architecture
 **Research Layer (5 agents, parallel):**
@@ -131,7 +147,7 @@ All agent decisions validated against:
 |--------|-------|
 | Lines of TypeScript | ~2,000 |
 | Build time | <1s |
-| Genome nodes created | 58+ |
+| Genome nodes created | 62 (schema-verified) |
 | Agents implemented | 8 |
 | Orchestrators | 2 |
 | Agent execution time | 0.02s (5 agents parallel) |
@@ -232,6 +248,7 @@ All agent decisions validated against:
 - [ ] CI/CD pipeline green
 - [ ] Letters MVP deployed to staging
 - [ ] 22-point QA matrix passing
+- [x] Genome persists across sessions and passes schema validation (62 nodes)
 - [ ] Genome fully populated (all node types, 200+ nodes)
 - [ ] Zero `@supabase` imports in code
 - [ ] Documentation complete

@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 255 255 255;
+  --foreground: 17 17 17;
+  --muted: 115 115 115;
+  --border: 229 229 229;
+  --accent: 37 99 235;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: 10 10 10;
+    --foreground: 245 245 245;
+    --muted: 163 163 163;
+    --border: 38 38 38;
+    --accent: 96 165 250;
+  }
+}
+
+body {
+  background: rgb(var(--background));
+  color: rgb(var(--foreground));
+}
