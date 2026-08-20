@@ -9,8 +9,8 @@ import { z } from "zod";
 // Base node type for all genome entities
 const BaseNodeSchema = z.object({
   id: z.string().uuid(),
-  createdAt: z.date(),
-  updatedAt: z.date(),
+  createdAt: z.coerce.date(),
+  updatedAt: z.coerce.date(),
   createdBy: z.string(), // agentId
   version: z.number().positive(),
 });
@@ -212,7 +212,7 @@ export const GenomeRelationshipSchema = z.object({
   toNodeId: z.string(),
   toType: z.string(),
   relationType: z.string(), // "requires", "implements", "contains", "depends_on", etc.
-  createdAt: z.date(),
+  createdAt: z.coerce.date(),
 });
 export type GenomeRelationship = z.infer<typeof GenomeRelationshipSchema>;
 
@@ -234,3 +234,43 @@ export const GenomeSchema = z.object({
   relationships: z.array(GenomeRelationshipSchema),
 });
 export type Genome = z.infer<typeof GenomeSchema>;
+
+/**
+ * Node `type` values are singular ("goal"); the Genome keys that hold them are
+ * plural ("goals"). Writing to `genome[node.type]` therefore lands in a key the
+ * schema does not define. This map is the single source of truth for that
+ * translation -- use it anywhere a node type selects a collection.
+ *
+ * "research" is the one type whose singular and plural spellings coincide, which
+ * is why research findings persisted correctly while every other type did not.
+ */
+export const NODE_TYPE_TO_COLLECTION = {
+  goal: "goals",
+  feature: "features",
+  requirement: "requirements",
+  component: "components",
+  service: "services",
+  database: "databases",
+  api: "apis",
+  test: "tests",
+  deployment: "deployments",
+  research: "research",
+  decision: "decisions",
+  risk: "risks",
+} as const;
+
+export type NodeCollectionKey =
+  (typeof NODE_TYPE_TO_COLLECTION)[keyof typeof NODE_TYPE_TO_COLLECTION];
+
+/** Every array-backed collection key, for iteration. */
+export const COLLECTION_KEYS = Object.values(
+  NODE_TYPE_TO_COLLECTION
+) as NodeCollectionKey[];
+
+/** Resolve a node type to its Genome collection key. Vision is a scalar, not a collection. */
+export function collectionForType(type: GenomeNode["type"]): NodeCollectionKey | null {
+  if (type === "vision") return null;
+  const key = NODE_TYPE_TO_COLLECTION[type as keyof typeof NODE_TYPE_TO_COLLECTION];
+  if (!key) throw new Error(`Unknown genome node type: ${type}`);
+  return key;
+}

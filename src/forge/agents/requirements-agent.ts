@@ -80,7 +80,7 @@ Each requirement cites source (research finding, founder belief, or competitor g
         title: "Custom domain registration",
         description: "Users can register custom domain (e.g., user@myname.com) and verify ownership via DNS",
         priority: "must",
-        source: "research_finding",
+        source: "research",
         acceptanceCriteria: [
           "User enters domain name",
           "Letters generates DNS records (MX, SPF, DKIM, DMARC)",
@@ -122,7 +122,7 @@ Each requirement cites source (research finding, founder belief, or competitor g
         title: "Encryption support (TLS in transit)",
         description: "All emails sent/received encrypted over TLS; optional encryption at rest",
         priority: "must",
-        source: "research_finding",
+        source: "research",
         acceptanceCriteria: [
           "SMTP/IMAP connections use STARTTLS",
           "TLS 1.2 minimum",
@@ -135,7 +135,7 @@ Each requirement cites source (research finding, founder belief, or competitor g
         title: "Email search",
         description: "Users search inbox by sender, subject, or body text",
         priority: "must",
-        source: "research_finding",
+        source: "research",
         acceptanceCriteria: [
           "Search form on inbox",
           "Results return matching emails",
@@ -187,7 +187,7 @@ Each requirement cites source (research finding, founder belief, or competitor g
         title: "Security: No unauthorized data access",
         description: "User data protected; no unauthorized access; regular security audits",
         priority: "must",
-        source: "research_finding",
+        source: "research",
         acceptanceCriteria: [
           "OWASP Top 10 covered (XSS, CSRF, SQL injection, etc.)",
           "Rate limiting on login (5 attempts/5 min)",
@@ -202,7 +202,7 @@ Each requirement cites source (research finding, founder belief, or competitor g
         title: "Shared mailbox support",
         description: "Multiple team members can access shared mailbox (e.g., support@company.com)",
         priority: "should",
-        source: "research_finding",
+        source: "research",
         acceptanceCriteria: [
           "Owner can add team members to mailbox",
           "Team members see all emails sent/received",
@@ -214,7 +214,7 @@ Each requirement cites source (research finding, founder belief, or competitor g
         title: "Email forwarding",
         description: "Users can set up email forwarding (forward to another account or external email)",
         priority: "should",
-        source: "research_finding",
+        source: "research",
         acceptanceCriteria: [
           "Set up forwarding rule in settings",
           "Emails forwarded to specified address",
@@ -228,7 +228,7 @@ Each requirement cites source (research finding, founder belief, or competitor g
         title: "Mobile app (iOS/Android)",
         description: "Native mobile app for iOS and Android",
         priority: "could",
-        source: "research_finding",
+        source: "research",
         acceptanceCriteria: [
           "Offline support (can read cached emails offline)",
           "Push notifications for new email",

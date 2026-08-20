@@ -1,17 +1,19 @@
 {
   "name": "letters",
   "version": "0.1.0",
-  "description": "Letters: The New Email Hosting Platform (built with Forge)",
-  "main": "dist/index.js",
+  "description": "Letters: privacy-first email hosting for indie creators (built with Forge)",
   "scripts": {
-    "build": "tsc",
-    "dev": "ts-node-dev --respawn src/index.ts",
-    "forge:server": "FORGE_API_PORT=3333 ts-node src/forge/mcp-server.ts",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "typecheck": "tsc --noEmit",
     "test": "jest",
     "test:watch": "jest --watch",
-    "db:init": "ts-node scripts/db-init.ts",
-    "db:migrate": "ts-node scripts/db-migrate.ts",
-    "db:seed": "ts-node scripts/db-seed.ts"
+    "forge:build": "tsc -p tsconfig.forge.json",
+    "forge:server": "FORGE_API_PORT=3333 ts-node src/forge/mcp-server.ts",
+    "forge:research": "ts-node src/forge/orchestrators/research-swarm.ts",
+    "forge:design": "ts-node src/forge/orchestrators/product-design.ts"
   },
   "keywords": [
     "email",
@@ -22,16 +24,28 @@
   "author": "Mangu Publishers",
   "license": "PROPRIETARY",
   "dependencies": {
+    "@supabase/ssr": "^0.12.4",
+    "@supabase/supabase-js": "^2.112.3",
     "dotenv": "^16.3.1",
+    "next": "^14.2.35",
     "pino": "^8.14.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "uuid": "^9.0.0",
-    "zod": "^3.22.0"
+    "zod": "^3.25.76"
   },
   "devDependencies": {
     "@types/jest": "^29.5.0",
     "@types/node": "^20.3.0",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
     "@types/uuid": "^10.0.0",
+    "autoprefixer": "^10.5.4",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "^14.2.35",
     "jest": "^29.5.0",
+    "postcss": "^8.5.26",
+    "tailwindcss": "^3.4.19",
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.0",
     "ts-node-dev": "^2.0.0",
