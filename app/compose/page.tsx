@@ -24,8 +24,27 @@ async function sendMessage(formData: FormData) {
   const subject = String(formData.get("subject") ?? "").trim();
   const body = String(formData.get("body") ?? "");
   const mailboxId = String(formData.get("mailbox_id") ?? "");
+  const replyToId = String(formData.get("reply_to_id") ?? "");
 
   if (!to || !mailboxId) redirect("/compose?error=missing-fields");
+
+  // Replying threads the message: In-Reply-To carries the original's RFC
+  // Message-ID, and thread_id groups the conversation (the original's
+  // thread, or the original itself as the thread root). The lookup is
+  // RLS-scoped, so a foreign id degrades to a plain send.
+  let inReplyTo: string | null = null;
+  let threadId: string | null = null;
+  if (replyToId) {
+    const { data: original } = await supabase
+      .from("messages")
+      .select("id, message_id, thread_id")
+      .eq("id", replyToId)
+      .maybeSingle();
+    if (original) {
+      inReplyTo = original.message_id;
+      threadId = original.thread_id ?? original.id;
+    }
+  }
 
   const recipients = [...parseAddressList(to, "to"), ...parseAddressList(cc, "cc")];
   if (recipients.length === 0) redirect("/compose?error=missing-fields");
@@ -57,6 +76,8 @@ async function sendMessage(formData: FormData) {
       direction: "outbound",
       folder: "sent",
       message_id: rfcMessageId,
+      in_reply_to: inReplyTo,
+      thread_id: threadId,
       from_address: mailbox.address,
       from_name: profile?.display_name || null,
       subject,
@@ -87,6 +108,7 @@ async function sendMessage(formData: FormData) {
     subject,
     text: body,
     messageId: rfcMessageId,
+    inReplyTo: inReplyTo ?? undefined,
   });
 
   redirect(`/inbox?folder=sent&sent=${outcome}`);
@@ -102,7 +124,7 @@ const ERROR_MESSAGES: Record<string, string> = {
 export default async function ComposePage({
   searchParams,
 }: {
-  searchParams: { error?: string };
+  searchParams: { error?: string; reply?: string };
 }) {
   const supabase = createClient();
   const { data: mailboxes } = await supabase
@@ -112,6 +134,23 @@ export default async function ComposePage({
 
   const options = mailboxes ?? [];
   const errorMessage = searchParams.error ? ERROR_MESSAGES[searchParams.error] : null;
+
+  // Reply prefill. RLS-scoped read: a foreign or bogus id just renders a
+  // blank compose.
+  let replyTo: { id: string; from_address: string; subject: string } | null = null;
+  if (searchParams.reply) {
+    const { data } = await supabase
+      .from("messages")
+      .select("id, from_address, subject")
+      .eq("id", searchParams.reply)
+      .maybeSingle();
+    replyTo = data;
+  }
+  const prefillSubject = replyTo
+    ? replyTo.subject.match(/^re:/i)
+      ? replyTo.subject
+      : `Re: ${replyTo.subject}`
+    : "";
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-10">
@@ -136,6 +175,7 @@ export default async function ComposePage({
         </p>
       ) : (
         <form action={sendMessage} className="mt-6 flex flex-col gap-3">
+          {replyTo && <input type="hidden" name="reply_to_id" value={replyTo.id} />}
           <label className="flex flex-col gap-1 text-sm">
             From
             <select
@@ -155,6 +195,7 @@ export default async function ComposePage({
             <input
               name="to"
               required
+              defaultValue={replyTo?.from_address ?? ""}
               placeholder="someone@example.com, another@example.com"
               className="rounded-md border border-border bg-transparent px-3 py-2"
             />
@@ -173,6 +214,7 @@ export default async function ComposePage({
             Subject
             <input
               name="subject"
+              defaultValue={prefillSubject}
               className="rounded-md border border-border bg-transparent px-3 py-2"
             />
           </label>
