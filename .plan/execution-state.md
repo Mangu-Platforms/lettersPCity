@@ -64,8 +64,23 @@ Questions compiled in `docs/QUESTIONS_FOR_MAX.md`, never blocking.
 
 ## Checkpoint ledger
 
-- C0 (this commit): recon complete, baseline green, survival files written.
-  Next action: migration 4.
+- C0 8ae596f: recon complete, baseline green, survival files written.
+- C1 70c0ec2: **migration 2 was broken at source** (unqualified message_id in
+  6 policies → uuid=text; never applied anywhere) — repaired in place;
+  migration 4 added (send_attempts, suppression_list,
+  domain_verification_attempts, column-level UPDATE hardening that closes
+  self-verify + direction-rewrite holes). Evidence:
+  .plan/evidence/C1-rls-matrix.log (15/15).
+- C2 2f85bad: lib/mail seam (Resend adapter, noop, dispatch ledger, plan
+  logic); env grows MAIL_PROVIDER/RESEND_API_KEY/CRON_SECRET. 28 tests.
+- C3 45dfbf7: compose dispatches + honest outcome banners; folder tabs;
+  delivery status on detail view. Full gate green incl. build.
+- C4 035eb3b: DNS verification — lib/domains/verify.ts status machine,
+  hourly cron route (bearer CRON_SECRET), add-domain + Check now on
+  settings. 40 tests.
+- C5 0d9d31e: db-check.sh + shim + rls_matrix.sql committed and wired into
+  CI as postgres:16 service job (verified green locally); README/docs
+  refreshed. Next action: docs pack A–L (task 6).
 
 ## Blockers
 
