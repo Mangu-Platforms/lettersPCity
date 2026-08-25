@@ -50,6 +50,9 @@ export default async function InboxPage({
       <header className="mb-6 flex items-baseline justify-between">
         <h1 className="text-2xl font-semibold tracking-tight">{activeLabel}</h1>
         <div className="flex items-baseline gap-4">
+          <Link href="/settings/activity" className="text-sm text-muted underline">
+            Activity
+          </Link>
           <Link href="/settings/domains" className="text-sm text-muted underline">
             Domains
           </Link>
