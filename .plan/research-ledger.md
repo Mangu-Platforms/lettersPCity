@@ -44,3 +44,21 @@ CONFLICT. Sources carry stable IDs.
 - UNKNOWN → for Max: which sending domain Mangu owns for Letters; brand
   ("Letters City" vs "Mangu Mail"); SES vs Resend preference; Supabase
   project budget approval.
+
+## Session learnings (2026-08-25, appended at C10)
+
+- FACT: Resend launched inbound receiving 2025-11-03 (webhook carries
+  metadata + email_id; body via GET /emails/receiving/{id}; Svix-signed).
+  Sources in .plan/evidence/research-full.json.
+- FACT: This build container's egress gateway 403s CONNECT to
+  *.supabase.co (verified via the agent-proxy status endpoint); the
+  Supabase MCP rides a separate proxy. Any future in-container e2e demo
+  needs an allowlist change or an external deploy.
+- FACT: GoTrue password sign-in requires a row in auth.identities
+  (provider='email'), not just auth.users — relevant for future seeding.
+- INFERENCE: The "Migrations apply + RLS matrix" CI step takes <1s on a
+  service container; its truthfulness was verified by reading the raw job
+  log (all 7 migrations + RLS_MATRIX_PASSED present), not the green tick.
+- DECISION DEC-006: drafts are insert-new + delete-old, never UPDATE —
+  preserving the column-grant guarantee that message content is immutable
+  to users after creation.
