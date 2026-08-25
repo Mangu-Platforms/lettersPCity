@@ -84,7 +84,13 @@ Either way the app does not change — the payload contract above is the seam.
 
 ## Outbound
 
-`app/compose/page.tsx` stores an outbound message in `Sent` but does not hand it
-to an MTA. Outbound needs the same always-on component, plus DKIM signing and a
-reputable sending IP, or deliverability to Gmail and Outlook will be poor. That
-is the known gap identified as the top risk in the Session 3 research.
+`app/compose/page.tsx` persists the message to `Sent`, then hands it to the
+provider behind `lib/mail/` — suppression list first, then the adapter chosen
+by `MAIL_PROVIDER`, with the outcome recorded per attempt in `send_attempts`
+(`accepted` / `failed` / `suppressed` / `skipped`). The default `noop`
+provider keeps every environment working with nothing configured, and the UI
+reports those sends honestly as not delivered.
+
+DKIM/SPF/DMARC for each creator domain are set up at the provider (Resend
+returns the records to publish alongside our `_letters` verification TXT).
+Deliverability strategy and the SES exit path live in `docs/ARCHITECTURE.md`.
