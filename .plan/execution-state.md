@@ -104,3 +104,10 @@ Questions compiled in `docs/QUESTIONS_FOR_MAX.md`, never blocking.
   5 (advisor hardening) + 6 (initplan) born from live findings.
   NOTE for Max: alice-chains now carries the Letters schema — rename it
   or say the word and I stand up a dedicated $10/mo project.
+- C8 af93ccc..3b274db: post-PR slices — mailbox creation UI (loop closed),
+  suppression UI + RFC8058 one-click unsubscribe (purpose-separated HMAC
+  tokens), inbound v2 scheme (replay window + 1MB cap), Resend adapter
+  (/api/mail/resend: Svix verify, receiving-API fetch, shared delivery
+  core, bounce/complaint -> suppression via ledger attribution), trash
+  retention (trashed_at triggers + daily housekeeping cron; migration 7
+  live). 70 tests. PR #3 updated.
