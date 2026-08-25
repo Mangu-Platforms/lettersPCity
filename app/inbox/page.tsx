@@ -6,6 +6,7 @@ export const dynamic = "force-dynamic";
 const FOLDERS: { key: Folder; label: string }[] = [
   { key: "inbox", label: "Inbox" },
   { key: "sent", label: "Sent" },
+  { key: "draft", label: "Drafts" },
   { key: "archive", label: "Archive" },
   { key: "trash", label: "Trash" },
 ];
@@ -33,11 +34,15 @@ function preview(text: string, max = 120) {
 export default async function InboxPage({
   searchParams,
 }: {
-  searchParams: { q?: string; folder?: string; sent?: string };
+  searchParams: { q?: string; folder?: string; sent?: string; saved?: string };
 }) {
   const query = searchParams.q?.trim() ?? "";
   const folder: Folder = isFolder(searchParams.folder) ? searchParams.folder : "inbox";
-  const banner = searchParams.sent ? SEND_BANNERS[searchParams.sent] : null;
+  const banner = searchParams.saved
+    ? "Draft saved."
+    : searchParams.sent
+      ? SEND_BANNERS[searchParams.sent]
+      : null;
 
   const messages: MessageSummary[] = query
     ? await searchMessages(query, { folder })
@@ -99,7 +104,11 @@ export default async function InboxPage({
         <ul className="divide-y divide-border">
           {messages.map((m) => (
             <li key={m.id}>
-              <Link href={`/inbox/${m.id}`} className="block py-3">
+              {/* Drafts open back into compose for editing, not the reader. */}
+              <Link
+                href={folder === "draft" ? `/compose?draft=${m.id}` : `/inbox/${m.id}`}
+                className="block py-3"
+              >
                 <div className="flex items-baseline justify-between gap-4">
                   <span className={m.is_read ? "text-muted" : "font-medium"}>
                     {m.from_name || m.from_address}
