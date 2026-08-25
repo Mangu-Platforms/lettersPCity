@@ -7,6 +7,14 @@
 -- The inbound-mail webhook has no user session, so it uses the service-role
 -- key and bypasses RLS. That path does its own authorization: it resolves the
 -- recipient address to a mailbox and writes only into that mailbox.
+--
+-- Note on qualification: inside the recipients/attachments policy subqueries,
+-- column references against messages must be qualified with the OUTER table
+-- (e.g. message_recipients.message_id). Unqualified, `message_id` resolves to
+-- messages.message_id — the RFC 5322 text column — and the policy fails to
+-- create with `uuid = text`. This file originally shipped unqualified and
+-- could never have been applied; repaired 2026-08-25, before any deployment
+-- existed (verified: no Supabase project carries this schema).
 
 alter table public.profiles           enable row level security;
 alter table public.domains            enable row level security;
@@ -110,7 +118,7 @@ create policy "recipients: read via own message"
   using (
     exists (
       select 1 from public.messages m
-      where m.id = message_id and m.owner_id = auth.uid()
+      where m.id = message_recipients.message_id and m.owner_id = auth.uid()
     )
   );
 
@@ -119,7 +127,7 @@ create policy "recipients: insert via own message"
   with check (
     exists (
       select 1 from public.messages m
-      where m.id = message_id and m.owner_id = auth.uid()
+      where m.id = message_recipients.message_id and m.owner_id = auth.uid()
     )
   );
 
@@ -128,7 +136,7 @@ create policy "recipients: delete via own message"
   using (
     exists (
       select 1 from public.messages m
-      where m.id = message_id and m.owner_id = auth.uid()
+      where m.id = message_recipients.message_id and m.owner_id = auth.uid()
     )
   );
 
@@ -138,7 +146,7 @@ create policy "attachments: read via own message"
   using (
     exists (
       select 1 from public.messages m
-      where m.id = message_id and m.owner_id = auth.uid()
+      where m.id = attachments.message_id and m.owner_id = auth.uid()
     )
   );
 
@@ -147,7 +155,7 @@ create policy "attachments: insert via own message"
   with check (
     exists (
       select 1 from public.messages m
-      where m.id = message_id and m.owner_id = auth.uid()
+      where m.id = attachments.message_id and m.owner_id = auth.uid()
     )
   );
 
@@ -156,7 +164,7 @@ create policy "attachments: delete via own message"
   using (
     exists (
       select 1 from public.messages m
-      where m.id = message_id and m.owner_id = auth.uid()
+      where m.id = attachments.message_id and m.owner_id = auth.uid()
     )
   );
 
