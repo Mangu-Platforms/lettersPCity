@@ -92,3 +92,15 @@ Questions compiled in `docs/QUESTIONS_FOR_MAX.md`, never blocking.
   (12 competitors, MTA landscape, compliance). Results feed docs/COMPETITORS.md
   and docs/ARCHITECTURE.md. If it returns empty, read its journal.jsonl before
   assuming loss.
+
+- C6 26cf7a1: docs pack A–L committed (research from 14-agent workflow;
+  evidence in .plan/evidence/research-full.json). DEC-002 updated: Resend
+  Inbound (launched Nov 2025) = MVP inbound; DEC-005 SES scale path.
+- C7 570e244: **live deploy**. New Supabase project costs $10/mo (Pro org)
+  → NOT created without Max (Q4). Deployed instead to the empty project
+  `alice-chains` (ibhubceuifgjshjaggtz, created same day, zero tables) as
+  zero-cost staging. All 6 migrations applied; live 15-check RLS matrix
+  passed; advisors: security 0 lints, performance INFO-only. Migrations
+  5 (advisor hardening) + 6 (initplan) born from live findings.
+  NOTE for Max: alice-chains now carries the Letters schema — rename it
+  or say the word and I stand up a dedicated $10/mo project.
