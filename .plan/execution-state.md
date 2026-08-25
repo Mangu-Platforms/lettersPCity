@@ -121,3 +121,9 @@ Questions compiled in `docs/QUESTIONS_FOR_MAX.md`, never blocking.
   needs a deploy, logged as Q11). Smoke user seeded+removed (auth.users
   back to 0). Session report artifact published:
   https://claude.ai/code/artifact/383f79d0-d48e-4bfc-a8ea-0db9e3749f19
+- C11 **MERGED** 81772fc: PR #3 (claude/letters-platform-architecture-fztmb0
+  → main) merged by redinc23 2026-08-25T23:00:20Z. All 20 tasks completed,
+  84 tests passing on merged main. Deliverables A–L complete: architecture,
+  PRD, roadmap, competitors, risks, Q&A. Three 14-day wins shipped: Resend
+  outbound seam + DNS verification + persistent inbox/compose. Session
+  complete. No post-merge issues noted.
