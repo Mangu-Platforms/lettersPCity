@@ -189,7 +189,10 @@ export default async function DomainsPage({
       </Link>
       <h1 className="mt-4 text-2xl font-semibold tracking-tight">Domains</h1>
       <p className="mt-1 text-sm text-muted">
-        Host Letters on a domain you own. Verification is a DNS TXT record.
+        Host Letters on a domain you own. Verification is a DNS TXT record.{" "}
+        <Link href="/settings/suppression" className="text-accent underline">
+          Do-not-send list
+        </Link>
       </p>
 
       {errorMessage && (
