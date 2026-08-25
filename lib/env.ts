@@ -24,6 +24,9 @@ const serverSchema = z
     // provider account: sends are recorded as skipped, nothing leaves.
     MAIL_PROVIDER: z.enum(["noop", "resend"]).default("noop"),
     RESEND_API_KEY: z.string().min(1).optional(),
+    // Svix signing secret for Resend's inbound webhook (whsec_…). Optional:
+    // without it the adapter route answers 503 instead of running open.
+    RESEND_INBOUND_WEBHOOK_SECRET: z.string().startsWith("whsec_").optional(),
     // Authorizes GET /api/domains/verify (Vercel cron sends it as a Bearer
     // token). Optional so environments without the cron still boot.
     CRON_SECRET: z.string().min(16).optional(),
@@ -92,6 +95,7 @@ export function serverEnv(): z.infer<typeof serverSchema> {
         INBOUND_MAIL_WEBHOOK_SECRET: process.env.INBOUND_MAIL_WEBHOOK_SECRET,
         MAIL_PROVIDER: process.env.MAIL_PROVIDER,
         RESEND_API_KEY: process.env.RESEND_API_KEY,
+        RESEND_INBOUND_WEBHOOK_SECRET: process.env.RESEND_INBOUND_WEBHOOK_SECRET,
         CRON_SECRET: process.env.CRON_SECRET,
       },
       "server"

@@ -44,7 +44,8 @@ Responses:
 | `202` | Delivered. |
 | `200` `{"status":"duplicate"}` | Already delivered; redelivery is a no-op. |
 | `400` | Body is not valid JSON, or fails the payload schema. |
-| `401` | Signature missing or invalid. |
+| `401` | Signature missing/invalid, or a stale v2 timestamp. |
+| `413` | Body exceeds 1 MB. |
 | `404` | No mailbox accepts mail at that address. |
 | `500` | Lookup or insert failed. |
 
@@ -79,6 +80,21 @@ Mail gets redelivered — that is normal, not an error. A unique index on
 `(mailbox_id, message_id)` makes a repeat insert fail with `23505`, which the
 handler reports as `duplicate` with a success status rather than surfacing an
 error to the sender. A retrying relay will not produce duplicates in the inbox.
+
+## The Resend adapter
+
+`POST /api/mail/resend-inbound` is a ready adapter for Resend Inbound (the
+MVP pick — docs/ARCHITECTURE.md DEC-002): it verifies the Svix signature
+(`RESEND_INBOUND_WEBHOOK_SECRET`, ±300 s window), fetches the message body
+from Resend's receiving API, translates it, and hands it to the same
+delivery core as the seam — once per hosted recipient, idempotently. It
+answers 2xx for everything that must not be retried and 5xx only when a
+delivery genuinely failed, so provider retries do useful work. Unconfigured
+deployments answer 503 (disabled, never open).
+
+To go live: add the MX record Resend specifies on the receiving (sub)domain,
+create a webhook pointed at this route for `email.received`, and set the two
+env vars.
 
 ## Attaching a real receiver
 

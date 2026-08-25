@@ -15,6 +15,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createAdminClient } from "@/lib/supabase/server";
 import { verifyInboundRequest } from "@/lib/messages/signature";
+import { deliverInbound } from "@/lib/messages/deliver";
 import { serverEnv } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
@@ -77,45 +78,17 @@ export async function POST(request: Request) {
   }
   const mail = parsed.data;
 
-  const supabase = createAdminClient();
+  const { outcome } = await deliverInbound(createAdminClient(), mail);
 
-  const { data: mailbox, error: mailboxError } = await supabase
-    .from("mailboxes")
-    .select("id, owner_id")
-    .eq("address", mail.to)
-    .maybeSingle();
-
-  if (mailboxError) {
-    return NextResponse.json({ error: "mailbox lookup failed" }, { status: 500 });
-  }
-  if (!mailbox) {
-    // Not an error on our side: nothing here accepts mail for that address.
-    return NextResponse.json({ error: "no such mailbox" }, { status: 404 });
-  }
-
-  // Redelivery is normal for mail. The unique index on (mailbox_id, message_id)
-  // makes a repeat a no-op rather than a duplicate in the user's inbox.
-  const { error: insertError } = await supabase.from("messages").insert({
-    mailbox_id: mailbox.id,
-    owner_id: mailbox.owner_id,
-    direction: "inbound",
-    folder: "inbox",
-    message_id: mail.message_id,
-    in_reply_to: mail.in_reply_to ?? null,
-    from_address: mail.from,
-    from_name: mail.from_name ?? null,
-    subject: mail.subject,
-    body_text: mail.body_text,
-    body_html: mail.body_html ?? null,
-    received_at: mail.received_at ?? new Date().toISOString(),
-  });
-
-  if (insertError) {
-    if (insertError.code === "23505") {
+  switch (outcome) {
+    case "delivered":
+      return NextResponse.json({ status: "delivered" }, { status: 202 });
+    case "duplicate":
       return NextResponse.json({ status: "duplicate", delivered: true });
-    }
-    return NextResponse.json({ error: "delivery failed" }, { status: 500 });
+    case "no-mailbox":
+      // Not an error on our side: nothing here accepts mail for that address.
+      return NextResponse.json({ error: "no such mailbox" }, { status: 404 });
+    case "error":
+      return NextResponse.json({ error: "delivery failed" }, { status: 500 });
   }
-
-  return NextResponse.json({ status: "delivered" }, { status: 202 });
 }

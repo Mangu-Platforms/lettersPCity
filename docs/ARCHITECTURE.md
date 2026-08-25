@@ -9,7 +9,7 @@ _Last updated 2026-08-25. Companion docs: [RISKS.md](RISKS.md),
 | Layer | Contents | Status |
 | --- | --- | --- |
 | **The app** | `app/` (login, inbox, compose, settings/domains, api/health, api/mail/inbound, api/domains/verify), `lib/` (env, supabase clients, messages, mail, domains), `middleware.ts` | Real, tested, builds green |
-| **The schema** | `supabase/migrations/` ×4 + `supabase/tests/` (shim + RLS matrix) | Applies cleanly to Postgres 16; **never yet deployed to a live Supabase project** |
+| **The schema** | `supabase/migrations/` ×6 + `supabase/tests/` (shim + RLS matrix) | Applied end-to-end on Postgres 16 in CI **and live on a staging Supabase project** (advisors clean; see `.plan/execution-state.md` C7) |
 | **The design layer** | `src/forge/` — agents, genome, constitution | Typechecked in CI; not the product |
 | **Design archive** | ~70 root-level `*.html` Gmail-style mockups, `download*`, `delegat` | Quarantined by CLAUDE.md; not the app; never import from them |
 | **Historical plans** | `FORGE_PHASE1_PROGRESS.md`, `Mangu Mail Phase 2 … .pdf` | Evidence, not ground truth |
@@ -141,6 +141,7 @@ it on every push against postgres:16.
 | `INBOUND_MAIL_WEBHOOK_SECRET` | server | yes (≥32 chars) | HMAC for the inbound seam |
 | `MAIL_PROVIDER` | server | no (default `noop`) | `noop` \| `resend` |
 | `RESEND_API_KEY` | server | iff `MAIL_PROVIDER=resend` | Outbound hand-off |
+| `RESEND_INBOUND_WEBHOOK_SECRET` | server | no (adapter 503s without it) | Svix secret for the Resend inbound webhook |
 | `CRON_SECRET` | server | no (job disabled without it) | Bearer auth on `/api/domains/verify` |
 
 Per environment: **local** `.env.local` (noop provider fine); **CI**
