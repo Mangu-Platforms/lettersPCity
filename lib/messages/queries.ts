@@ -41,7 +41,9 @@ export async function getMessage(id: string) {
   const supabase = createClient();
   const { data, error } = await supabase
     .from("messages")
-    .select("*, message_recipients(kind, address, name), attachments(id, filename, content_type, size_bytes)")
+    .select(
+      "*, message_recipients(kind, address, name), attachments(id, filename, content_type, size_bytes), send_attempts(attempt, provider, status, error, created_at)"
+    )
     .eq("id", id)
     .maybeSingle();
 

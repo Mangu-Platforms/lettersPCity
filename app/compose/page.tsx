@@ -1,9 +1,14 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { z } from "zod";
 import { createClient } from "@/lib/supabase/server";
+import { dispatchOutbound } from "@/lib/mail/dispatch";
+import { parseAddressList } from "@/lib/mail/plan";
 import { randomUUID } from "crypto";
 
 export const dynamic = "force-dynamic";
+
+const addressSchema = z.string().email();
 
 async function sendMessage(formData: FormData) {
   "use server";
@@ -15,11 +20,18 @@ async function sendMessage(formData: FormData) {
   if (!user) redirect("/login?next=/compose");
 
   const to = String(formData.get("to") ?? "").trim();
+  const cc = String(formData.get("cc") ?? "").trim();
   const subject = String(formData.get("subject") ?? "").trim();
   const body = String(formData.get("body") ?? "");
   const mailboxId = String(formData.get("mailbox_id") ?? "");
 
   if (!to || !mailboxId) redirect("/compose?error=missing-fields");
+
+  const recipients = [...parseAddressList(to, "to"), ...parseAddressList(cc, "cc")];
+  if (recipients.length === 0) redirect("/compose?error=missing-fields");
+  if (recipients.some((r) => !addressSchema.safeParse(r.address).success)) {
+    redirect("/compose?error=bad-address");
+  }
 
   const { data: mailbox, error: mailboxError } = await supabase
     .from("mailboxes")
@@ -29,6 +41,14 @@ async function sendMessage(formData: FormData) {
   // RLS scopes this to the user's own mailboxes, so a foreign id reads as null.
   if (mailboxError || !mailbox) redirect("/compose?error=unknown-mailbox");
 
+  const { data: profile } = await supabase
+    .from("profiles")
+    .select("display_name")
+    .eq("id", user.id)
+    .maybeSingle();
+
+  const rfcMessageId = `<${randomUUID()}@${mailbox.address.split("@")[1] ?? "letters"}>`;
+
   const { data: message, error } = await supabase
     .from("messages")
     .insert({
@@ -36,8 +56,9 @@ async function sendMessage(formData: FormData) {
       owner_id: user.id,
       direction: "outbound",
       folder: "sent",
-      message_id: `<${randomUUID()}@letters>`,
+      message_id: rfcMessageId,
       from_address: mailbox.address,
+      from_name: profile?.display_name || null,
       subject,
       body_text: body,
     })
@@ -46,20 +67,43 @@ async function sendMessage(formData: FormData) {
 
   if (error || !message) redirect("/compose?error=send-failed");
 
-  await supabase
-    .from("message_recipients")
-    .insert(to.split(",").map((address) => ({
+  const { error: recipientsError } = await supabase.from("message_recipients").insert(
+    recipients.map((r) => ({
       message_id: message.id,
-      kind: "to" as const,
-      address: address.trim(),
-    })));
+      kind: r.kind,
+      address: r.address,
+    }))
+  );
+  if (recipientsError) redirect("/compose?error=send-failed");
 
-  // Handing the message to an outbound MTA is not wired yet -- see
-  // docs/INBOUND_MAIL.md. The message is stored in Sent either way.
-  redirect("/inbox?sent=1");
+  // The message is safely in Sent; now hand it to the provider. dispatch
+  // records the outcome in send_attempts and never throws back into this
+  // action — a provider outage must not turn into a lost draft.
+  const outcome = await dispatchOutbound({
+    messageRowId: message.id,
+    ownerId: user.id,
+    from: { address: mailbox.address, name: profile?.display_name || undefined },
+    recipients,
+    subject,
+    text: body,
+    messageId: rfcMessageId,
+  });
+
+  redirect(`/inbox?folder=sent&sent=${outcome}`);
 }
 
-export default async function ComposePage() {
+const ERROR_MESSAGES: Record<string, string> = {
+  "missing-fields": "A recipient and a sending mailbox are required.",
+  "bad-address": "One of the recipient addresses is not a valid email address.",
+  "unknown-mailbox": "That sending mailbox does not exist on your account.",
+  "send-failed": "The message could not be saved. Nothing was sent — try again.",
+};
+
+export default async function ComposePage({
+  searchParams,
+}: {
+  searchParams: { error?: string };
+}) {
   const supabase = createClient();
   const { data: mailboxes } = await supabase
     .from("mailboxes")
@@ -67,6 +111,7 @@ export default async function ComposePage() {
     .order("is_default", { ascending: false });
 
   const options = mailboxes ?? [];
+  const errorMessage = searchParams.error ? ERROR_MESSAGES[searchParams.error] : null;
 
   return (
     <main className="mx-auto max-w-2xl px-6 py-10">
@@ -74,6 +119,12 @@ export default async function ComposePage() {
         ← Inbox
       </Link>
       <h1 className="mt-4 text-2xl font-semibold tracking-tight">Compose</h1>
+
+      {errorMessage && (
+        <p className="mt-4 rounded-md border border-border px-3 py-2 text-sm text-muted">
+          {errorMessage}
+        </p>
+      )}
 
       {options.length === 0 ? (
         <p className="mt-6 text-sm text-muted">
@@ -104,7 +155,16 @@ export default async function ComposePage() {
             <input
               name="to"
               required
-              placeholder="someone@example.com"
+              placeholder="someone@example.com, another@example.com"
+              className="rounded-md border border-border bg-transparent px-3 py-2"
+            />
+          </label>
+
+          <label className="flex flex-col gap-1 text-sm">
+            Cc
+            <input
+              name="cc"
+              placeholder="optional"
               className="rounded-md border border-border bg-transparent px-3 py-2"
             />
           </label>

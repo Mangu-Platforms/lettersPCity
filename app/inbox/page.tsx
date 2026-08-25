@@ -1,7 +1,29 @@
 import Link from "next/link";
-import { listMessages, searchMessages, type MessageSummary } from "@/lib/messages/queries";
+import { listMessages, searchMessages, type Folder, type MessageSummary } from "@/lib/messages/queries";
 
 export const dynamic = "force-dynamic";
+
+const FOLDERS: { key: Folder; label: string }[] = [
+  { key: "inbox", label: "Inbox" },
+  { key: "sent", label: "Sent" },
+  { key: "archive", label: "Archive" },
+  { key: "trash", label: "Trash" },
+];
+
+function isFolder(value: string | undefined): value is Folder {
+  return FOLDERS.some((f) => f.key === value);
+}
+
+/** What the ?sent= outcome actually means for the user, stated honestly. */
+const SEND_BANNERS: Record<string, string> = {
+  accepted: "Sent — the mail provider accepted your message.",
+  skipped:
+    "Saved to Sent. No mail provider is configured on this deployment, so nothing was delivered.",
+  failed:
+    "Saved to Sent, but the mail provider rejected the hand-off. Delivery did not happen.",
+  suppressed:
+    "Saved to Sent, but every recipient is on your suppression list, so nothing was delivered.",
+};
 
 function preview(text: string, max = 120) {
   const flat = text.replace(/\s+/g, " ").trim();
@@ -11,23 +33,52 @@ function preview(text: string, max = 120) {
 export default async function InboxPage({
   searchParams,
 }: {
-  searchParams: { q?: string };
+  searchParams: { q?: string; folder?: string; sent?: string };
 }) {
   const query = searchParams.q?.trim() ?? "";
+  const folder: Folder = isFolder(searchParams.folder) ? searchParams.folder : "inbox";
+  const banner = searchParams.sent ? SEND_BANNERS[searchParams.sent] : null;
+
   const messages: MessageSummary[] = query
-    ? await searchMessages(query)
-    : await listMessages("inbox");
+    ? await searchMessages(query, { folder })
+    : await listMessages(folder);
+
+  const activeLabel = FOLDERS.find((f) => f.key === folder)?.label ?? "Inbox";
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-10">
       <header className="mb-6 flex items-baseline justify-between">
-        <h1 className="text-2xl font-semibold tracking-tight">Inbox</h1>
-        <Link href="/compose" className="text-sm text-accent underline">
-          Compose
-        </Link>
+        <h1 className="text-2xl font-semibold tracking-tight">{activeLabel}</h1>
+        <div className="flex items-baseline gap-4">
+          <Link href="/settings/domains" className="text-sm text-muted underline">
+            Domains
+          </Link>
+          <Link href="/compose" className="text-sm text-accent underline">
+            Compose
+          </Link>
+        </div>
       </header>
 
+      {banner && (
+        <p className="mb-6 rounded-md border border-border px-3 py-2 text-sm text-muted">
+          {banner}
+        </p>
+      )}
+
+      <nav className="mb-6 flex gap-4 border-b border-border pb-2 text-sm">
+        {FOLDERS.map((f) => (
+          <Link
+            key={f.key}
+            href={f.key === "inbox" ? "/inbox" : `/inbox?folder=${f.key}`}
+            className={f.key === folder ? "font-medium text-accent" : "text-muted"}
+          >
+            {f.label}
+          </Link>
+        ))}
+      </nav>
+
       <form className="mb-6">
+        {folder !== "inbox" && <input type="hidden" name="folder" value={folder} />}
         <input
           type="search"
           name="q"
