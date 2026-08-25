@@ -36,6 +36,8 @@ async function submitMessage(formData: FormData) {
   const mailboxId = String(formData.get("mailbox_id") ?? "");
   const replyToId = String(formData.get("reply_to_id") ?? "");
   const draftId = String(formData.get("draft_id") ?? "");
+  const draftInReplyTo = String(formData.get("draft_in_reply_to") ?? "");
+  const draftThreadId = String(formData.get("draft_thread_id") ?? "");
 
   if (!mailboxId) redirect("/compose?error=missing-fields");
 
@@ -57,9 +59,15 @@ async function submitMessage(formData: FormData) {
   // Message-ID, and thread_id groups the conversation (the original's
   // thread, or the original itself as the thread root). The lookup is
   // RLS-scoped, so a foreign id degrades to a plain send.
+  // When reopening a draft, use the draft's stored in_reply_to/thread_id;
+  // when composing a fresh reply, look up the original's message_id/thread_id.
   let inReplyTo: string | null = null;
   let threadId: string | null = null;
-  if (replyToId) {
+  if (draftInReplyTo) {
+    // Draft already has threading metadata; preserve it.
+    inReplyTo = draftInReplyTo || null;
+    threadId = draftThreadId || null;
+  } else if (replyToId) {
     const { data: original } = await supabase
       .from("messages")
       .select("id, message_id, thread_id")
@@ -221,19 +229,22 @@ export default async function ComposePage({
 
   // Draft prefill, same posture. Only rows still in the draft folder open
   // for editing — a sent message is not a draft.
+  // Fetch in_reply_to and thread_id to preserve reply threading across draft reopens.
   let draft:
     | {
         id: string;
         mailbox_id: string;
         subject: string;
         body_text: string;
+        in_reply_to: string | null;
+        thread_id: string | null;
         message_recipients: { kind: string; address: string }[];
       }
     | null = null;
   if (searchParams.draft) {
     const { data } = await supabase
       .from("messages")
-      .select("id, mailbox_id, subject, body_text, folder, message_recipients(kind, address)")
+      .select("id, mailbox_id, subject, body_text, folder, in_reply_to, thread_id, message_recipients(kind, address)")
       .eq("id", searchParams.draft)
       .eq("folder", "draft")
       .maybeSingle();
@@ -283,6 +294,8 @@ export default async function ComposePage({
           <form action={submitMessage} className="mt-6 flex flex-col gap-3">
             {replyTo && <input type="hidden" name="reply_to_id" value={replyTo.id} />}
             {draft && <input type="hidden" name="draft_id" value={draft.id} />}
+            {draft?.in_reply_to && <input type="hidden" name="draft_in_reply_to" value={draft.in_reply_to} />}
+            {draft?.thread_id && <input type="hidden" name="draft_thread_id" value={draft.thread_id} />}
             <label className="flex flex-col gap-1 text-sm">
               From
               <select
