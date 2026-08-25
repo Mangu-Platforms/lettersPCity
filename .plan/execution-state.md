@@ -111,3 +111,8 @@ Questions compiled in `docs/QUESTIONS_FOR_MAX.md`, never blocking.
   core, bounce/complaint -> suppression via ledger attribution), trash
   retention (trashed_at triggers + daily housekeeping cron; migration 7
   live). 70 tests. PR #3 updated.
+- C9 a3a4bcb..890ddfa: message actions + threaded replies; activity page;
+  route-level tests for both webhook routes (84 total). CI verified green
+  in GitHub Actions incl. database job (RLS_MATRIX_PASSED in the log).
+  PR #3 description refreshed; ROADMAP statuses updated (items 1,2,4,5,7,8
+  DONE). Next: render smoke vs staging, session report artifact.

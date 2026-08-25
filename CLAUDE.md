@@ -13,17 +13,21 @@ human or agent — working in this repo.
 | Root `*.html`, `download*`, `delegat` | **Design archive.** Gmail-style mockups predating the app. Never treat as the app, never import from, never extend. |
 | `Mangu Mail Phase 2 – ….pdf`, `FORGE_PHASE1_PROGRESS.md` | Historical planning documents. Read as evidence, not as ground truth. |
 
-## Ground truth as of 2026-08-25
+## Ground truth as of 2026-08-25 (end of platform session)
 
-- **No message has ever been sent.** Compose persists to `messages` with
-  `folder='sent'` and stops. There is no MTA client in the dependency tree.
-- **The schema has never been deployed.** No Supabase project in the org
-  carries the Letters tables. The app has never had a live backend.
-- Domain verification UI shows a TXT token; the DNS check + status flip is
-  the `lib/domains/` + cron seam.
-- Inbound mail arrives only through `POST /api/mail/inbound` (HMAC-signed).
-  See `docs/INBOUND_MAIL.md` — that seam contract is stable; adapters
-  translate provider webhooks to it, the app does not change per provider.
+- **Still no real message sent** — but the entire path exists: compose →
+  dispatch (`lib/mail/`) → provider adapter → `send_attempts` ledger. What
+  remains is operator work: a Resend API key, the platform domain, Vercel
+  env. See `docs/ROADMAP.md`.
+- **Schema is live on staging**: all migrations applied to the Supabase
+  project `alice-chains` (see `.plan/execution-state.md` C7) and re-applied
+  from scratch on postgres:16 in CI on every push.
+- Domain verification is automated (`lib/domains/verify.ts`, hourly cron +
+  "Check now"); mailboxes are created in settings on verified domains.
+- Inbound arrives through `POST /api/mail/inbound` (HMAC seam, v1/v2
+  schemes) or `POST /api/mail/resend` (Svix-verified Resend adapter). Both
+  feed `lib/messages/deliver.ts` — authorization lives there and nowhere
+  looser. See `docs/INBOUND_MAIL.md`.
 
 ## Commands
 

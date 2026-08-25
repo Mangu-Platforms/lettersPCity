@@ -24,21 +24,28 @@ couldn't apply at all (R-0), two RLS privilege holes (R-1, R-2), missing
 add-domain form, no mailbox-creation path (still open, S3), CI had no
 database truth at all — now a postgres:16 job.
 
-## Next 14 days (proposed order)
+## Next 14 days — updated at end of session (most items landed same-day)
 
-1. Deploy schema to a Letters Supabase project; run smoke (health?ready=1,
-   sign-up, claim domain, verify against a real TXT record).
-2. Mailbox creation UI on verified domains (S3 — the last gap in the loop).
+1. ~~Deploy schema~~ **DONE** (staging on `alice-chains`; advisors clean).
+2. ~~Mailbox creation UI~~ **DONE** (settings, verified domains only).
 3. Resend account: platform domain, API key, first real send to a Gmail
-   address; screenshot the DKIM-pass headers as evidence.
-4. Resend Inbound on a Mangu-owned test domain → Svix-verified adapter →
-   our HMAC seam → reply lands in inbox. Loop closed.
-5. Suppression management UI + provider bounce/complaint webhook rows.
-6. RFC 8058 one-click unsubscribe headers on any bulk-ish send path +
-   unsubscribe landing route (R-5 gate).
-7. Trash auto-purge + retention schedule doc (R-4).
-8. Operator dashboard slice: per-domain verification history, per-message
-   ledger (P3).
+   address; screenshot the DKIM-pass headers as evidence. **← the next
+   human step; everything downstream of it is code-complete.**
+4. Resend Inbound: adapter is **DONE** (`/api/mail/resend`, Svix-verified,
+   per-recipient delivery). Remaining: MX record + webhook config in the
+   Resend dashboard once the account exists.
+5. ~~Suppression UI + bounce/complaint rows~~ **DONE** (management page;
+   bounce/complaint events attributed through the ledger).
+6. RFC 8058: unsubscribe route + tokens **DONE**; remaining: attach
+   List-Unsubscribe headers when a bulk/broadcast send path exists (no
+   such path yet — deliberate).
+7. ~~Trash auto-purge~~ **DONE** (trashed_at triggers + daily cron);
+   retention schedule numbers still need Max's blessing (Q6).
+8. ~~Operator slice~~ **DONE** (/settings/activity).
+
+Newly next: Vercel project + env + crons (operator, ~1h); first real
+send/receive on a Mangu domain; drafts; broadcast primitive design
+(needs Q8/Q9 answers); DPA + retention schedule docs.
 
 ## K. Prosperity plan
 
