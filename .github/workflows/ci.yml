@@ -39,3 +39,30 @@ jobs:
 
       - name: Forge design layer typecheck
         run: npm run forge:build
+
+  database:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      PGHOST: localhost
+      PGUSER: postgres
+      PGPASSWORD: postgres
+    steps:
+      - uses: actions/checkout@v4
+
+      # Applies every migration to a clean database and runs the RLS
+      # behavior matrix (supabase/tests/rls_matrix.sql): forged inbound
+      # mail, self-verified domains, cross-user reads — all must stay
+      # impossible.
+      - name: Migrations apply + RLS matrix
+        run: scripts/db-check.sh

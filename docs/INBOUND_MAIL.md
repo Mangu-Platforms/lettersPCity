@@ -44,17 +44,29 @@ Responses:
 | `202` | Delivered. |
 | `200` `{"status":"duplicate"}` | Already delivered; redelivery is a no-op. |
 | `400` | Body is not valid JSON, or fails the payload schema. |
-| `401` | Signature missing or invalid. |
+| `401` | Signature missing/invalid, or a stale v2 timestamp. |
+| `413` | Body exceeds 1 MB. |
 | `404` | No mailbox accepts mail at that address. |
 | `500` | Lookup or insert failed. |
 
 ### Authentication
 
 There is no user session on this path, so the endpoint authenticates the
-*sender* by HMAC over the raw request body, using `INBOUND_MAIL_WEBHOOK_SECRET`.
-The comparison is constant-time (`lib/messages/signature.ts`); tests in
-`tests/api/inbound-signature.test.ts` cover forged secrets, tampered bodies,
-truncated signatures, and re-serialized JSON.
+*sender* by HMAC-SHA256 using `INBOUND_MAIL_WEBHOOK_SECRET`, in one of two
+schemes the sender chooses:
+
+- **v1** — `X-Letters-Signature: HMAC(rawBody)`. The original contract.
+- **v2** — additionally send `X-Letters-Timestamp: <unix seconds>`; the
+  signature must then cover `` `${timestamp}.${rawBody}` `` and the timestamp
+  must be within ±300 s of the server clock. Prefer v2: a captured request
+  dies with the window instead of being replayable forever. Sending the
+  timestamp commits the request to v2 — a body-only signature is refused.
+
+Bodies over 1 MB are refused with `413` (attachments travel via storage, not
+this endpoint). The comparison is constant-time
+(`lib/messages/signature.ts`); tests cover forged secrets, tampered bodies,
+truncated signatures, re-serialized JSON, stale/future timestamps and
+cross-scheme downgrade attempts.
 
 Because there is no session, the handler uses the service-role Supabase client
 and **bypasses RLS**. It therefore does its own authorization: it resolves
@@ -68,6 +80,21 @@ Mail gets redelivered — that is normal, not an error. A unique index on
 `(mailbox_id, message_id)` makes a repeat insert fail with `23505`, which the
 handler reports as `duplicate` with a success status rather than surfacing an
 error to the sender. A retrying relay will not produce duplicates in the inbox.
+
+## The Resend adapter
+
+`POST /api/mail/resend-inbound` is a ready adapter for Resend Inbound (the
+MVP pick — docs/ARCHITECTURE.md DEC-002): it verifies the Svix signature
+(`RESEND_INBOUND_WEBHOOK_SECRET`, ±300 s window), fetches the message body
+from Resend's receiving API, translates it, and hands it to the same
+delivery core as the seam — once per hosted recipient, idempotently. It
+answers 2xx for everything that must not be retried and 5xx only when a
+delivery genuinely failed, so provider retries do useful work. Unconfigured
+deployments answer 503 (disabled, never open).
+
+To go live: add the MX record Resend specifies on the receiving (sub)domain,
+create a webhook pointed at this route for `email.received`, and set the two
+env vars.
 
 ## Attaching a real receiver
 
@@ -84,7 +111,13 @@ Either way the app does not change — the payload contract above is the seam.
 
 ## Outbound
 
-`app/compose/page.tsx` stores an outbound message in `Sent` but does not hand it
-to an MTA. Outbound needs the same always-on component, plus DKIM signing and a
-reputable sending IP, or deliverability to Gmail and Outlook will be poor. That
-is the known gap identified as the top risk in the Session 3 research.
+`app/compose/page.tsx` persists the message to `Sent`, then hands it to the
+provider behind `lib/mail/` — suppression list first, then the adapter chosen
+by `MAIL_PROVIDER`, with the outcome recorded per attempt in `send_attempts`
+(`accepted` / `failed` / `suppressed` / `skipped`). The default `noop`
+provider keeps every environment working with nothing configured, and the UI
+reports those sends honestly as not delivered.
+
+DKIM/SPF/DMARC for each creator domain are set up at the provider (Resend
+returns the records to publish alongside our `_letters` verification TXT).
+Deliverability strategy and the SES exit path live in `docs/ARCHITECTURE.md`.

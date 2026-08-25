@@ -72,10 +72,23 @@ are not committed.
 
 ## Known gaps
 
-- **Inbound and outbound mail are not connected to any MTA.** The webhook seam
-  exists and is tested; nothing delivers through it yet. See
+- **Inbound mail is not yet connected to a relay.** The HMAC webhook seam
+  exists and is tested; no provider delivers into it yet. See
   `docs/INBOUND_MAIL.md`.
-- **Domain verification is not automated.** The TXT record and token are shown
-  in settings; nothing checks DNS and flips the status to `verified` yet.
+- **Outbound needs a provider account.** The compose path hands mail to the
+  provider behind `lib/mail/` (Resend adapter shipped; `MAIL_PROVIDER=noop`
+  default records sends as `skipped`). Sending for real requires a Resend
+  API key and a verified sending domain — see `docs/ARCHITECTURE.md`.
+- **Domain verification is automated but needs the cron secret.** The DNS
+  TXT check runs hourly via `/api/domains/verify` (plus a per-domain
+  "Check now" button); set `CRON_SECRET` in Vercel or the job stays off.
 - Encryption is TLS-in-transit only. Teams, mobile apps and AI features are
   v2+ per the roadmap in the genome.
+
+## Database checks
+
+`scripts/db-check.sh` applies every migration to a scratch Postgres (using
+`supabase/tests/shim.sql` to stand in for a Supabase project) and runs
+`supabase/tests/rls_matrix.sql` — 15 behavioral assertions that forged
+inbound mail, self-verified domains and cross-user reads stay impossible.
+CI runs it against a `postgres:16` service on every push.
