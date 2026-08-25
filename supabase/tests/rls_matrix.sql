@@ -139,5 +139,17 @@ do $$ declare n int; begin
   if n <> 1 then raise exception 'T15 FAILED: owner sees % attempt rows, want 1', n; end if;
 end $$;
 
+-- T16: trashing starts the retention clock; restoring stops it
+update public.messages set folder = 'trash' where id = 'cccccccc-0000-0000-0000-000000000001';
+do $$ declare ts timestamptz; begin
+  select trashed_at into ts from public.messages where id = 'cccccccc-0000-0000-0000-000000000001';
+  if ts is null then raise exception 'T16 FAILED: trashed_at not set on move to trash'; end if;
+end $$;
+update public.messages set folder = 'inbox' where id = 'cccccccc-0000-0000-0000-000000000001';
+do $$ declare ts timestamptz; begin
+  select trashed_at into ts from public.messages where id = 'cccccccc-0000-0000-0000-000000000001';
+  if ts is not null then raise exception 'T16 FAILED: trashed_at not cleared on restore'; end if;
+end $$;
+
 reset role;
 select 'RLS_MATRIX_PASSED' as result;

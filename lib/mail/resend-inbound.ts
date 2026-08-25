@@ -20,6 +20,13 @@ export interface ResendReceivedEmail {
   created_at?: string | null;
 }
 
+/** Which suppression reason a Resend event type maps to; null = not ours. */
+export function suppressionReasonFor(type: string): "bounce" | "complaint" | null {
+  if (type === "email.bounced") return "bounce";
+  if (type === "email.complained") return "complaint";
+  return null;
+}
+
 /** "Jane Doe <jane@x.com>" → { address, name }; bare addresses pass through. */
 export function parseAddress(raw: MaybeAddress): { address: string; name: string | null } | null {
   if (!raw) return null;
