@@ -77,11 +77,69 @@ async function checkDomain(formData: FormData) {
   redirect(`/settings/domains?checked=${check.result}`);
 }
 
+/**
+ * Local part of a new mailbox address. A pragmatic subset of RFC 5321:
+ * alphanumerics with dots, underscores, hyphens and plus inside — the shapes
+ * providers actually deliver to.
+ */
+const localPartSchema = z
+  .string()
+  .trim()
+  .toLowerCase()
+  .regex(/^[a-z0-9](?:[a-z0-9._+-]{0,62}[a-z0-9])?$/, "invalid mailbox name");
+
+async function addMailbox(formData: FormData) {
+  "use server";
+
+  const supabase = createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (!user) redirect("/login?next=/settings/domains");
+
+  const domainId = String(formData.get("domain_id") ?? "");
+  const parsed = localPartSchema.safeParse(String(formData.get("local_part") ?? ""));
+  if (!parsed.success) redirect("/settings/domains?error=bad-mailbox");
+
+  // RLS returns nothing for a domain the user doesn't own; verified status is
+  // re-checked by the mailbox insert policy, so this read is for the address.
+  const { data: domain } = await supabase
+    .from("domains")
+    .select("id, domain, status")
+    .eq("id", domainId)
+    .maybeSingle();
+  if (!domain) redirect("/settings/domains?error=unknown-domain");
+  if (domain.status !== "verified") redirect("/settings/domains?error=not-verified");
+
+  // First mailbox becomes the default sender in compose.
+  const { count } = await supabase
+    .from("mailboxes")
+    .select("id", { head: true, count: "exact" });
+
+  const { error } = await supabase.from("mailboxes").insert({
+    owner_id: user.id,
+    domain_id: domain.id,
+    address: `${parsed.data}@${domain.domain}`,
+    is_default: (count ?? 0) === 0,
+  });
+
+  if (error) {
+    redirect(
+      `/settings/domains?error=${error.code === "23505" ? "mailbox-taken" : "mailbox-failed"}`
+    );
+  }
+  revalidatePath("/settings/domains");
+}
+
 const ERROR_MESSAGES: Record<string, string> = {
   "bad-domain": "Enter a bare domain like example.com — no https://, no @.",
   taken: "That domain is already claimed on Letters.",
   "add-failed": "The domain could not be added. Try again.",
   "unknown-domain": "That domain is not on your account.",
+  "bad-mailbox": "Mailbox names are letters and numbers, with . _ - + inside.",
+  "not-verified": "Verify the domain before creating mailboxes on it.",
+  "mailbox-taken": "That address already exists.",
+  "mailbox-failed": "The mailbox could not be created. Try again.",
 };
 
 const CHECK_MESSAGES: Record<string, string> = {
@@ -110,6 +168,17 @@ export default async function DomainsPage({
     .order("created_at", { ascending: false });
 
   const rows = domains ?? [];
+
+  const { data: mailboxes } = await supabase
+    .from("mailboxes")
+    .select("id, domain_id, address, is_default")
+    .order("created_at", { ascending: true });
+  const mailboxesByDomain = new Map<string, { id: string; address: string; is_default: boolean }[]>();
+  for (const m of mailboxes ?? []) {
+    const list = mailboxesByDomain.get(m.domain_id) ?? [];
+    list.push(m);
+    mailboxesByDomain.set(m.domain_id, list);
+  }
   const errorMessage = searchParams.error ? ERROR_MESSAGES[searchParams.error] : null;
   const checkMessage = searchParams.checked ? CHECK_MESSAGES[searchParams.checked] : null;
 
@@ -184,6 +253,41 @@ export default async function DomainsPage({
                 <p className="mt-2 text-xs text-muted">
                   Last checked {new Date(d.last_checked_at).toLocaleString()}
                 </p>
+              )}
+
+              {d.status === "verified" && (
+                <div className="mt-3">
+                  {(mailboxesByDomain.get(d.id) ?? []).length > 0 && (
+                    <ul className="mb-2 text-sm">
+                      {(mailboxesByDomain.get(d.id) ?? []).map((m) => (
+                        <li key={m.id} className="py-0.5">
+                          {m.address}
+                          {m.is_default && (
+                            <span className="ml-2 text-xs uppercase tracking-wide text-muted">
+                              default
+                            </span>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  <form action={addMailbox} className="flex items-center gap-2">
+                    <input type="hidden" name="domain_id" value={d.id} />
+                    <input
+                      name="local_part"
+                      required
+                      placeholder="you"
+                      className="w-32 rounded-md border border-border bg-transparent px-3 py-1.5 text-sm"
+                    />
+                    <span className="text-sm text-muted">@{d.domain}</span>
+                    <button
+                      type="submit"
+                      className="rounded-md border border-border px-3 py-1.5 text-xs font-medium"
+                    >
+                      Add mailbox
+                    </button>
+                  </form>
+                </div>
               )}
             </li>
           ))}
