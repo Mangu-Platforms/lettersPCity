@@ -57,6 +57,16 @@ undercut on raw mailboxes (Fastmail $6 includes domains) but nobody bundles
 the creator loop — the $20 tier is defensible, the $8 tier is marketing
 (details in COMPETITORS.md). OK to bake into a pricing page copy draft?
 
+## Q11 — Live demo needs a deploy (environment note)
+The app builds and renders against the staging project, but this build
+container's egress gateway rejects direct connections to `*.supabase.co`
+(the Supabase MCP rides a different proxy), so the interactive walkthrough
+(sign-in → domain → mailbox → send) couldn't be exercised from here. It
+will work from any normal machine or a Vercel deploy. To go live: create a
+Vercel project on this repo and set the env matrix from
+docs/ARCHITECTURE.md §H (the service-role key is the one secret I never
+had). Want me to prepare the Vercel project next session?
+
 ## Q10 — E2EE positioning
 We are TLS-in-transit + at-rest, *not* end-to-end, and competitors will
 point it out. I propose we say it plainly on the privacy page (Skiff had

@@ -116,3 +116,8 @@ Questions compiled in `docs/QUESTIONS_FOR_MAX.md`, never blocking.
   in GitHub Actions incl. database job (RLS_MATRIX_PASSED in the log).
   PR #3 description refreshed; ROADMAP statuses updated (items 1,2,4,5,7,8
   DONE). Next: render smoke vs staging, session report artifact.
+- C10: live render smoke (landing/login 200, health ok vs staging; egress
+  gateway blocks *.supabase.co from this container -> full walkthrough
+  needs a deploy, logged as Q11). Smoke user seeded+removed (auth.users
+  back to 0). Session report artifact published:
+  https://claude.ai/code/artifact/383f79d0-d48e-4bfc-a8ea-0db9e3749f19
