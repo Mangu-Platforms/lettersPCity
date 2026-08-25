@@ -51,10 +51,21 @@ Responses:
 ### Authentication
 
 There is no user session on this path, so the endpoint authenticates the
-*sender* by HMAC over the raw request body, using `INBOUND_MAIL_WEBHOOK_SECRET`.
-The comparison is constant-time (`lib/messages/signature.ts`); tests in
-`tests/api/inbound-signature.test.ts` cover forged secrets, tampered bodies,
-truncated signatures, and re-serialized JSON.
+*sender* by HMAC-SHA256 using `INBOUND_MAIL_WEBHOOK_SECRET`, in one of two
+schemes the sender chooses:
+
+- **v1** — `X-Letters-Signature: HMAC(rawBody)`. The original contract.
+- **v2** — additionally send `X-Letters-Timestamp: <unix seconds>`; the
+  signature must then cover `` `${timestamp}.${rawBody}` `` and the timestamp
+  must be within ±300 s of the server clock. Prefer v2: a captured request
+  dies with the window instead of being replayable forever. Sending the
+  timestamp commits the request to v2 — a body-only signature is refused.
+
+Bodies over 1 MB are refused with `413` (attachments travel via storage, not
+this endpoint). The comparison is constant-time
+(`lib/messages/signature.ts`); tests cover forged secrets, tampered bodies,
+truncated signatures, re-serialized JSON, stale/future timestamps and
+cross-scheme downgrade attempts.
 
 Because there is no session, the handler uses the service-role Supabase client
 and **bypasses RLS**. It therefore does its own authorization: it resolves

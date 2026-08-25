@@ -14,11 +14,18 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { createAdminClient } from "@/lib/supabase/server";
-import { signatureIsValid } from "@/lib/messages/signature";
+import { verifyInboundRequest } from "@/lib/messages/signature";
 import { serverEnv } from "@/lib/env";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
+
+/**
+ * Parsed mail JSON has no business being this large; attachments travel via
+ * storage, not this endpoint. The cap bounds memory per request and what an
+ * attacker can make us HMAC.
+ */
+const MAX_BODY_BYTES = 1_000_000;
 
 const InboundMessage = z.object({
   to: z.string().email(),
@@ -37,7 +44,20 @@ export async function POST(request: Request) {
   // parse afterwards -- re-serializing would change what is being verified.
   const rawBody = await request.text();
 
-  if (!signatureIsValid(rawBody, request.headers.get("x-letters-signature"), serverEnv().INBOUND_MAIL_WEBHOOK_SECRET)) {
+  if (Buffer.byteLength(rawBody, "utf8") > MAX_BODY_BYTES) {
+    return NextResponse.json({ error: "payload too large" }, { status: 413 });
+  }
+
+  // v1: HMAC over the body. v2 (when X-Letters-Timestamp is sent): HMAC over
+  // `${timestamp}.${body}` with a ±5 minute replay window. Details in
+  // docs/INBOUND_MAIL.md.
+  const verification = verifyInboundRequest(
+    rawBody,
+    request.headers.get("x-letters-signature"),
+    request.headers.get("x-letters-timestamp"),
+    serverEnv().INBOUND_MAIL_WEBHOOK_SECRET
+  );
+  if (!verification.valid) {
     return NextResponse.json({ error: "invalid signature" }, { status: 401 });
   }
 

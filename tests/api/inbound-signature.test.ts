@@ -34,3 +34,64 @@ describe("inbound webhook signature", () => {
     expect(signatureIsValid(reserialized, signPayload(BODY, SECRET), SECRET)).toBe(false);
   });
 });
+
+describe("verifyInboundRequest (schemes v1/v2 + replay window)", () => {
+  const { verifyInboundRequest, REPLAY_WINDOW_SECONDS } =
+    require("../../lib/messages/signature") as typeof import("../../lib/messages/signature");
+  const NOW = 1_756_000_000;
+  const clock = () => NOW;
+
+  it("accepts a v1 request (no timestamp header) with a body-only signature", () => {
+    const result = verifyInboundRequest(BODY, signPayload(BODY, SECRET), null, SECRET, clock);
+    expect(result).toEqual({ valid: true, scheme: "v1" });
+  });
+
+  it("accepts a v2 request whose signature covers timestamp.body, inside the window", () => {
+    const ts = String(NOW - 30);
+    const sig = signPayload(`${ts}.${BODY}`, SECRET);
+    expect(verifyInboundRequest(BODY, sig, ts, SECRET, clock)).toEqual({
+      valid: true,
+      scheme: "v2",
+    });
+  });
+
+  it("refuses a stale v2 request — a captured request dies with the window", () => {
+    const ts = String(NOW - REPLAY_WINDOW_SECONDS - 1);
+    const sig = signPayload(`${ts}.${BODY}`, SECRET);
+    expect(verifyInboundRequest(BODY, sig, ts, SECRET, clock)).toEqual({
+      valid: false,
+      reason: "stale",
+    });
+  });
+
+  it("refuses a v2 request from the future beyond the skew allowance", () => {
+    const ts = String(NOW + REPLAY_WINDOW_SECONDS + 1);
+    const sig = signPayload(`${ts}.${BODY}`, SECRET);
+    expect(verifyInboundRequest(BODY, sig, ts, SECRET, clock)).toEqual({
+      valid: false,
+      reason: "stale",
+    });
+  });
+
+  it("sending a timestamp commits to v2: a body-only signature no longer passes", () => {
+    const ts = String(NOW);
+    const v1sig = signPayload(BODY, SECRET);
+    expect(verifyInboundRequest(BODY, v1sig, ts, SECRET, clock)).toEqual({
+      valid: false,
+      reason: "bad-signature",
+    });
+  });
+
+  it("refuses a non-numeric timestamp without throwing", () => {
+    const sig = signPayload(`abc.${BODY}`, SECRET);
+    expect(verifyInboundRequest(BODY, sig, "abc", SECRET, clock)).toEqual({
+      valid: false,
+      reason: "bad-timestamp",
+    });
+  });
+
+  it("refuses a missing signature under either scheme", () => {
+    expect(verifyInboundRequest(BODY, null, null, SECRET, clock).valid).toBe(false);
+    expect(verifyInboundRequest(BODY, "", String(NOW), SECRET, clock).valid).toBe(false);
+  });
+});
