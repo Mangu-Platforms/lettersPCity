@@ -79,11 +79,31 @@ export async function dispatchOutbound(input: DispatchInput): Promise<DispatchOu
       const mailProvider = getProvider();
       provider = mailProvider.name;
 
+      // Split recipients by kind, then promote cc into to if to is empty.
+      // Some providers require a non-empty to field; we keep the original kind
+      // for the ledger but ensure sendable payload.
+      const toList = plan.deliverable
+        .filter((r) => r.kind === "to")
+        .map((r) => r.address);
+      const ccList = plan.deliverable
+        .filter((r) => r.kind === "cc")
+        .map((r) => r.address);
+      const bccList = plan.deliverable
+        .filter((r) => r.kind === "bcc")
+        .map((r) => r.address);
+
+      // If all To recipients were suppressed but Cc survives, promote the first Cc
+      // into the To field so the provider payload is valid. This ensures the Cc
+      // recipient actually receives the mail even when the To list empties via suppression.
+      if (toList.length === 0 && ccList.length > 0) {
+        toList.push(ccList.shift()!);
+      }
+
       const result = await mailProvider.send({
         from: input.from,
-        to: plan.deliverable.filter((r) => r.kind === "to").map((r) => r.address),
-        cc: plan.deliverable.filter((r) => r.kind === "cc").map((r) => r.address),
-        bcc: plan.deliverable.filter((r) => r.kind === "bcc").map((r) => r.address),
+        to: toList,
+        cc: ccList,
+        bcc: bccList,
         subject: input.subject,
         text: input.text,
         html: input.html,
