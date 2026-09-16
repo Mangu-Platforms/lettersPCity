@@ -7,6 +7,12 @@ Built with **Forge** — the autonomous product foundry in `src/forge/`, which
 produced this product's vision, requirements and roadmap before any of the app
 was written.
 
+**Live on Vercel:** [letters-p-city.vercel.app](https://letters-p-city.vercel.app)
+
+Dashboard: [vercel.com/redinc23s-projects/letters-p-city](https://vercel.com/redinc23s-projects/letters-p-city)
+
+Git deploys: every push to `main` and every pull request. See [`docs/VERCEL.md`](docs/VERCEL.md).
+
 ## Stack
 
 Deliberately identical to `mangu-publishers`, so the two repos are one stack:
@@ -14,7 +20,7 @@ Deliberately identical to `mangu-publishers`, so the two repos are one stack:
 | Layer | Choice |
 | --- | --- |
 | Framework | Next.js 14 (App Router) |
-| Hosting | Vercel |
+| Hosting | Vercel (`letters-p-city`, region `iad1`) |
 | Database / auth / storage | Supabase (Postgres, RLS, Auth) |
 | Styling | Tailwind CSS |
 | Validation | Zod |
@@ -53,6 +59,7 @@ supabase/migrations/    schema, RLS policies, search function
 src/forge/              the Forge design layer (agents, genome, constitution)
 tests/                  Jest
 docs/INBOUND_MAIL.md    why inbound SMTP is not on Vercel, and the seam it uses
+docs/VERCEL.md          Git-linked project, URLs, crons, dashboard env
 ```
 
 ## Commands
@@ -90,5 +97,5 @@ are not committed.
 `scripts/db-check.sh` applies every migration to a scratch Postgres (using
 `supabase/tests/shim.sql` to stand in for a Supabase project) and runs
 `supabase/tests/rls_matrix.sql` — 15 behavioral assertions that forged
-inbound mail, self-verified domains and cross-user reads stay impossible.
+  inbound mail, self-verified domains and cross-user reads stay impossible.
 CI runs it against a `postgres:16` service on every push.
